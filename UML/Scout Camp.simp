@@ -35,6 +35,14 @@
         <item-type stereotype="" type="ConcreteUmlActivationBar" />
         <value>17</value>
       </counter>
+      <counter>
+        <item-type stereotype="" type="UmlClass" />
+        <value>4</value>
+      </counter>
+      <counter>
+        <item-type stereotype="" type="UmlPackage" />
+        <value>1</value>
+      </counter>
     </entity-names>
     <entity-ids>
       <counter>
@@ -75,7 +83,15 @@
       </counter>
       <counter>
         <item-type stereotype="" type="AbstractElementGroup" />
-        <value>589</value>
+        <value>667</value>
+      </counter>
+      <counter>
+        <item-type stereotype="" type="UmlClass" />
+        <value>5</value>
+      </counter>
+      <counter>
+        <item-type stereotype="" type="UmlPackage" />
+        <value>2</value>
       </counter>
     </entity-ids>
     <diagrams>
@@ -87,8 +103,17 @@
         <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlSequenceDiagram</type>
         <value>1</value>
       </counter>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlClassDiagram</type>
+        <value>1</value>
+      </counter>
     </diagrams>
-    <fields />
+    <fields>
+      <counter>
+        <type>SoftwareIdeasModeler.Core.DiagramItems.Fields.AttributeField</type>
+        <value>12</value>
+      </counter>
+    </fields>
   </counters>
   <alias-groups />
   <management>
@@ -113,7 +138,10 @@
     <type-sets>
       <type-set file="UmlTypes.xml" />
     </type-sets>
-    <custom-types />
+    <custom-types>
+      <type id="Badge" tid="" name="Badge" description="" nullable="false" />
+      <type id="Tier" tid="" name="Tier" description="" nullable="false" />
+    </custom-types>
   </types>
   <filters />
   <items>
@@ -432,7 +460,7 @@
           </item>
         </layer>
       </diagram>
-      <diagram type="uml-sequence" id="p274301777490015481" name="Sequência" order-index="2" overview-order-index="0" show-id="false" show-name="true" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" show-template-parameters="true" show-fields="true" show-empty-compartments="true" show-attributes="true" show-attribute-visibility="true" show-operations="true" show-operation-parameters="true" show-operation-visibility="true" show-nullability="true" show-sequence-number="false" show-extension-points="false" show-relationship-texts="true" show-description="false" show-field-description="false" auto-routed-paths="false" view-location="1079,38">
+      <diagram type="uml-sequence" id="p274301777490015481" name="Sequência" order-index="2" overview-order-index="0" show-id="false" show-name="true" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" show-template-parameters="true" show-fields="true" show-empty-compartments="true" show-attributes="true" show-attribute-visibility="true" show-operations="true" show-operation-parameters="true" show-operation-visibility="true" show-nullability="true" show-sequence-number="false" show-extension-points="false" show-relationship-texts="true" show-description="false" show-field-description="false" auto-routed-paths="false" view-location="1015,-22">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -1053,6 +1081,238 @@
           <item id="di831337264455436894" iid="45946f81a4a8476f9fb17a028d253e6d" creation-date="08/24/2015 22:48:38" order-index="35" type="sequence-action">
             <layout x1="1491" y1="347" x2="1691" y2="347" ax="1491" ay="332" awidth="200" aheight="20" x="1491" y="332" width="200" height="20" message-x="0" message-y="-10" />
             <sequence-action from="di343817942562953776" to="di926647113396525109" show-sequence-number="false" />
+          </item>
+        </layer>
+      </diagram>
+      <diagram type="uml-class" id="p592924504578497240" name="Classes" order-index="3" overview-order-index="1" show-id="false" show-name="true" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" show-template-parameters="true" show-fields="true" show-empty-compartments="true" show-attributes="true" show-attribute-visibility="true" show-operations="true" show-operation-parameters="true" show-operation-visibility="true" show-nullability="true" show-sequence-number="false" show-extension-points="false" show-relationship-texts="true" show-description="false" show-field-description="false" auto-routed-paths="false" view-location="-107,-77" zoom="0.7">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>08/24/2015 22:57:24</creation-date>
+          <change-date>08/25/2015 00:17:35</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="di354556877603283246" cid="C001" type="class" name="User" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" visibility="package" creation-date="08/24/2015 23:01:39">
+            <stereotypes />
+            <documentation>
+              <text>
+                <styles>
+                  <style name="S1" font-name="Verdana" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                    <text>
+                      <solid-brush color="#FF000000" />
+                    </text>
+                  </style>
+                </styles>
+                <content>
+                  <paragraph>
+                    <p s="S1">
+                      <t>
+</t>
+                    </p>
+                  </paragraph>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes>
+              <attribute id="ab38abeaa6146437e8f0c22ff5e877efb178" cid="AT001" name="nome" type="String" type-id="Uml.String" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a4eb35b25e9c3401dacba8f467661bb33839" cid="AT002" name="id" type="Integer" type-id="Uml.Integer" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a2dc355c6a9ae47acb0220280970730d4755" cid="AT003" name="badges" type="Badge" type-id="Badge" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a85ade329a7c94f27ac862e6d38f47e59454" cid="AT004" name="tier" type="Tier" type-id="Tier" visibility="private">
+                <style class="default" />
+              </attribute>
+            </attributes>
+            <operations />
+            <template-parameters>
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
+            </template-parameters>
+          </item>
+          <item id="di788285850885502224" cid="C002" type="class" name="BadgeBase" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" visibility="package" creation-date="08/24/2015 23:53:39">
+            <stereotypes />
+            <documentation>
+              <text>
+                <styles>
+                  <style name="S1" font-name="Verdana" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                    <text>
+                      <solid-brush color="#FF000000" />
+                    </text>
+                  </style>
+                </styles>
+                <content>
+                  <paragraph>
+                    <p s="S1">
+                      <t>
+</t>
+                    </p>
+                  </paragraph>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes>
+              <attribute id="a21bf5467f924438ebcbb1f18b72c9a2a516" cid="AT005" name="nome" type="String" type-id="Uml.String" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a186a90bccade4ce0a230f00430200ad5410" cid="AT006" name="id" type="Integer" type-id="Uml.Integer" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a5911a720e9cb42199828b76691ea7ec9146" cid="AT007" name="image" type="String" type-id="Uml.String" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="a80c77b9be53b4e52903781b7522b723f570" cid="AT008" name="title" type="String" type-id="Uml.String" visibility="private">
+                <style class="default" />
+              </attribute>
+              <attribute id="ac725fb061c9e43269cada8667656bb2d361" cid="AT009" name="description" type="String" type-id="Uml.String" visibility="private">
+                <style class="default" />
+              </attribute>
+            </attributes>
+            <operations />
+            <template-parameters>
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
+            </template-parameters>
+          </item>
+          <item id="di242198075238236061" cid="C003" type="class" name="Tier" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" visibility="package" creation-date="08/25/2015 00:03:20">
+            <stereotypes>
+              <stereotype name="extends BadgeBase" />
+            </stereotypes>
+            <documentation>
+              <text>
+                <styles>
+                  <style name="S1" font-name="Verdana" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                    <text>
+                      <solid-brush color="#FF000000" />
+                    </text>
+                  </style>
+                </styles>
+                <content>
+                  <paragraph>
+                    <p s="S1">
+                      <t>
+</t>
+                    </p>
+                  </paragraph>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes>
+              <attribute id="a0e4f8f79665c4c84a14b265c32834960534" cid="AT010" name="level" type="Integer" type-id="Uml.Integer" visibility="private">
+                <style class="default" />
+              </attribute>
+            </attributes>
+            <operations />
+            <template-parameters>
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
+            </template-parameters>
+          </item>
+          <item id="di691032782546378988" cid="C004" type="class" name="Badge" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" visibility="package" creation-date="08/25/2015 00:13:51">
+            <stereotypes>
+              <stereotype name="extends BadgeBase" />
+            </stereotypes>
+            <documentation>
+              <text>
+                <styles>
+                  <style name="S1" font-name="Verdana" font-size="12" font-bold="false" font-italic="false" font-underline="false" font-strikeout="false">
+                    <text>
+                      <solid-brush color="#FF000000" />
+                    </text>
+                  </style>
+                </styles>
+                <content>
+                  <paragraph>
+                    <p s="S1">
+                      <t>
+</t>
+                    </p>
+                  </paragraph>
+                </content>
+              </text>
+            </documentation>
+            <cooperation>
+              <participants />
+              <comments />
+            </cooperation>
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <attributes>
+              <attribute id="a615bf108822445f39e69ca327c682ead612" cid="AT011" name="points" type="Integer" type-id="Uml.Integer" visibility="private">
+                <style class="default" />
+              </attribute>
+            </attributes>
+            <operations />
+            <template-parameters>
+              <source-codes>
+                <source-code language="ActionScript" />
+              </source-codes>
+            </template-parameters>
+          </item>
+          <item id="di244391137789699704" cid="PKG001" type="package" name="scoutcamp" style-class="" is-abstract="false" is-root="false" is-leaf="false" is-active="false" visibility="package" creation-date="08/25/2015 00:17:35">
+            <stereotypes />
+            <associated-diagrams />
+            <owned-items />
+            <style class="default" />
+            <nestedItems />
+          </item>
+        </abstract-items>
+        <layer name="Default" visible="true" enabled="true" locked="false">
+          <item id="di244391137789699704" iid="fd483ef569ca4ae292f69539646ca234" creation-date="08/25/2015 00:17:35" order-index="4" type="entity">
+            <layout ax="-49" ay="-5" awidth="567" aheight="541" x="-49" y="-5" width="567" height="541" angle="0" />
+          </item>
+          <item id="di354556877603283246" iid="e4d22b2f6b7240e3bc5ced798035825a" container="di244391137789699704" container-iid="fd483ef569ca4ae292f69539646ca234" creation-date="08/24/2015 23:01:39" order-index="0" type="entity">
+            <layout ax="23" ay="90" awidth="173" aheight="187" x="23" y="90" width="173" height="187" angle="0" />
+            <class />
+          </item>
+          <item id="di691032782546378988" iid="72f404d0f2184a3f8e914a2d21f2c91e" container="di244391137789699704" container-iid="fd483ef569ca4ae292f69539646ca234" creation-date="08/25/2015 00:13:51" order-index="3" type="entity">
+            <layout ax="260" ay="310" awidth="173" aheight="187" x="260" y="310" width="173" height="187" angle="0" />
+            <class />
+          </item>
+          <item id="di788285850885502224" iid="f8e065054bdf457b929ae14714446a1c" container="di244391137789699704" container-iid="fd483ef569ca4ae292f69539646ca234" creation-date="08/24/2015 23:53:39" order-index="1" type="entity">
+            <layout ax="260" ay="90" awidth="173" aheight="187" x="260" y="90" width="173" height="187" angle="0" />
+            <class />
+          </item>
+          <item id="di242198075238236061" iid="d59c7ec593474d6385f2d831e4e40151" container="di244391137789699704" container-iid="fd483ef569ca4ae292f69539646ca234" creation-date="08/25/2015 00:03:20" order-index="2" type="entity">
+            <layout ax="23" ay="310" awidth="173" aheight="187" x="23" y="310" width="173" height="187" angle="0" />
+            <class />
           </item>
         </layer>
       </diagram>
