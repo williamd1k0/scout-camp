@@ -1,7 +1,6 @@
-/*
--- Query: 
--- Date: 2015-08-26 11:23
-*/
+INSERT INTO `scout_camp`.`badge` (`badge_id`,`badge_name`,`badge_image`,`badge_title`,`badge_desc`,`badge_point`) VALUES (NULL,'Exemplo de medalha','placeholderb.jpg','Exemplo de medalha','Uma medalha de exemplo.',0);
+INSERT INTO `scout_camp`.`crest` (`crest_id`,`crest_name`,`crest_image`,`crest_title`,`crest_desc`) VALUES (NULL,'Sem emblema','placeholderc.jpg','Sem emblema','Não possui uma insígnia');
+INSERT INTO `scout_camp`.`tier` (`tier_id`,`tier_name`,`tier_image`,`tier_title`,`tier_desc`,`tier_level`) VALUES (NULL,'Sem patente','placeholdert','Sem patente','Não possui uma patente.',0);
 INSERT INTO `scout_camp`.`user` (`user_id`,`facebook_id`,`user_name`,`crest_crest_id`,`tier_tier_id`) VALUES (NULL,NULL,'João da Silva',1,1);
 INSERT INTO `scout_camp`.`user` (`user_id`,`facebook_id`,`user_name`,`crest_crest_id`,`tier_tier_id`) VALUES (NULL,NULL,'Maria da Silva',1,1);
 INSERT INTO `scout_camp`.`user` (`user_id`,`facebook_id`,`user_name`,`crest_crest_id`,`tier_tier_id`) VALUES (NULL,NULL,'Anna Araujo Gomes',1,1);
