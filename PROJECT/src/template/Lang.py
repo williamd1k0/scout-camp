@@ -5,7 +5,7 @@ import sys
 import os.path
 sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-    
+
 class Lang:
 
     BUTTONS = None
@@ -14,7 +14,7 @@ class Lang:
     def __init__(self, lang=None,tlPath=None):
 
         try:
-            obj = file(tlPath+"/"+lang+".lang","r")
+            obj = open(tlPath+"/"+lang+".lang","r")
         except:
             obj = None
 
@@ -22,3 +22,8 @@ class Lang:
             self.settings = yaml.load(obj)
             self.BUTTONS = self.settings["buttons"]
             self.EXCEPTIONS = self.settings["erros"]
+
+if __name__ == '__main__':
+    main = Lang("pt_br","../testes")
+    print main.BUTTONS
+    raw_input()
