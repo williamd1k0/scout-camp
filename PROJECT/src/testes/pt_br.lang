@@ -1,2 +1,11 @@
-buttons: Teste, Sair
-erros: "{} não definido!"
+# UI
+buttons:
+  teste: Teste
+  sair: Sair
+
+# Layout
+layout:
+  title: Os Mitadores
+
+# Erros
+errors: "{} não definido!"
