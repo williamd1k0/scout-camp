@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 SCRIPT PARA TESTAR OS MÉTODOS QUE SERÃO
 USADOS OU NÃO NO PROJETO
@@ -16,6 +16,7 @@ import pystache
 # variáveis em uma string pelos valores obtidos no YAML.
 # TESTES: Funcionando melhor que o esperado.
 
+
 # Variáveis temporárias para definições.
 # Posteriormente será obtivo via YAML.
 path = "testes/"
@@ -28,9 +29,10 @@ temp = open(path+template,"r")
 
 # Passando o template para uma string.
 temp_base = temp.read()
+lang_string = lang.read()
 
 # Passando as strings em YAML para um 'dict'.
-lang_dict = yaml.load(lang.read())
+lang_dict = yaml.load(lang_string)
 
 # Fechando arquivos.
 lang.close()
@@ -42,11 +44,13 @@ htmlBase = tempMaker.render(temp_base,lang_dict)
 
 # Escrevendo o template pronto em um arquivo HTML.
 teste = open(path+"teste.html","w")
-teste.write(htmlBase)
+teste.write(htmlBase.encode('utf8'))
 teste.close()
 
 # Somente printando as strings para testes.
 print lang_dict
+print "\n"
+print htmlBase
 print "\n"
 print temp_base
 
