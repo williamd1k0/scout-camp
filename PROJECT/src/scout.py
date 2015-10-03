@@ -5,7 +5,7 @@ from template import *
 import yaml
 
 class ScoutCamp:
-    
+
     @staticmethod
     def main():
         debug = "testes/"
@@ -16,7 +16,11 @@ class ScoutCamp:
         print teste.get_templates()
         print teste.to_string()
 
+    @staticmethod
+    def myth():
+        print "== Penso, logo mito =="
+
 if __name__ == '__main__':
 
-    ScoutCamp.main()
+    ScoutCamp.myth()
     raw_input()
