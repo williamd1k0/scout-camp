@@ -30,6 +30,16 @@ class Template:
 
 
     def __set_template_list(self, temp_dict={}):
+        """Método privado __set_template_list
+            - Percorre uma dict para forçar que seja usada somente a
+            - primeira posição e atribui o resultado ao atributo privado
+            - __template_list (list).
+            Argumentos:
+              - self (object): instância da própria classe
+              - temp_dict (dict): dict herdada do yaml (default=dict vazio)
+            Retorno:
+              - Sem retorno
+        """
         template_list = []
         for i in temp_dict:
             template_list.append(temp_dict[i])
@@ -37,10 +47,27 @@ class Template:
 
 
     def get_template_list(self):
+        """Método público get_template_list
+            - Retorna a lista dos templates disponíveis.
+            Argumentos:
+              - self (object): instância da própria classe
+            Retorno:
+              - self.__template_list (lsit): lista de templates
+        """
         return self.__template_list
 
 
     def __set_templates(self, path=None, extension=None):
+        """Método privado __set_templates
+            - Obtém os templates contidos na lista de templates e
+            - atribui no atributo privado __templates (list).
+            Argumentos:
+              - self (object): instância da própria classe
+              - path (string): caminho dos arquivos dos templates (default=None)
+              - extension (string): extensão dos arquivos (default=None)
+            Retorno:
+              - Sem retorno
+        """
         if not path:
             path = self.__path
         if not extension:
@@ -56,10 +83,24 @@ class Template:
 
 
     def get_templates(self):
+        """Método público get_templates
+            - Retorna todos os templates (list).
+            Argumentos:
+              - self (object): instância da própria classe
+            Retorno:
+              - self.__templates (list): lista com os templates
+        """
         return self.__templates
 
 
     def to_string(self):
+        """Método público
+            - Retorna todos os templates em uma única string.
+            Argumentos:
+              - self (object): instância da própria classe
+            Retorno:
+              - self.__templates (string): templates em uma única string
+        """
         return "".join(self.get_templates())
 
 
