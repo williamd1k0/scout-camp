@@ -6,7 +6,7 @@ from Exceptions import *
 class Config:
 
     __paths = {
-        "template": "_view",
+        "templates": "_view",
         "table": "_table",
         "scouts": "_scouts",
         "styles": "_styles",
@@ -25,7 +25,7 @@ class Config:
         else:
             return self.__paths[path]
 
-    def get_all_paths(self):
+    def get_paths(self):
         return self.__paths
 
     def list_paths(self):
@@ -38,6 +38,6 @@ if __name__ == '__main__':
 
     teste = Config()
     print teste.get_path_to("template")
-    print teste.get_all_paths()
+    print teste.get_paths()
     print teste.list_paths()
     raw_input()

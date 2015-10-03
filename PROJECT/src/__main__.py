@@ -6,7 +6,10 @@ import yaml
 
 if __name__ == '__main__':
 
-    teste = Template("list.yaml","testes/")
+    debug = "testes/"
+    configs = Config()
+    teste = Template("list.yaml",debug+configs.get_path_to("templates"))
+
     print teste.get_template_list()
     print teste.get_templates()
     print teste.to_string()
