@@ -7,7 +7,6 @@ class Template:
 
     __template_list = None
     __templates = []
-    __merged_template = None
     __path = ""
     __temp_extension = ".tmp"
 
