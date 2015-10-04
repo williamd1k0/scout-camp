@@ -4,14 +4,33 @@ import yaml
 from Exceptions import *
 
 class Template:
+    """Classe Template
+        - Utilizada para obter e gerenciar a base dos templates.
+        Atributos:
+          - template_list (private:list): Lista de templates
+          - templates (private:list): Templates
+          - path (private:string): caminho para os arquivos
+          - temp_extension (private:string): extensão dos arquivos de template
+    """
 
-    __template_list = None
+    __template_list = []
     __templates = []
     __path = ""
     __temp_extension = ".tmp"
 
-    def __init__(self, list_file, path="", extension=".tmp"):
 
+    def __init__(self, list_file, path="", extension=".tmp"):
+        """Método construtor da Classe
+            - Durante o instanciamento, os arquivos de lista e templates
+            - são lidos e armazenados nos atributos específicos.
+            Argumentos:
+              - self (object): instância da própria classe
+              - list_file (string): nome do arquivo da lista de templates (obrigatório)
+              - path (string): caminho para o arquivo (default=string vazia)
+              - extension (string): extensão opcional dos arquivos de template (default=".tmp")
+            Retorno:
+              - Sem retorno
+        """
         list_file = open(path+list_file,"r")
         template_list = yaml.load(list_file.read())
         list_file.close()
