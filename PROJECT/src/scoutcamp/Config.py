@@ -13,9 +13,17 @@ class Config:
         "scripts": "_js",
         "languages": "_lang"
     }
+    __lists = {
+        "templates": "list.yaml",
+        "scouts": "list.yaml"
+    }
     __facebook_mode = False
 
     def __init__(self, config_file="conf.yaml"):
+        pass
+
+
+    def __call__(self, cmd, args):
         pass
 
 
@@ -25,8 +33,15 @@ class Config:
         else:
             return self.__paths[path]
 
+
+    def get_list_to(self, conf):
+        return self.__lists[conf]
+
     def get_paths(self):
         return self.__paths
+
+    def get_lists(self):
+        return self.__lists
 
     def list_paths(self):
         paths = ""
