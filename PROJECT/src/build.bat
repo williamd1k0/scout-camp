@@ -3,7 +3,7 @@ title  Scout Camp Builder
 color e1
 echo.
 echo  Building Scout Camp...
-pyinstaller scout.py
+pyinstaller -i py.ico scout.py
 echo. >> build-log.txt
 echo  -- Build done -- >> build-log.txt
 echo  %date% >> build-log.txt
