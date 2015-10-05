@@ -125,7 +125,7 @@ class Template:
         return self.__templates
 
 
-    def to_string(self):
+    def __str__(self):
         """Método público
             - Retorna todos os templates em uma única string.
             Argumentos:
