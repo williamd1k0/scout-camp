@@ -7,38 +7,53 @@ import yaml
 
 class ScoutCamp:
 
+    __version__ = "Scout Camp 0.0.1"
+
+
     @staticmethod
-    def main():
-        debug = "testes/"
+    def main(**debug):
+        if not debug:
+            debug["path"] = ""
+
         configs = Config()
-        teste = Template("list.yaml",debug+configs.get_path_to("templates"))
+        teste = Template("list.yaml", debug["path"]+configs.get_path_to("templates"))
 
         print teste.get_template_list()
         print teste.get_templates()
         print teste
 
+
+    @classmethod
+    def debug(cls, path="testes/"):
+        cls.main(**{"path":path})
+
+
     @staticmethod
     def myth():
-        print "== Penso, logo mito =="
+        print "\n -*- Penso, logo mito -*-"
 
-__version__ = "Scout Camp 0.0.1"
+
+    @classmethod
+    def get(cls, term):
+        if(term == "version"):
+            return cls.__version__
+
 
 if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-d","--debug", help="init the debug mode.", action="store_true")
-    parser.add_argument("-m","--myth", help="myth.", action="store_true")
-    parser.add_argument("-v","--version", help="show version.", action="store_true")
+    #print help(argparse.ArgumentParser)
+    parser = argparse.ArgumentParser(prog="Scout Camp", description="Scout Camp - Static HTML Group Manager")
+    parser.add_argument("-d","--debug", help="run the debug mode")
+    parser.add_argument("-m","--myth", help="myth", action="store_true")
+    parser.add_argument("-v","--version", help="show version", action="store_true")
     args = parser.parse_args()
 
     if args.myth:
         ScoutCamp.myth()
 
     elif args.debug:
-        ScoutCamp.main()
+        ScoutCamp.debug()
 
     elif args.version:
-        print __version__
-
+        print ScoutCamp.get("version")
     else:
-        pass
+        ScoutCamp.main()
