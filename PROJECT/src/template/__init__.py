@@ -2,3 +2,4 @@
 
 from Lang import Lang
 from Template import Template
+from Exceptions import *

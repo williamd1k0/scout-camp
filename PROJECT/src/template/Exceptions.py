@@ -2,4 +2,6 @@
 
 
 class TemplateException(Exception):
-    pass
+    def __init__(self, message="Template error"):
+        print "TemplateException: "+message
+        exit()
