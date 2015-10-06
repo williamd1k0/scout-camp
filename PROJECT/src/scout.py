@@ -10,26 +10,31 @@ class ScoutCamp:
     __version__ = "Scout Camp 0.0.1"
 
 
-    @staticmethod
-    def main(debug_path=None, confoverride=None):
+    @classmethod
+    def main(cls, debug_path=None, confoverride=None, mode="default"):
         if not debug_path:
             debug_path = ""
         if confoverride:
-            configs = Config(confoverride)
+            cls.configs = Config(confoverride)
         else:
-            configs = Config()
+            cls.configs = Config()
 
-        try:
-            teste = Template(configs.get_list_to("templates"),
-                             debug_path+configs.get_path_to("templates"))
-        except IOError as ioe:
-            TemplateException("list.yaml for templates not found")
-            raw_input()
-            exit(1)
+        if mode == "server":
+            cls.server()
+        else:
+            try:
+                teste = Template(cls.configs.get_list_to("templates"),
+                                 debug_path+cls.configs.get_path_to("templates"))
+            except IOError:
+                TemplateException("list.yaml for templates not found")
+                raw_input()
+                exit(1)
 
-        print teste.get_template_list()
-        print teste.get_templates()
-        print teste
+            print teste.get_template_list()
+            print teste.get_templates()
+            print teste
+
+        exit(0)
 
 
     @staticmethod
@@ -39,9 +44,11 @@ class ScoutCamp:
             path += "/"
         cls.main(debug_path=path)
 
-    @staticmethod
-    def server():
-        camp = Server()
+
+    @classmethod
+    def server(cls):
+        camp = Server(cls.configs.get_server_host(),
+                      cls.configs.get_server_port())
         camp.infinite()
 
 
@@ -60,7 +67,7 @@ if __name__ == '__main__':
 
     import argparse
 
-    parser = argparse.ArgumentParser(prog="Scout Camp", description="Scout Camp - Static HTML Group Manager")
+    parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-d","--debug", help="run the debug mode")
     parser.add_argument("-c","--conf", help="use another config file")
     parser.add_argument("-s","--server", help="starts the Scout Camp server", action="store_true")
@@ -78,7 +85,7 @@ if __name__ == '__main__':
         ScoutCamp.main(confoverride=args.conf)
 
     elif args.server:
-        ScoutCamp.server()
+        ScoutCamp.main(mode="server")
 
     elif args.version:
         print ScoutCamp.get("version")
