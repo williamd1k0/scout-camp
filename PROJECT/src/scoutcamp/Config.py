@@ -17,6 +17,10 @@ class Config:
         "templates": "list.yaml",
         "scouts": "list.yaml"
     }
+    __server = {
+        "host": "localhost",
+        "port": 80
+    }
     __facebook_mode = False
 
     def __init__(self, config_file="conf.yaml"):
@@ -48,6 +52,13 @@ class Config:
         for i in self.__paths:
             paths += self.__paths[i]+"\n"
         return paths
+
+    def get_server_host(self):
+        return self.__server["host"]
+
+    def get_server_port(self):
+        return self.__server["port"]
+
 
 if __name__ == '__main__':
 
