@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
-from Exceptions import *
+from exceptions import *
 
 class Template:
     """Classe Template

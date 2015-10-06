@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
-from Lang import Lang
-from Template import Template
-from Exceptions import *
+from lang import Lang
+from template import Template
+from exceptions import *
