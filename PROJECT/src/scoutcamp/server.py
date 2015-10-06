@@ -7,7 +7,7 @@ class Server:
     __port = 80
     __host = "localhost"
 
-    def __init__(self, port=None, host=None):
+    def __init__(self, host=None, port=None):
 
         if port:
             self.__port = port
@@ -26,9 +26,9 @@ class Server:
         self.server_message()
         try:
             self.httpd.serve_forever()
-        except KeyboardInterrupt:
+        except:
             pass
-            
+
         self.httpd.server_close()
         print " Server switched off, press Enter to exit"
         raw_input()
