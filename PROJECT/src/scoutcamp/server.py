@@ -42,7 +42,7 @@ class Server:
 
     def open_chrome(self):
 
-        webbrowser.open("http://{}".format(self.__host))
+        webbrowser.open("http://{}:{}".format(self.__host, self.__port))
 
 
 if __name__ == '__main__':
