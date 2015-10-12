@@ -20,12 +20,14 @@ import pystache
 # Variáveis temporárias para definições.
 # Posteriormente será obtivo via YAML.
 path = "testes/"
+view = "_view/"
+lang = "_lang/"
 template = "template.tmp"
 strings = "pt_br.lang"
 
 # Obtendo os arquivos com as strings e os templates.
-lang = open(path+strings,"r")
-temp = open(path+template,"r")
+lang = open(path+lang+strings,"r")
+temp = open(path+view+template,"r")
 
 # Passando o template para uma string.
 temp_base = temp.read()

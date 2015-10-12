@@ -37,8 +37,8 @@ class ScoutCamp:
         exit(0)
 
 
-    @staticmethod
-    def debug(path="testes/"):
+    @classmethod
+    def debug(cls, path="testes/"):
         path = path.replace("\\","/")
         if path[-1] != "/":
             path += "/"
