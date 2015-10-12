@@ -3,6 +3,7 @@
 
 from scoutcamp import *
 from template import *
+import sys
 import yaml
 
 class ScoutCamp:
@@ -28,13 +29,13 @@ class ScoutCamp:
             except IOError:
                 TemplateException("list.yaml for templates not found")
                 raw_input()
-                exit(1)
+                sys.exit(1)
 
             print teste.get_template_list()
             print teste.get_templates()
             print teste
 
-        exit(0)
+        sys.exit(0)
 
 
     @classmethod
@@ -71,7 +72,7 @@ if __name__ == '__main__':
     parser.add_argument("-d","--debug", help="run the debug mode")
     parser.add_argument("-c","--conf", help="use another config file")
     parser.add_argument("-s","--server", help="starts the Scout Camp server", action="store_true")
-    parser.add_argument("-m","--myth", help="myth", action="store_true")
+    parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-v","--version", help="show version", action="store_true")
     args = parser.parse_args()
 
