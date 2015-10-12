@@ -27,7 +27,7 @@ class ScoutCamp:
                 teste = Template(cls.configs.get_list_to("templates"),
                                  debug_path+cls.configs.get_path_to("templates"))
             except IOError:
-                TemplateException("list.yaml for templates not found")
+                TemplateException("list.yml for templates not found")
                 raw_input()
                 sys.exit(1)
 

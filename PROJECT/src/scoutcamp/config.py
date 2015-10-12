@@ -14,8 +14,8 @@ class Config:
         "languages": "_lang"
     }
     __lists = {
-        "templates": "list.yaml",
-        "scouts": "list.yaml"
+        "templates": "list.yml",
+        "scouts": "list.yml"
     }
     __server = {
         "host": "localhost",
@@ -23,9 +23,14 @@ class Config:
     }
     __facebook_mode = False
 
-    def __init__(self, config="conf.yaml"):
+    def __init__(self, config="conf.yml"):
 
-        config_file = open(config, "r")
+        try:
+            config_file = open(config, "r")
+        except IOError:
+            ConfigException("conf.yml for settings was not found")
+            raw_input()
+            sys.exit(1)
         config_dict = yaml.load(config_file.read())
 
         # Altera os padrões de host e porta a partir do arquivo de configuração

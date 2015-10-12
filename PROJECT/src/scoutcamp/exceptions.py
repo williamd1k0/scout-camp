@@ -2,4 +2,6 @@
 
 
 class ConfigException(Exception):
-    pass
+
+    def __init__(self, message="Configuration error"):
+        print "ConfigException: "+message
