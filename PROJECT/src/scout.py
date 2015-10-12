@@ -4,6 +4,7 @@
 from scoutcamp import *
 from template import *
 import sys
+import os
 import yaml
 
 class ScoutCamp:
@@ -12,16 +13,23 @@ class ScoutCamp:
 
 
     @classmethod
-    def main(cls, debug_path=None, confoverride=None, mode="default"):
+    def main(cls, debug_path=None, confoverride=None, mode="default", project_name=None):
         if not debug_path:
             debug_path = ""
+
         if confoverride:
             cls.configs = Config(confoverride)
+        elif mode == "init":
+            cls.configs = Config(init=True)
         else:
             cls.configs = Config()
 
         if mode == "server":
             cls.server()
+
+        elif mode == "init":
+            cls.init(project_name)
+
         else:
             try:
                 teste = Template(cls.configs.get_list_to("templates"),
@@ -63,6 +71,22 @@ class ScoutCamp:
         if(term == "version"):
             return cls.__version__
 
+    @classmethod
+    def init(cls, project_name):
+
+        if not os.path.isdir(project_name):
+            os.mkdir(project_name)
+            os.chdir(project_name)
+
+            for path in cls.configs.get_paths():
+                os.mkdir(cls.configs.get_paths()[path])
+
+            conf = open("conf.yml","w")
+            conf.write(yaml.dump(dict(server = cls.configs.get_server()), default_flow_style=False))
+            conf.close()
+
+        else:
+            print "The directory {} already exists!".format(project_name)
 
 if __name__ == '__main__':
 
@@ -70,6 +94,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-d","--debug", help="run the debug mode")
+    parser.add_argument("-i","--init", help="init new ScoutCamp project")
     parser.add_argument("-c","--conf", help="use another config file")
     parser.add_argument("-s","--server", help="starts the Scout Camp server", action="store_true")
     parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
@@ -90,6 +115,9 @@ if __name__ == '__main__':
 
     elif args.version:
         print ScoutCamp.get("version")
+
+    elif args.init:
+        print ScoutCamp.main(mode="init", project_name=args.init)
 
     else:
         ScoutCamp.main()

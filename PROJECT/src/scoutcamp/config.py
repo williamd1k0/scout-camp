@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
+import sys
 from exceptions import *
 
 class Config:
@@ -23,22 +24,25 @@ class Config:
     }
     __facebook_mode = False
 
-    def __init__(self, config="conf.yml"):
+    def __init__(self, config="conf.yml", init=False):
 
-        try:
-            config_file = open(config, "r")
-        except IOError:
-            ConfigException("conf.yml for settings was not found")
-            raw_input()
-            sys.exit(1)
-        config_dict = yaml.load(config_file.read())
+        if not init:
 
-        # Altera os padrões de host e porta a partir do arquivo de configuração
-        if "server" in config_dict:
-            if "host" in config_dict["server"]:
-                self.__server["host"] = config_dict["server"]["host"]
-            if "port" in config_dict["server"]:
-                self.__server["port"] = config_dict["server"]["port"]
+            try:
+                config_file = open(config, "r")
+            except IOError:
+                ConfigException("conf.yml for settings was not found")
+                raw_input()
+                sys.exit(1)
+            config_dict = yaml.load(config_file.read())
+
+            # Altera os padrões de host e porta a partir do arquivo de configuração
+            if "server" in config_dict:
+                if "host" in config_dict["server"]:
+                    self.__server["host"] = config_dict["server"]["host"]
+                if "port" in config_dict["server"]:
+                    self.__server["port"] = config_dict["server"]["port"]
+
 
     def __call__(self, cmd, args):
         pass
@@ -59,6 +63,9 @@ class Config:
 
     def get_lists(self):
         return self.__lists
+
+    def get_server(self):
+        return self.__server
 
     def list_paths(self):
         paths = ""
