@@ -23,9 +23,17 @@ class Config:
     }
     __facebook_mode = False
 
-    def __init__(self, config_file="conf.yaml"):
-        pass
+    def __init__(self, config="conf.yaml"):
 
+        config_file = open(config, "r")
+        config_dict = yaml.load(config_file.read())
+
+        # Altera os padrões de host e porta a partir do arquivo de configuração
+        if "server" in config_dict:
+            if "host" in config_dict["server"]:
+                self.__server["host"] = config_dict["server"]["host"]
+            if "port" in config_dict["server"]:
+                self.__server["port"] = config_dict["server"]["port"]
 
     def __call__(self, cmd, args):
         pass
