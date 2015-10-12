@@ -50,7 +50,7 @@ class ScoutCamp:
     def server(cls):
         camp = Server(cls.configs.get_server_host(),
                       cls.configs.get_server_port())
-        camp.infinite()
+        camp.start_server()
 
 
     @staticmethod

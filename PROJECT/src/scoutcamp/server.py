@@ -18,7 +18,7 @@ class Server:
         self.httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
 
 
-    def infinite(self, auto_exec=True):
+    def start_server(self, auto_exec=True):
 
         if auto_exec:
             self.open_chrome()
@@ -48,4 +48,4 @@ class Server:
 if __name__ == '__main__':
 
     camp = Server()
-    camp.infinite()
+    camp.start_server()
