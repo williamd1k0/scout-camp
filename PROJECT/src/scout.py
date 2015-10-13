@@ -9,7 +9,7 @@ import yaml
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.0.1"
+    __version__ = "Scout Camp 0.0.2"
 
 
     @classmethod
