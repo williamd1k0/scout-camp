@@ -2,7 +2,6 @@
 # -*- encoding: utf-8 -*-
 
 from scoutcamp import *
-from template import *
 import sys
 import os
 import yaml
@@ -58,6 +57,7 @@ class ScoutCamp:
     def server(cls):
         camp = Server(cls.configs.get_server_host(),
                       cls.configs.get_server_port())
+        os.chdir(cls.configs.get_server_index())
         camp.start_server()
 
 

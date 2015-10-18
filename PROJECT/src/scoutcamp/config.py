@@ -20,7 +20,8 @@ class Config:
     }
     __server = {
         "host": "localhost",
-        "port": 80
+        "port": 80,
+        "index": "scout_board"
     }
     __facebook_mode = False
 
@@ -42,6 +43,8 @@ class Config:
                     self.__server["host"] = config_dict["server"]["host"]
                 if "port" in config_dict["server"]:
                     self.__server["port"] = config_dict["server"]["port"]
+                if "index" in config_dict["server"]:
+                    self.__server["index"] = config_dict["server"]["index"]
 
 
     def __call__(self, cmd, args):
@@ -78,6 +81,9 @@ class Config:
 
     def get_server_port(self):
         return self.__server["port"]
+
+    def get_server_index(self):
+        return self.__server["index"]
 
 
 if __name__ == '__main__':
