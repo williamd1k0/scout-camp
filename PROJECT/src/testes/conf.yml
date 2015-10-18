@@ -1,3 +1,4 @@
 server:
   host: localhost
   port: 80
+  index: scout_board
