@@ -42,10 +42,10 @@ temp.close()
 
 # Criando instância do PyStache e inserindo as strings no template.
 tempMaker = pystache.Renderer()
-htmlBase = tempMaker.render(temp_base,lang_dict)
+htmlBase = tempMaker.render(temp_base.decode('utf8'),lang_dict)
 
 # Escrevendo o template pronto em um arquivo HTML.
-teste = open(path+"teste.html","w")
+teste = open(path+"scout_board/index.html","w")
 teste.write(htmlBase.encode('utf8'))
 teste.close()
 
