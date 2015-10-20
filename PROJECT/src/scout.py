@@ -94,8 +94,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-d","--debug", help="run the debug mode")
-    parser.add_argument("-i","--init", help="init new ScoutCamp project")
-    parser.add_argument("-c","--conf", help="use another config file")
+    parser.add_argument("-c","--create", help="init new ScoutCamp project")
+    parser.add_argument("-t","--test", help="build using another config file")
     parser.add_argument("-s","--server", help="starts the Scout Camp server", action="store_true")
     parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-v","--version", help="show version", action="store_true")
@@ -107,17 +107,20 @@ if __name__ == '__main__':
     elif args.debug:
         ScoutCamp.debug(args.debug)
 
-    elif args.conf:
-        ScoutCamp.main(confoverride=args.conf)
+    elif args.test and not args.server:
+        ScoutCamp.main(confoverride=args.test)
 
-    elif args.server:
+    elif args.test and args.server:
+        ScoutCamp.main(confoverride=args.test, mode="server")
+
+    elif args.server and not args.test:
         ScoutCamp.main(mode="server")
 
     elif args.version:
         print ScoutCamp.get("version")
 
-    elif args.init:
-        print ScoutCamp.main(mode="init", project_name=args.init)
+    elif args.create:
+        print ScoutCamp.main(mode="init", project_name=args.create)
 
     else:
         ScoutCamp.main()
