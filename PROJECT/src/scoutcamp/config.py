@@ -12,7 +12,8 @@ class Config:
         "scouts": "_scouts",
         "styles": "_styles",
         "scripts": "_js",
-        "languages": "_lang"
+        "languages": "_lang",
+        "index": "scout_board"
     }
     __lists = {
         "templates": "list.yml",

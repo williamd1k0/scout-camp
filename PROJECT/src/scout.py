@@ -82,7 +82,7 @@ class ScoutCamp:
                 os.mkdir(cls.configs.get_paths()[path])
 
             conf = open("conf.yml","w")
-            conf.write(yaml.dump(dict(server = cls.configs.get_server()), default_flow_style=False))
+            conf.write( yaml.dump( dict(server = cls.configs.get_server()) ) )
             conf.close()
 
         else:
