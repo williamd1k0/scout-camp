@@ -12,12 +12,12 @@ class ScoutCamp:
 
 
     @classmethod
-    def main(cls, debug_path=None, confoverride=None, mode="default", project_name=None):
-        if not debug_path:
-            debug_path = ""
+    def main(cls, main_path=None, conf_override=None, mode="default", project_name=None):
+        if not main_path:
+            main_path = ""
 
-        if confoverride:
-            cls.configs = Config(confoverride)
+        if conf_override:
+            cls.configs = Config(conf_override)
         elif mode == "init":
             cls.configs = Config(init=True)
         else:
@@ -31,8 +31,8 @@ class ScoutCamp:
 
         else:
             try:
-                teste = Template(cls.configs.get_list_to("templates"),
-                                 debug_path+cls.configs.get_path_to("templates"))
+                teste = Template(cls.configs.get_list_to("templates"), main_path+cls.configs.get_path_to("templates"))
+
             except IOError:
                 TemplateException("list.yml for templates not found")
                 raw_input()
@@ -46,11 +46,12 @@ class ScoutCamp:
 
 
     @classmethod
-    def debug(cls, path="testes/"):
+    def use_alternative_path(cls, path=None):
         path = path.replace("\\","/")
         if path[-1] != "/":
             path += "/"
-        cls.main(debug_path=path)
+        os.chdir(path)
+        cls.main()
 
 
     @classmethod
@@ -67,9 +68,8 @@ class ScoutCamp:
 
 
     @classmethod
-    def get(cls, term):
-        if(term == "version"):
-            return cls.__version__
+    def get_version(cls):
+        return cls.__version__
 
     @classmethod
     def init(cls, project_name):
@@ -93,10 +93,10 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
-    parser.add_argument("-d","--debug", help="run the debug mode")
-    parser.add_argument("-c","--create", help="init new ScoutCamp project")
-    parser.add_argument("-t","--test", help="build using another config file")
-    parser.add_argument("-s","--server", help="starts the Scout Camp server", action="store_true")
+    parser.add_argument("-p","--path", help="compile using alternative path")
+    parser.add_argument("-c","--create", help="create new ScoutCamp project")
+    parser.add_argument("-t","--test", help="compile using another config file")
+    parser.add_argument("-s","--server", help="start the Scout Camp server", action="store_true")
     parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-v","--version", help="show version", action="store_true")
     args = parser.parse_args()
@@ -104,20 +104,20 @@ if __name__ == '__main__':
     if args.myth:
         ScoutCamp.myth()
 
-    elif args.debug:
-        ScoutCamp.debug(args.debug)
+    elif args.path:
+        ScoutCamp.use_alternative_path(args.path)
 
     elif args.test and not args.server:
-        ScoutCamp.main(confoverride=args.test)
+        ScoutCamp.main(conf_override=args.test)
 
     elif args.test and args.server:
-        ScoutCamp.main(confoverride=args.test, mode="server")
+        ScoutCamp.main(conf_override=args.test, mode="server")
 
     elif args.server and not args.test:
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        print ScoutCamp.get("version")
+        print ScoutCamp.get_version()
 
     elif args.create:
         print ScoutCamp.main(mode="init", project_name=args.create)
