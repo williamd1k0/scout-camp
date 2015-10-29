@@ -134,7 +134,11 @@ class Template:
               - self.__templates (string): templates em uma única string
         """
         # Junta todas as posições da list em uma string
-        return "".join(self.get_templates())
+        return str("".join(self.get_templates()))
+
+    def __call__(self, term):
+        if term == "string":
+            return str(self)
 
 
 if __name__ == '__main__':
