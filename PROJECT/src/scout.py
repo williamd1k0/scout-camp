@@ -2,6 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 from scoutcamp import *
+import platform
 import sys
 import os
 import yaml
@@ -10,14 +11,16 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.1.0"
+    __version__ = "Scout Camp 0.1.1"
 
 
     @classmethod
-    def main(cls, main_path=None, conf_override=None, mode="default", project_name=None):
-        if not main_path:
-            main_path = ""
+    def main(cls, conf_override=None, mode="default", project_name=None):
 
+        cls.progress(1)
+
+        # Checagem para obter as configurações
+        cls.progress(2)
         if conf_override:
             cls.configs = Config(conf_override)
         elif mode == "init":
@@ -25,33 +28,45 @@ class ScoutCamp:
         else:
             cls.configs = Config()
 
+        # Iniciar servidor
         if mode == "server":
             cls.server()
 
+        # Criar novo projeto
         elif mode == "init":
             cls.init(project_name)
 
         else:
-            try:
-                cls.main_template = Template(cls.configs.get_list_to("templates"), main_path+cls.configs.get_path_to("templates"))
+            # Compilar projeto
+            cls.compile()
 
-            except IOError:
-                TemplateException("list.yml for templates not found")
-                raw_input()
-                sys.exit(1)
 
-            print cls.main_template.get_template_list()
-            print cls.main_template.get_templates()
-            print cls.main_template
-
-            temp_maker = pystache.Renderer()
-            htmlBase = temp_maker.render(cls.main_template("string").decode('utf8'), dict(camp = cls.configs.get_camp()))
-
-            teste = open(main_path + cls.configs.get_path_to("index") + "index.html","w")
-            teste.write(htmlBase.encode('utf8'))
-            teste.close()
-
+        cls.progress()
         sys.exit(0)
+
+
+    @classmethod
+    def compile(cls):
+        try:
+            cls.progress(3)
+            cls.main_template = Template(cls.configs.get_list_to("templates"), cls.configs.get_path_to("templates"))
+
+        except IOError:
+            TemplateException("list.yml for templates not found")
+            raw_input()
+            sys.exit(1)
+
+        #print cls.main_template.get_template_list()
+        #print cls.main_template.get_templates()
+        #print cls.main_template
+
+        cls.progress(4)
+        temp_maker = pystache.Renderer()
+        htmlBase = temp_maker.render(cls.main_template("string").decode('utf8'), dict(camp = cls.configs.get_camp()))
+
+        teste = open(cls.configs.get_path_to("index") + "index.html","w")
+        teste.write(htmlBase.encode('utf8'))
+        teste.close()
 
 
     @classmethod
@@ -79,6 +94,32 @@ class ScoutCamp:
     @classmethod
     def get_version(cls):
         return cls.__version__
+
+    @staticmethod
+    def progress(prog=None):
+        messages = [
+            "Compilação finalizada!",
+            "Inicializando...",
+            "Checando configurações...",
+            "Checando templates...",
+            "Compilando páginas..."
+        ]
+        if platform.system().lower() == "windows":
+            for i in range(len(messages)):
+                messages[i] = messages[i].decode("utf8")
+
+        if prog:
+            if prog == 1:
+                print messages[prog]
+            if prog == 2:
+                print messages[prog]
+            if prog == 3:
+                print messages[prog]
+            if prog == 4:
+                print messages[prog]
+
+        else:
+            print messages[0]
 
     @classmethod
     def init(cls, project_name):
