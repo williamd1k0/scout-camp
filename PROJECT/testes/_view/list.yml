@@ -1,4 +1,5 @@
 templates: [
   header,
-  template
+  template,
+  footer
 ]

@@ -1,41 +1,73 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <title>{{ camp.name }}</title>
-
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-</head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">{{ camp.name }}</a>
+        </div>
 
-    <div style="text-align:center ;font-family:Mythosmeister; font-size:35px; color:white;">
-    <img src=""> <br> {{ camp.name }} </div>
-    <div id="titl" class="tit"></div>
-    <div id="hidden"><b>Sort</b></div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Mitos <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">{{ camp.badges }}</a></li>
+            <li class="dropdown">
 
-    <div id="hidden2"><b>{{ camp.badges }}</b></div>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Sort <span class="caret"></span>
+              </a>
 
-    <div id="tabelas"></div><br>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
 
-    </div>
-
-<!--
-        <script type="text/javascript" src="tinysort.js"></script>
-        <script type="text/javascript" src="gayQuery.js"></script>
-        <script type="text/javascript" src="mythdata.js"></script>
-        <script type="text/javascript" src="mythmitos.js"></script>
-        <script type="text/javascript" src="mythcore.js"></script>
--->
+            </li>
+          </ul>
 
 
-    <div id="buttalfa" class="button">Léxico</div>
-    <div id="buttbadge" class="button">Badges</div>
-    <div id="butttier" class="button">Tier</div>
-    <div id="buttrandom" class="button">Random</div>
-    <div id="buttano" class="button">Ano</div>
-    <div id="xis">X</div>
-    </body>
-</html>
-<!-- **************************************************************************************************** -->
+          <!-- Myth API - Use method GET -->
+
+          <!-- <datalist id="myths">
+              <option value="tumeo">William Tuméo</option>
+              <option value="flicky">Lucas Flicky</option>
+          </datalist>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input list="myths" name="myth" type="myth" class="form-control" placeholder="Buscar mito">
+            </div>
+            <button type="submit" class="btn btn-default">Buscar</button>
+          </form> -->
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  Selecionar Mito <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu drop-overflow">
+                <!-- Myth API - Use method GET | search -->
+                <li><a href="/?scout=lorem">{-{ scout.lorem }}</a></li>
+                <li><a href="/?scout=ipsum">{-{ scout.ipsum }}</a></li>
+                <li><a href="/?scout=dolor">{-{ scout.dolor }}</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/?scout=sit">{-{ scout.sit }}</a></li>
+              </ul>
+            </li>
+          </ul>
+
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
