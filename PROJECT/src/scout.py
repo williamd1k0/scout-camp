@@ -5,10 +5,12 @@ from scoutcamp import *
 import sys
 import os
 import yaml
+import pystache
+
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.0.2"
+    __version__ = "Scout Camp 0.1.0"
 
 
     @classmethod
@@ -31,16 +33,23 @@ class ScoutCamp:
 
         else:
             try:
-                teste = Template(cls.configs.get_list_to("templates"), main_path+cls.configs.get_path_to("templates"))
+                cls.main_template = Template(cls.configs.get_list_to("templates"), main_path+cls.configs.get_path_to("templates"))
 
             except IOError:
                 TemplateException("list.yml for templates not found")
                 raw_input()
                 sys.exit(1)
 
-            print teste.get_template_list()
-            print teste.get_templates()
-            print teste
+            print cls.main_template.get_template_list()
+            print cls.main_template.get_templates()
+            print cls.main_template
+
+            temp_maker = pystache.Renderer()
+            htmlBase = temp_maker.render(cls.main_template("string").decode('utf8'), dict(camp = cls.configs.get_camp()))
+
+            teste = open(main_path + cls.configs.get_path_to("index") + "index.html","w")
+            teste.write(htmlBase.encode('utf8'))
+            teste.close()
 
         sys.exit(0)
 
