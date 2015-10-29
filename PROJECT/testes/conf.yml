@@ -1,4 +1,8 @@
+camp:
+    name:   Os Mitadores
+    badges: Medalhas
+
 server:
-  host: localhost
-  port: 80
-  index: scout_board
+  host:     localhost
+  port:     80
+  index:    scout_board

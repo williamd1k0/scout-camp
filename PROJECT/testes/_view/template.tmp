@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Scout Camp</title>
+    <title>{{ camp.name }}</title>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
@@ -11,11 +11,11 @@
 <body>
 
     <div style="text-align:center ;font-family:Mythosmeister; font-size:35px; color:white;">
-    <img src=""> <br> Scout Camp </div>
+    <img src=""> <br> {{ camp.name }} </div>
     <div id="titl" class="tit"></div>
     <div id="hidden"><b>Sort</b></div>
 
-    <div id="hidden2"><b>Badges</b></div>
+    <div id="hidden2"><b>{{ camp.badges }}</b></div>
 
     <div id="tabelas"></div><br>
 
@@ -35,7 +35,6 @@
     <div id="butttier" class="button">Tier</div>
     <div id="buttrandom" class="button">Random</div>
     <div id="buttano" class="button">Ano</div>
-    <div id="buttgay" class="button">Gay</div>
     <div id="xis">X</div>
     </body>
 </html>
