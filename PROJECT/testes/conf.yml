@@ -1,6 +1,6 @@
 camp:
-    name:   Os Mitadores
-    badges: Medalhas
+    name:   Scout Camp
+    badges: Badges
 
 server:
   host:     localhost
