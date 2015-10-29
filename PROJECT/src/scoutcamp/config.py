@@ -24,6 +24,10 @@ class Config:
         "port": 80,
         "index": "scout_board"
     }
+    __camp = {
+        "name": "Scout Camp",
+        "badges": "Badges"
+    }
     __facebook_mode = False
 
     def __init__(self, config="conf.yml", init=False):
@@ -46,6 +50,12 @@ class Config:
                     self.__server["port"] = config_dict["server"]["port"]
                 if "index" in config_dict["server"]:
                     self.__server["index"] = config_dict["server"]["index"]
+
+            if "camp" in config_dict:
+                if "name" in config_dict["camp"]:
+                    self.__camp["name"] = config_dict["camp"]["name"]
+                if "badges" in config_dict["camp"]:
+                    self.__camp["badges"] = config_dict["camp"]["badges"]
 
 
     def __call__(self, cmd, args):
@@ -85,6 +95,15 @@ class Config:
 
     def get_server_index(self):
         return self.__server["index"]
+
+    def get_camp_name(self):
+        return self.__camp["name"]
+
+    def get_camp_badges(self):
+        return self.__camp["badges"]
+
+    def get_camp(self):
+        return self.__camp
 
 
 if __name__ == '__main__':
