@@ -11,7 +11,7 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.1.1"
+    __version__ = "Scout Camp 0.1.2"
 
 
     @classmethod
@@ -62,7 +62,13 @@ class ScoutCamp:
 
         cls.progress(4)
         temp_maker = pystache.Renderer()
-        htmlBase = temp_maker.render(cls.main_template("string").decode('utf8'), dict(camp = cls.configs.get_camp()))
+        htmlBase = temp_maker.render(
+            cls.main_template("string").decode('utf8'),
+            dict(
+                camp = cls.configs.get_camp(),
+                nav_buttons = cls.configs.get_nav_buttons()
+            )
+        )
 
         teste = open(cls.configs.get_path_to("index") + "index.html","w")
         teste.write(htmlBase.encode('utf8'))
@@ -82,7 +88,7 @@ class ScoutCamp:
     def server(cls):
         camp = Server(cls.configs.get_server_host(),
                       cls.configs.get_server_port())
-        os.chdir(cls.configs.get_server_index())
+        os.chdir(cls.configs.get_path_to("index"))
         camp.start_server()
 
 
