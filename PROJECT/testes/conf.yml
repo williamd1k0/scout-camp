@@ -1,8 +1,13 @@
 camp:
     name:   Scout Camp
+    index:  scout_board
+
+nav_buttons:
     badges: Badges
+    scouts: Membros
+    sort:   Ordenar
+    select: Selecionar Membro
 
 server:
-  host:     localhost
-  port:     80
-  index:    scout_board
+    host:   localhost
+    port:   80

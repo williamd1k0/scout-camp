@@ -21,12 +21,16 @@ class Config:
     }
     __server = {
         "host": "localhost",
-        "port": 80,
-        "index": "scout_board"
+        "port": 80
     }
     __camp = {
-        "name": "Scout Camp",
-        "badges": "Badges"
+        "name": "Scout Camp"
+    }
+    __nav_buttons = {
+        "badges": "Medalhas",
+        "scouts": "Membros",
+        "sort": "Ordenar",
+        "select": "Selecionar Membro"
     }
     __facebook_mode = False
 
@@ -48,14 +52,20 @@ class Config:
                     self.__server["host"] = config_dict["server"]["host"]
                 if "port" in config_dict["server"]:
                     self.__server["port"] = config_dict["server"]["port"]
-                if "index" in config_dict["server"]:
-                    self.__server["index"] = config_dict["server"]["index"]
+
 
             if "camp" in config_dict:
                 if "name" in config_dict["camp"]:
                     self.__camp["name"] = config_dict["camp"]["name"]
-                if "badges" in config_dict["camp"]:
-                    self.__camp["badges"] = config_dict["camp"]["badges"]
+                if "index" in config_dict["camp"]:
+                    self.__paths["index"] = config_dict["camp"]["index"]
+
+
+
+            if "nav_buttons" in config_dict:
+                for i in self.__nav_buttons:
+                    if self.__nav_buttons[i] in config_dict["nav_buttons"]:
+                        self.__nav_buttons[i] = config_dict["nav_buttons"][i]
 
 
     def __call__(self, cmd, args):
@@ -99,11 +109,11 @@ class Config:
     def get_camp_name(self):
         return self.__camp["name"]
 
-    def get_camp_badges(self):
-        return self.__camp["badges"]
-
     def get_camp(self):
         return self.__camp
+
+    def get_nav_buttons(self):
+        return self.__nav_buttons
 
 
 if __name__ == '__main__':
