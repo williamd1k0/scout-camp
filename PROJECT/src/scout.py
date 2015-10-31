@@ -11,7 +11,7 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.1.2"
+    __version__ = "Scout Camp 0.1.3"
 
 
     @classmethod
@@ -56,17 +56,26 @@ class ScoutCamp:
             raw_input()
             sys.exit(1)
 
+        try:
+            cls.progress(4)
+            cls.main_language = Lang(cls.configs.get_path_to("languages"), cls.configs.get_current_language())
+
+        except IOError:
+            TemplateException("list.yml for templates not found")
+            raw_input()
+            sys.exit(1)
+
         #print cls.main_template.get_template_list()
         #print cls.main_template.get_templates()
         #print cls.main_template
 
-        cls.progress(4)
+        cls.progress(5)
         temp_maker = pystache.Renderer()
         htmlBase = temp_maker.render(
             cls.main_template("string").decode('utf8'),
             dict(
                 camp = cls.configs.get_camp(),
-                nav_buttons = cls.configs.get_nav_buttons()
+                nav_buttons = cls.main_language.get_nav_buttons()
             )
         )
 
@@ -104,11 +113,12 @@ class ScoutCamp:
     @staticmethod
     def progress(prog=None):
         messages = [
-            "Compilação finalizada!",
-            "Inicializando...",
-            "Checando configurações...",
-            "Checando templates...",
-            "Compilando páginas..."
+            " Compilação finalizada!",
+            " Inicializando...",
+            " Checando configurações...",
+            " Checando templates...",
+            " Checando localização",
+            " Compilando páginas..."
         ]
         if platform.system().lower() == "windows":
             for i in range(len(messages)):
@@ -122,6 +132,8 @@ class ScoutCamp:
             if prog == 3:
                 print messages[prog]
             if prog == 4:
+                print messages[prog]
+            if prog == 5:
                 print messages[prog]
 
         else:
