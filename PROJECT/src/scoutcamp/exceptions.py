@@ -8,5 +8,12 @@ class ConfigException(Exception):
 
 
 class TemplateException(Exception):
+
     def __init__(self, message="Template error"):
         print "TemplateException: "+message
+
+
+class LanguageException(Exception):
+
+    def __init__(self, message="Language error"):
+        print "LanguageException: "+message

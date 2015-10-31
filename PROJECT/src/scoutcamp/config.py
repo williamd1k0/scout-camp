@@ -26,12 +26,9 @@ class Config:
     __camp = {
         "name": "Scout Camp"
     }
-    __nav_buttons = {
-        "badges": "Medalhas",
-        "scouts": "Membros",
-        "sort": "Ordenar",
-        "select": "Selecionar Membro"
-    }
+
+    __current_language = "pt_br"
+
     __facebook_mode = False
 
     def __init__(self, config="conf.yml", init=False):
@@ -45,6 +42,7 @@ class Config:
                 raw_input()
                 sys.exit(1)
             config_dict = yaml.load(config_file.read())
+            config_file.close()
 
             # Altera os padrões de host e porta a partir do arquivo de configuração
             if "server" in config_dict:
@@ -61,11 +59,8 @@ class Config:
                     self.__paths["index"] = config_dict["camp"]["index"]
 
 
-
-            if "nav_buttons" in config_dict:
-                for i in self.__nav_buttons:
-                    if self.__nav_buttons[i] in config_dict["nav_buttons"]:
-                        self.__nav_buttons[i] = config_dict["nav_buttons"][i]
+            if "current_language" in config_dict:
+                self.__current_language = config_dict["current_language"]
 
 
     def __call__(self, cmd, args):
@@ -114,6 +109,9 @@ class Config:
 
     def get_nav_buttons(self):
         return self.__nav_buttons
+
+    def get_current_language(self):
+        return self.__current_language
 
 
 if __name__ == '__main__':
