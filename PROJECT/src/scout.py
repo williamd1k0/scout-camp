@@ -39,9 +39,9 @@ class ScoutCamp:
         else:
             # Compilar projeto
             cls.compile()
+            cls.progress()
 
 
-        cls.progress()
         sys.exit(0)
 
 
@@ -71,7 +71,7 @@ class ScoutCamp:
 
         cls.progress(5)
         temp_maker = pystache.Renderer()
-        htmlBase = temp_maker.render(
+        rendered_html = temp_maker.render(
             cls.main_template("string").decode('utf8'),
             dict(
                 camp = cls.configs.get_camp(),
@@ -79,9 +79,9 @@ class ScoutCamp:
             )
         )
 
-        teste = open(cls.configs.get_path_to("index") + "index.html","w")
-        teste.write(htmlBase.encode('utf8'))
-        teste.close()
+        html_output = open(cls.configs.get_path_to("index") + "index.html","w")
+        html_output.write(rendered_html.encode('utf8'))
+        html_output.close()
 
 
     @classmethod
