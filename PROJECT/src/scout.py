@@ -11,7 +11,7 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.1.3"
+    __version__ = "Scout Camp 0.1.4"
 
 
     @classmethod
@@ -90,7 +90,7 @@ class ScoutCamp:
         if path[-1] != "/":
             path += "/"
         os.chdir(path)
-        cls.main()
+        #cls.main()
 
 
     @classmethod
@@ -161,6 +161,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
+    parser.add_argument("-r","--render", help="compile project using default config file", action="store_true")
     parser.add_argument("-p","--path", help="compile using alternative path")
     parser.add_argument("-c","--create", help="create new ScoutCamp project")
     parser.add_argument("-t","--test", help="compile using another config file")
@@ -174,6 +175,14 @@ if __name__ == '__main__':
 
     elif args.path:
         ScoutCamp.use_alternative_path(args.path)
+        if args.render and not args.server:
+            ScoutCamp.main()
+            raw_input()
+        elif args.server:
+            ScoutCamp.main(mode="server")
+        else:
+            print "Use o comando path com render ou server!"
+            raw_input()
 
     elif args.test and not args.server:
         ScoutCamp.main(conf_override=args.test)
@@ -190,6 +199,9 @@ if __name__ == '__main__':
     elif args.create:
         print ScoutCamp.main(mode="init", project_name=args.create)
 
-    else:
+    elif args.render:
         ScoutCamp.main()
         raw_input()
+
+    else:
+        parser.print_help()
