@@ -26,9 +26,9 @@ class Lang:
         lang_file.close()
 
         if "nav_buttons" in lang_dict:
-            for i in self.__nav_buttons:
-                if self.__nav_buttons[i] in lang_dict["nav_buttons"]:
-                    self.__nav_buttons[i] = lang_dict["nav_buttons"][i]
+            for key_name in self.__nav_buttons.keys():
+                if key_name in lang_dict["nav_buttons"]:
+                    self.__nav_buttons[key_name] = lang_dict["nav_buttons"][key_name]
 
 
     def get_nav_buttons(self):

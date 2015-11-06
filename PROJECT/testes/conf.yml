@@ -6,4 +6,4 @@ server:
     host:   localhost
     port:   80
 
-current_language: pt_br
+current_language: en_us
