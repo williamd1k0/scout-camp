@@ -1,0 +1,55 @@
+`
+<link rel="stylesheet" href="../scout_board/style.css" charset="utf-8">
+<table border="1" class="tg" style="margin-bottom: 10px; fixed; width: 100%">
+    <colgroup>
+        <col style="width: 50px">
+        <col style="width: 150px">
+    </colgroup>
+    <tr>
+        <!-- CREST ICON -->
+        <th class="crest">
+            <img class="crestpic" title="${crest[0]}" src="{PATH + crest[1]}.png">
+        </th>
+        <!-- NAME -->
+        <th align="left" class="name" colspan="3"> ${mito.name} </th>
+        <!-- Espacinho -->
+        <!-- TIER -->
+        <th align="left" class="tiername">
+            <span class="tierlevel"> ${mito.tier[2]} </span>{{ table.tier }}:
+            <strong> ${mito.tier[0]}</strong>
+        </th>
+        <th align="right" class="tiericon">
+            <div>
+                <img class="tier" title="${mito.tier[1][0]}" src="${PATH + mito.tier[1][1]}.png">
+        </th>
+    </tr>
+    <tr>
+        <!-- PROFILE PIC -->
+        <td align="center" class="profilepic" colspan="2" rowspan="5">
+            <a target="_blank" href="https://www.facebook.com/${mito.faceId}">
+                <img class="profile" src="http://graph.facebook.com/${mito.faceId}/picture?width=151&height=151">
+            </a>
+        </td>
+        <tr>
+            <td HEIGHT="1px" colspan="2"></td>
+        </tr>
+        <td class="tg-e3zv">
+            {{table.badges}}
+        </td>
+        <td class="tg-031e"></td>
+        <td class="since" align="right" colspan="3"> {{ table.since }}
+            <strong class="mythano"> ${mito.ano} </strong>
+        </td>
+    </tr>
+    <tr>
+        <!-- BADGES -->
+        <td class="badges" id="${mito.tagId}" colspan="4">
+        </td>
+    </tr>
+    <tr>
+        <td class="badges">
+            <td class="badges">
+                <td colspan="2" align="right" class="badges2"> <i>{{ table.collection }}</i> <b id="${mito.tagId1}"></b> </td>
+    </tr>
+</table>
+`

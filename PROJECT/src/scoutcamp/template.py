@@ -16,10 +16,10 @@ class Template:
     __template_list = []
     __templates = []
     __path = ""
-    __temp_extension = ".tmp"
+    __temp_extension = ".html"
 
 
-    def __init__(self, list_file, path="", extension=".tmp"):
+    def __init__(self, list_file, path="", extension=".html"):
         """Método construtor da Classe
             - Durante o instanciamento, os arquivos de lista e templates
             - são lidos e armazenados nos atributos específicos.
