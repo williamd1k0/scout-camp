@@ -17,7 +17,8 @@ class Config:
     }
     __lists = {
         "templates": "list.yml",
-        "scouts": "list.yml"
+        "scouts": "list.yml",
+        "table": "list.yml"
     }
     __server = {
         "host": "localhost",

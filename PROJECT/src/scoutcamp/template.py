@@ -19,7 +19,7 @@ class Template:
     __temp_extension = ".html"
 
 
-    def __init__(self, list_file, path="", extension=".html"):
+    def __init__(self, path="", list_file=None, extension=".html"):
         """Método construtor da Classe
             - Durante o instanciamento, os arquivos de lista e templates
             - são lidos e armazenados nos atributos específicos.

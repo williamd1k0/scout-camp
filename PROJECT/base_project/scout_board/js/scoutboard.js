@@ -1,5 +1,4 @@
 var scoutboard = document.querySelector('#scout-board');
-
 scoutboard.innerHTML = `
 <table class="tg table table-striped table-bordered" style="margin-bottom: 10px; fixed; width: 100%">
     <colgroup>
@@ -55,4 +54,5 @@ scoutboard.innerHTML = `
         </tr>
     </tbody>
 </table>
-`;
+`
+;

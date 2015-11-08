@@ -11,7 +11,10 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.1.4"
+    __version__ = "Scout Camp 0.2.0"
+    configs = Config()
+    main_template = None
+    main_language = None
 
 
     @classmethod
@@ -25,8 +28,6 @@ class ScoutCamp:
             cls.configs = Config(conf_override)
         elif mode == "init":
             cls.configs = Config(init=True)
-        else:
-            cls.configs = Config()
 
         # Iniciar servidor
         if mode == "server":
@@ -47,21 +48,43 @@ class ScoutCamp:
 
     @classmethod
     def compile(cls):
+        cls.progress(3)
+
         try:
-            cls.progress(3)
-            cls.main_template = Template(cls.configs.get_list_to("templates"), cls.configs.get_path_to("templates"))
+            # Templates base
+            cls.main_template = Template(
+                cls.configs.get_path_to("templates"),
+                cls.configs.get_list_to("templates")
+            )
 
         except IOError:
             TemplateException("list.yml for templates not found")
             raw_input()
             sys.exit(1)
 
+        cls.progress(4)
+
         try:
-            cls.progress(4)
-            cls.main_language = Lang(cls.configs.get_path_to("languages"), cls.configs.get_current_language())
+            # Strings para localização
+            cls.main_language = Lang(
+                cls.configs.get_path_to("languages"),
+                cls.configs.get_current_language()
+            )
 
         except IOError:
-            TemplateException("list.yml for templates not found")
+            TemplateException("list.yml for locale not found")
+            raw_input()
+            sys.exit(1)
+
+        try:
+            # Template para a tabela de cada integrante
+            cls.main_scoutboard = Template(
+                cls.configs.get_path_to("table"),
+                cls.configs.get_list_to("table")
+            )
+
+        except IOError:
+            TemplateException("list.yml for scoutboard not found")
             raw_input()
             sys.exit(1)
 
@@ -82,6 +105,10 @@ class ScoutCamp:
         html_output = open(cls.configs.get_path_to("index") + "index.html","w")
         html_output.write(rendered_html.encode('utf8'))
         html_output.close()
+
+        js_output = open(cls.configs.get_path_to("index")+"/js/"+"scoutboard.js","w")
+        js_output.write("var scoutboard = document.querySelector('#scout-board');\nscoutboard.innerHTML = "+cls.main_scoutboard("string").encode('utf8')+";")
+        js_output.close()
 
 
     @classmethod
@@ -149,6 +176,7 @@ class ScoutCamp:
 
         else:
             print "The directory {} already exists!".format(project_name)
+
 
 if __name__ == '__main__':
 
