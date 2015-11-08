@@ -143,15 +143,9 @@ class ScoutCamp:
     def init(cls, project_name):
 
         if not os.path.isdir(project_name):
-            os.mkdir(project_name)
-            os.chdir(project_name)
-
-            for path in cls.configs.get_paths():
-                os.mkdir(cls.configs.get_paths()[path])
-
-            conf = open("conf.yml","w")
-            conf.write( yaml.dump( dict(server = cls.configs.get_server()) ) )
-            conf.close()
+            from zipfile import ZipFile
+            with ZipFile(os.path.dirname(sys.argv[0])+'/base_project.zip', "r") as init_zip:
+                init_zip.extractall(project_name)
 
         else:
             print "The directory {} already exists!".format(project_name)
