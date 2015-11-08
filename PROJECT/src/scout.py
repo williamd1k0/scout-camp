@@ -11,8 +11,8 @@ import pystache
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.2.0"
-    configs = Config()
+    __version__ = "Scout Camp 0.2.1"
+    configs = None
     main_template = None
     main_language = None
 
@@ -28,6 +28,8 @@ class ScoutCamp:
             cls.configs = Config(conf_override)
         elif mode == "init":
             cls.configs = Config(init=True)
+        else:
+            cls.configs = Config()
 
         # Iniciar servidor
         if mode == "server":
