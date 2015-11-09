@@ -10,5 +10,3 @@
 |     `-t`     |    `--test`    |`ALTERNATIVE-CONF`<br> Arquivo de configurações alternativo|Modificador do arquivo de configurações padrão|
 |     `-s`     |   `--server`   |` ー `|Inicia o servidor e o navegador na pasta gerada|
 |     `-v`     |   `--version`  |` ー `|Exibe a versão do Scout Camp|
-
-<div align="center">yhyhyy</div>
