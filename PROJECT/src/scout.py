@@ -39,6 +39,9 @@ class ScoutCamp:
         elif mode == "init":
             cls.init(project_name)
 
+        elif mode == "database":
+            cls.generate_sql()
+
         else:
             # Compilar projeto
             cls.compile()
@@ -111,6 +114,13 @@ class ScoutCamp:
         js_output = open(cls.configs.get_path_to("index")+"/js/"+"scoutboard.js","w")
         js_output.write("var scoutboard = document.querySelector('#scout-board');\nscoutboard.innerHTML = "+cls.main_scoutboard("string").encode('utf8')+";")
         js_output.close()
+
+
+    @classmethod
+    def generate_sql(cls):
+        teste_scout = DataBase(cls.configs.get_path_to("scouts"),'william')
+        print teste_scout.get_attributes()
+        print teste_scout.get_id()
 
 
     @classmethod
@@ -190,6 +200,7 @@ if __name__ == '__main__':
     parser.add_argument("-c","--create", help="create new ScoutCamp project")
     parser.add_argument("-t","--test", help="compile using another config file")
     parser.add_argument("-s","--server", help="start the Scout Camp server", action="store_true")
+    parser.add_argument("-d","--data", help="generate SQLite database", action="store_true")
     parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-v","--version", help="show version", action="store_true")
     args = parser.parse_args()
@@ -197,9 +208,16 @@ if __name__ == '__main__':
     if args.myth:
         ScoutCamp.myth()
 
+    if args.data:
+        ScoutCamp.main(mode="database")
+
     elif args.path:
         ScoutCamp.use_alternative_path(args.path)
-        if args.render and not args.server:
+
+        if args.data:
+            ScoutCamp.main(mode="database")
+
+        elif args.render and not args.server:
             ScoutCamp.main()
             raw_input()
         elif args.server:
