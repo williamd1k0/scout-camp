@@ -1,5 +1,10 @@
-
+# William Tuméo
+id: williamd1k0
+faceId: 100001156867316
 nome: William
+join: 2015-11-15
 tier: Minister
-id: faceid
-badges: noob, alpha, asd
+badges:
+    - mythMinister
+    - merito
+    - programeiro

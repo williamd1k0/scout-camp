@@ -118,9 +118,17 @@ class ScoutCamp:
 
     @classmethod
     def generate_sql(cls):
+
+        table = "scouts"
         teste_scout = DataBase(cls.configs.get_path_to("scouts"),'william')
-        print teste_scout.get_attributes()
-        print teste_scout.get_id()
+
+        # print teste_scout.get_attributes()['join']
+        # print teste_scout.get_relations()
+        # print teste_scout.get_id()
+
+        tables = []
+        for key in teste_scout.get_relations():
+            tables.append(SQLiteTable(teste_scout.get_relations()[key], table, key))
 
 
     @classmethod
