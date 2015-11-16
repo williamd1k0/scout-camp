@@ -28,6 +28,8 @@ class Config:
         "name": "Scout Camp"
     }
 
+    __database = "scout"
+
     __current_language = "pt_br"
 
     __facebook_mode = False
@@ -67,6 +69,10 @@ class Config:
     def __call__(self, cmd, args):
         pass
 
+
+    def get_database(self):
+        return self.__database
+        
 
     def get_path_to(self, path):
         if self.__paths[path][-1] != "/":

@@ -6,13 +6,14 @@ import sqlite3
 from exceptions import *
 
 
-class DataBase:
+class DataBase(object):
 
     __id = None
     __attributes = {}
     __relations = {}
+    objects = []
 
-    def __init__(self, path="", scout=None, ext=".yml"):
+    def __init__(self, path="", scout="", ext=".yml"):
 
         scout_file = open(path+scout+ext,'r')
         scout_dict = yaml.load(scout_file.read())
@@ -28,6 +29,8 @@ class DataBase:
                 else:
                     self.__relations[key] = scout_dict[key]
 
+        self.__class__.objects.append(self)
+
 
     def get_attributes(self):
         return self.__attributes
@@ -38,35 +41,72 @@ class DataBase:
     def get_relations(self):
         return self.__relations
 
+    @classmethod
+    def all(cls):
+        return cls.objects
+
 
 class SQLite:
 
-    @staticmethod
-    def new_column(name, c_type=None):
+    connection = None
+    __tables = []
+    __inserts = []
+
+    def __init__(self, database=None):
+
+        self.connection = sqlite3.connect(database)
+        self.cursor = self.connection.cursor()
+
+
+    def save(self):
+        self.connection.commit()
+
+
+    def close(self):
+        self.connection.close()
+
+
+    def new_column(self, name, c_type=None):
 
         if not c_type:
             c_type = "TEXT"
-
-        return "`"+name+"` "+c_type+","
-
-
-class SQLiteTable:
+        table = "`"+name+"` "+c_type+","
+        return table
 
 
-    def __init__(self, columns=None, table=None, key=None):
+    def new_table(self, columns=None, table=None, key=None):
 
         table_header = "CREATE TABLE \""+table+"\"("
 
-        for attr in columns:
-            table_header += "\n\t"+SQLite.new_column(attr)
+        for attr in range(len(columns)):
+            table_header += "\n\t"+self.new_column(columns[attr])
 
         table_header = table_header[0:len(table_header)-1]+")"
 
-        print table_header
+        self.__tables.append(table_header)
 
-        print table
-        print key
+    def new_insert(self, table, attributes):
 
+        insert_header = "INSERT INTO "+table+" ("
+        for key in attributes.keys():
+            insert_header += key+","
+
+        insert_header = insert_header[0:len(insert_header)-1]+")\n VALUES ("
+        for val in attributes.values():
+            insert_header += "'"+str(val)+"',"
+
+        insert_header = insert_header[0:len(insert_header)-1]+")"
+
+        self.__inserts.append(insert_header)
+
+    def crate_tables(self):
+        for table in self.__tables:
+            self.cursor.execute(table)
+
+    def insert_into(self):
+        for insert in self.__inserts:
+            print insert
+            self.cursor.execute(insert)
 
 
 if __name__ == '__main__':
