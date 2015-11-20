@@ -83,28 +83,37 @@ class SQLite(object):
         return table
 
 
-    def new_table(self, columns=None, table=None, key=None):
+    def new_table(self, columns=None, table=None, relationship=None):
 
-        table_header = "CREATE TABLE \""+table+"\"("
+        if relationship:
+            table_header = "CREATE TABLE \""+table+"_"+relationship+"_relationship\"("
+            table_header += "\n\t"+self.new_column(table+"_id")+"\n\t"+self.new_column(relationship+"_id")
+        else:
+            table_header = "CREATE TABLE \""+table+"\"("
 
-        for attr in range(len(columns)):
-            table_header += "\n\t"+self.new_column(columns[attr])
+            for attr in range(len(columns)):
+                table_header += "\n\t"+self.new_column(columns[attr])
 
         table_header = table_header[0:len(table_header)-1]+")"
 
         self.__tables.append(table_header)
 
 
-    def new_insert(self, table, attributes):
+    def new_insert(self, table, attributes, relationship=None):
 
-        insert_header = "INSERT INTO "+table+" ("
-        for key in attributes.keys():
-            insert_header += key+","
+        if relationship:
+            insert_header = "INSERT INTO "+table+"_"+relationship+"_relationship ("+table+"_id, "+relationship+"_id)\n VALUES ("
+            insert_header += "'"+attributes[0]+"','"+attributes[1]+"',"
+        else:
+            insert_header = "INSERT INTO "+table+" ("
 
-        insert_header = insert_header[0:len(insert_header)-1]+")\n VALUES ("
-        for val in attributes.values():
-            val = u"%s" % val
-            insert_header += "'%s'," % val
+            for key in attributes.keys():
+                insert_header += key+","
+
+            insert_header = insert_header[0:len(insert_header)-1]+")\n VALUES ("
+            for val in attributes.values():
+                val = u"%s" % val
+                insert_header += "'%s'," % val
 
         insert_header = insert_header[0:len(insert_header)-1]+")"
 
@@ -113,6 +122,7 @@ class SQLite(object):
 
     def crate_tables(self):
         for table in self.__tables:
+            print table
             self.cursor.execute(table)
 
 

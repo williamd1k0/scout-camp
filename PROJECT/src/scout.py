@@ -137,11 +137,18 @@ class ScoutCamp(object):
 
         for new_table in tables:
             table.new_table(teste_scout[0].get_attributes().keys(), new_table)
+            for relation in teste_scout[0].get_relations().keys():
+                table.new_table(teste_scout[0].get_relations().keys(), "scouts", relation)
             table.crate_tables()
             for i in range(len(datas)):
                 #teste_scout = DataBase(cls.configs.get_path_to("scouts"), i)
                 #print scout.get_attributes()
                 table.new_insert(new_table, teste_scout[i].get_attributes())
+
+                for rel in teste_scout[i].get_relations().keys():
+                    for rowid in teste_scout[i].get_relations()[rel]:
+                        table.new_insert("scouts", [datas[i] , rowid], rel)
+
 
             table.insert_into()
 
