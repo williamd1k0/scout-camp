@@ -3,15 +3,14 @@
 
 from scoutcamp import *
 import platform
-import sys
-import os
+import sys, os
 import yaml
 import pystache
 
 
 class ScoutCamp:
 
-    __version__ = "Scout Camp 0.2.1"
+    __version__ = "Scout Camp 0.3.0"
     configs = None
     main_template = None
     main_language = None
@@ -119,28 +118,29 @@ class ScoutCamp:
     @classmethod
     def generate_sql(cls):
 
-        os.remove(cls.configs.get_path_to("index")+cls.configs.get_database()+".db")
-        table = SQLite(cls.configs.get_path_to("index")+cls.configs.get_database()+".db")
+        data_base_file = cls.configs.get_path_to("index")+cls.configs.get_database()+".db"
 
-        datas = ['william', 'flicky']
+        if os.path.exists(data_base_file):
+            os.remove(data_base_file)
 
-        teste_scout = DataBase(cls.configs.get_path_to("scouts"), datas[0]);
+        table = SQLite(data_base_file)
 
+        datas = ['flicky','william']
+        teste_scout = []
 
-        # print teste_scout.get_attributes()['join']
-        # print teste_scout.get_relations()
-        # print teste_scout.get_id()
+        for i in datas:
+            teste_scout.append(DataBase(cls.configs.get_path_to("scouts"), i))
 
         tables = ["scouts"]
 
 
         for new_table in tables:
-            table.new_table(teste_scout.get_attributes().keys(), new_table)
+            table.new_table(teste_scout[0].get_attributes().keys(), new_table)
             table.crate_tables()
-            for i in datas:
-                teste_scout = DataBase(cls.configs.get_path_to("scouts"), i);
+            for i in range(len(datas)):
+                #teste_scout = DataBase(cls.configs.get_path_to("scouts"), i)
                 #print scout.get_attributes()
-                table.new_insert(new_table, teste_scout.get_attributes())
+                table.new_insert(new_table, teste_scout[i].get_attributes())
 
             table.insert_into()
 

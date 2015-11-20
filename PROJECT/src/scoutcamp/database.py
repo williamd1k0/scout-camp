@@ -8,10 +8,11 @@ from exceptions import *
 
 class DataBase(object):
 
+
     __id = None
-    __attributes = {}
-    __relations = {}
-    objects = []
+    __attributes = None
+    __relations = None
+
 
     def __init__(self, path="", scout="", ext=".yml"):
 
@@ -19,17 +20,19 @@ class DataBase(object):
         scout_dict = yaml.load(scout_file.read())
         scout_file.close()
 
+
         if "id" in scout_dict:
 
             self.__id = scout_dict["id"]
+            self.__attributes = dict()
+            self.__relations = dict()
 
             for key in scout_dict.keys():
                 if type(scout_dict[key]) is not list:
                     self.__attributes[key] = scout_dict[key]
+
                 else:
                     self.__relations[key] = scout_dict[key]
-
-        self.__class__.objects.append(self)
 
 
     def get_attributes(self):
@@ -40,10 +43,6 @@ class DataBase(object):
 
     def get_relations(self):
         return self.__relations
-
-    @classmethod
-    def all(cls):
-        return cls.objects
 
 
 class SQLite:
@@ -67,7 +66,6 @@ class SQLite:
 
 
     def new_column(self, name, c_type=None):
-
         if not c_type:
             c_type = "TEXT"
         table = "`"+name+"` "+c_type+","
@@ -93,7 +91,8 @@ class SQLite:
 
         insert_header = insert_header[0:len(insert_header)-1]+")\n VALUES ("
         for val in attributes.values():
-            insert_header += "'"+str(val)+"',"
+            val = u"%s" % val
+            insert_header += "'%s'," % val
 
         insert_header = insert_header[0:len(insert_header)-1]+")"
 
