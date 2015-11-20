@@ -22,8 +22,9 @@ class DataBase(object):
 
 
         if "id" in scout_dict:
-
             self.__id = scout_dict["id"]
+
+            # Previne instanciamento duplicado
             self.__attributes = dict()
             self.__relations = dict()
 
@@ -34,18 +35,25 @@ class DataBase(object):
                 else:
                     self.__relations[key] = scout_dict[key]
 
+        else:
+            DataBaseException("O atributo id e obrigatorio e nao foi definido para o membro {}".format(scout))
+            raw_input()
+            sys.exit(1)
+
 
     def get_attributes(self):
         return self.__attributes
 
+
     def get_id(self):
         return self.__id
+
 
     def get_relations(self):
         return self.__relations
 
 
-class SQLite:
+class SQLite(object):
 
     connection = None
     __tables = []
@@ -53,6 +61,9 @@ class SQLite:
 
     def __init__(self, database=None):
 
+        # Previne instanciamento duplicado
+        self.__tables = list()
+        self.__inserts = list()
         self.connection = sqlite3.connect(database)
         self.cursor = self.connection.cursor()
 
@@ -83,6 +94,7 @@ class SQLite:
 
         self.__tables.append(table_header)
 
+
     def new_insert(self, table, attributes):
 
         insert_header = "INSERT INTO "+table+" ("
@@ -98,9 +110,11 @@ class SQLite:
 
         self.__inserts.append(insert_header)
 
+
     def crate_tables(self):
         for table in self.__tables:
             self.cursor.execute(table)
+
 
     def insert_into(self):
         for insert in self.__inserts:

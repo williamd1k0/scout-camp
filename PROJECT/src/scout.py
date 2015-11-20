@@ -8,7 +8,8 @@ import yaml
 import pystache
 
 
-class ScoutCamp:
+class ScoutCamp(object):
+
 
     __version__ = "Scout Camp 0.3.0"
     configs = None

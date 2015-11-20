@@ -4,7 +4,9 @@ import yaml
 import sys
 from exceptions import *
 
-class Config:
+
+class Config(object):
+
 
     __paths = {
         "templates": "_view",
@@ -72,7 +74,7 @@ class Config:
 
     def get_database(self):
         return self.__database
-        
+
 
     def get_path_to(self, path):
         if self.__paths[path][-1] != "/":

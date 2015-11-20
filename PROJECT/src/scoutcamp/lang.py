@@ -4,7 +4,9 @@ import yaml
 import sys
 from exceptions import *
 
-class Lang:
+
+class Lang(object):
+
 
     __nav_buttons = {
         "badges": "Medalhas",
@@ -33,6 +35,7 @@ class Lang:
 
     def get_nav_buttons(self):
         return self.__nav_buttons
+
 
 if __name__ == '__main__':
     pass

@@ -3,7 +3,8 @@
 import yaml
 from exceptions import *
 
-class Template:
+
+class Template(object):
     """Classe Template
         - Utilizada para obter e gerenciar a base dos templates.
         Atributos:
@@ -13,8 +14,9 @@ class Template:
           - temp_extension (private:string): extensão dos arquivos de template
     """
 
-    __template_list = []
-    __templates = []
+
+    __template_list = None
+    __templates = None
     __path = ""
     __temp_extension = ".html"
 
@@ -31,6 +33,11 @@ class Template:
             Retorno:
               - Sem retorno
         """
+
+        # Previne instanciamento duplicado
+        self.__template_list = list()
+        self.__templates = list()
+
         # Abre o arquivo da lista em YAML
         list_file = open(path+list_file,"r")
         # Passa o arquivo para uma dict

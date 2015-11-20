@@ -17,3 +17,8 @@ class LanguageException(Exception):
 
     def __init__(self, message="Language error"):
         print "LanguageException: "+message
+
+class DataBaseException(Exception):
+
+    def __init__(self, message="DataBase error"):
+        print "DataBaseException: "+message
