@@ -1,0 +1,18 @@
+{
+	"mythMinister":{
+        "descricao": "Badge reservada a Mitadores Ministers.<br> Assumem a bronca em horas de crise, e agitam a casa conforme podem. Conte sempre com eles. (Reserved)", 
+        "id": "mythMinister", 
+        "imagem": "minister", 
+        "nome": "Mythnister", 
+        "tipo": "Tier", 
+        "titulo": "Mythnister: Leading the path of strife!"
+},
+	"programeiro":{
+        "descricao": "Ajude os Mitadores dando uma m\u00e3o com qualquer tipo de edi\u00e7\u00e3o de c\u00f3digo pras paradas que criamos", 
+        "id": "programeiro", 
+        "imagem": "code", 
+        "nome": "Programeiro", 
+        "tipo": "Utilidade", 
+        "titulo": "Programeiro: Ajuda a codar paradas mitadoras"
+}
+}

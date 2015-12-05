@@ -12,6 +12,7 @@ class Config(object):
         "templates": "_view",
         "table": "_table",
         "scouts": "_scouts",
+        "badges": "_badges",
         "styles": "_styles",
         "scripts": "_js",
         "languages": "_lang",
@@ -20,7 +21,8 @@ class Config(object):
     __lists = {
         "templates": "list.yml",
         "scouts": "list.yml",
-        "table": "list.yml"
+        "table": "list.yml",
+        "badges": "list.yml"
     }
     __server = {
         "host": "localhost",
@@ -116,11 +118,11 @@ class Config(object):
     def get_camp(self):
         return self.__camp
 
-    def get_nav_buttons(self):
-        return self.__nav_buttons
-
     def get_current_language(self):
         return self.__current_language
+
+    def facebook_mode(self):
+        return self.__facebook_mode
 
 
 if __name__ == '__main__':

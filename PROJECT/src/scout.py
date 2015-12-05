@@ -6,6 +6,7 @@ import platform
 import sys, os
 import yaml
 import pystache
+import json
 
 
 class ScoutCamp(object):
@@ -93,12 +94,45 @@ class ScoutCamp(object):
             raw_input()
             sys.exit(1)
 
-        #print cls.main_template.get_template_list()
-        #print cls.main_template.get_templates()
-        #print cls.main_template
+
+        cls.badges = Template(
+            cls.configs.get_path_to("badges"),
+            cls.configs.get_list_to("badges"),
+            ".yml"
+        )
+
+
+
+        cls.badge_base = list()
+
+        for i in cls.badges.get_template_list():
+            cls.badge_base.append(DataBase(cls.configs.get_path_to("badges"),i))
+
+
+
+        json_badges = "{"
+
+        for i in cls.badge_base:
+            json_badges += '\n\t"'+i.get_id()+'":'
+            json_badges += json.dumps(i.get_attributes(),sort_keys=True,indent=8)
+            json_badges += ','
+
+        json_badges = json_badges[0:len(json_badges)-1]
+        json_badges += '\n}'
+        if cls.configs.facebook_mode():
+            pass
+        else:
+            json_output = open(
+                cls.configs.get_path_to("index")+
+                cls.configs.get_path_to("scripts")[1::]+
+                "badges.json","w")
+            json_output.write(json_badges)
+            json_output.close()
+
 
         cls.progress(5)
         temp_maker = pystache.Renderer()
+
         rendered_html = temp_maker.render(
             cls.main_template("string").decode('utf8'),
             dict(

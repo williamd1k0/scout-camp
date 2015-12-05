@@ -1,1 +1,2 @@
-scout_board: [table_template]
+scout_board:
+    - table_template

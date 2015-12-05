@@ -1,5 +1,4 @@
-templates: [
-  header,
-  template,
-  footer
-]
+templates:
+    - header
+    - template
+    - footer

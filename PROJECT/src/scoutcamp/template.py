@@ -17,8 +17,8 @@ class Template(object):
 
     __template_list = None
     __templates = None
-    __path = ""
-    __temp_extension = ".html"
+    __path = None
+    __temp_extension = None
 
 
     def __init__(self, path="", list_file=None, extension=".html"):
@@ -113,9 +113,15 @@ class Template(object):
         temps = []
         # Faz um loop pela lista de templates para obtê-los
         for i in self.get_template_list():
-            template = open(path+i+extension,"r")
-            temps.append(template.read())
-            template.close()
+            try:
+                template = open(path+i+extension,"r")
+                temps.append(template.read())
+                template.close()
+
+            except IOError:
+                TemplateException("File "+i+extension+" was not found")
+                raw_input()
+                exit(1)
 
         # Seta o resultado no atriburo templates
         self.__templates = temps
