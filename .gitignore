@@ -1,6 +1,9 @@
 *.bak
 *.db
 
+# LibreOffice temp
+.~lock.*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
