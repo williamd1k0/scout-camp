@@ -8,14 +8,9 @@ from exceptions import *
 class Lang(object):
 
 
-    __nav_buttons = {
-        "badges": "Medalhas",
-        "scouts": "Membros",
-        "sort": "Ordenar",
-        "select": "Selecionar Membro"
-    }
+    __lang_dict = None
 
-    def __init__(self, path="", lang=None, ext=".lang"):
+    def __init__(self, path="", lang=None, ext=".yml"):
 
         try:
             lang_file = open(path+lang+ext, "r")
@@ -27,14 +22,16 @@ class Lang(object):
         lang_dict = yaml.load(lang_file.read())
         lang_file.close()
 
-        if "nav_buttons" in lang_dict:
-            for key_name in self.__nav_buttons.keys():
-                if key_name in lang_dict["nav_buttons"]:
-                    self.__nav_buttons[key_name] = lang_dict["nav_buttons"][key_name]
+        print lang_dict
+
+        self.__lang_dict = lang_dict
 
 
-    def get_nav_buttons(self):
-        return self.__nav_buttons
+    def get_lang(self):
+        return self.__lang_dict
+
+    def __dict__(self):
+        return self.get_lang()
 
 
 if __name__ == '__main__':

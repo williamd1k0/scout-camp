@@ -12,10 +12,10 @@ import json
 class ScoutCamp(object):
 
 
-    __version__ = "Scout Camp 0.3.0"
+    __version__ = "Scout Camp 0.4.0 by William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
-    main_language = None
+    main_language = dict()
 
 
     @classmethod
@@ -133,12 +133,14 @@ class ScoutCamp(object):
         cls.progress(5)
         temp_maker = pystache.Renderer()
 
+        template_dict = dict()
+        print cls.main_language.get_lang()
+        template_dict.update({"camp":cls.configs.get_camp()})
+        template_dict.update(cls.main_language.get_lang())
+
         rendered_html = temp_maker.render(
             cls.main_template("string").decode('utf8'),
-            dict(
-                camp = cls.configs.get_camp(),
-                nav_buttons = cls.main_language.get_nav_buttons()
-            )
+            template_dict
         )
 
         html_output = open(cls.configs.get_path_to("index") + "index.html","w")
@@ -227,9 +229,9 @@ class ScoutCamp(object):
             " Checando localização",
             " Compilando páginas..."
         ]
-        if platform.system().lower() == "windows":
-            for i in range(len(messages)):
-                messages[i] = messages[i].decode("utf8")
+        # if platform.system().lower() == "windows":
+        #     for i in range(len(messages)):
+        #         messages[i] = messages[i].decode("utf8")
 
         if prog:
             if prog == 1:

@@ -53,6 +53,13 @@ class DataBase(object):
         return self.__relations
 
 
+class Util(object):
+
+    @classmethod
+    def get_list(cls, path="", list_file=None):
+        pass
+
+
 class SQLite(object):
 
     connection = None
