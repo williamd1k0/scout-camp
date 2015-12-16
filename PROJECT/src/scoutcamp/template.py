@@ -156,5 +156,5 @@ class Template(object):
 
 if __name__ == '__main__':
     """ Bloco main para testes """
-    print dir(Template)
+    print(dir(Template))
     raw_input()

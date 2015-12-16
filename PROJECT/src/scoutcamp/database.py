@@ -129,13 +129,13 @@ class SQLite(object):
 
     def crate_tables(self):
         for table in self.__tables:
-            print table
+            print(table)
             self.cursor.execute(table)
 
 
     def insert_into(self):
         for insert in self.__inserts:
-            print insert
+            print(insert)
             self.cursor.execute(insert)
 
 

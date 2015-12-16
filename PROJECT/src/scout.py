@@ -134,7 +134,7 @@ class ScoutCamp(object):
         temp_maker = pystache.Renderer()
 
         template_dict = dict()
-        print cls.main_language.get_lang()
+
         template_dict.update({"camp":cls.configs.get_camp()})
         template_dict.update(cls.main_language.get_lang())
 
@@ -212,7 +212,7 @@ class ScoutCamp(object):
 
     @staticmethod
     def myth():
-        print "\n -*- Penso, logo mito -*-"
+        print("\n -*- Penso, logo mito -*-")
 
 
     @classmethod
@@ -235,18 +235,18 @@ class ScoutCamp(object):
 
         if prog:
             if prog == 1:
-                print messages[prog]
+                print(messages[prog])
             if prog == 2:
-                print messages[prog]
+                print(messages[prog])
             if prog == 3:
-                print messages[prog]
+                print(messages[prog])
             if prog == 4:
-                print messages[prog]
+                print(messages[prog])
             if prog == 5:
-                print messages[prog]
+                print(messages[prog])
 
         else:
-            print messages[0]
+            print(messages[0])
 
     @classmethod
     def init(cls, project_name):
@@ -257,7 +257,7 @@ class ScoutCamp(object):
                 init_zip.extractall(project_name)
 
         else:
-            print "The directory {} already exists!".format(project_name)
+            print("The directory {} already exists!".format(project_name))
 
 
 if __name__ == '__main__':
@@ -293,7 +293,7 @@ if __name__ == '__main__':
         elif args.server:
             ScoutCamp.main(mode="server")
         else:
-            print "Use o comando path com render ou server!"
+            print("Use o comando path com render ou server!")
             raw_input()
 
     elif args.test and not args.server:
@@ -306,10 +306,10 @@ if __name__ == '__main__':
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        print ScoutCamp.get_version()
+        print(ScoutCamp.get_version())
 
     elif args.create:
-        print ScoutCamp.main(mode="init", project_name=args.create)
+        print(ScoutCamp.main(mode="init", project_name=args.create))
 
     elif args.render:
         ScoutCamp.main()

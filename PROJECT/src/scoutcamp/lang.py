@@ -22,8 +22,6 @@ class Lang(object):
         lang_dict = yaml.load(lang_file.read())
         lang_file.close()
 
-        print lang_dict
-
         self.__lang_dict = lang_dict
 
 

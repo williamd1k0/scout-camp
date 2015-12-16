@@ -30,14 +30,14 @@ class Server:
             pass
 
         self.httpd.server_close()
-        print " Server switched off, press Enter to exit"
+        print(" Server switched off, press Enter to exit")
         raw_input()
 
     def server_message(self):
 
-        print "\n> Scout Camp serving at port {}".format(self.__port)
-        print "> Open your browser and go to http://{}/".format(self.__host)
-        print "\n> Press Ctrl+C or close window to shut down the server\n"
+        print("\n> Scout Camp serving at port {}".format(self.__port))
+        print("> Open your browser and go to http://{}/".format(self.__host))
+        print("\n> Press Ctrl+C or close window to shut down the server\n")
 
 
     def open_chrome(self):

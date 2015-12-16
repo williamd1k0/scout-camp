@@ -128,7 +128,7 @@ class Config(object):
 if __name__ == '__main__':
 
     teste = Config()
-    print teste.get_path_to("template")
-    print teste.get_paths()
-    print teste.list_paths()
+    print(teste.get_path_to("template"))
+    print(teste.get_paths())
+    print(teste.list_paths())
     raw_input()
