@@ -1,9 +1,0 @@
-camp:
-    name:   Scout Camp
-    index:  scout_board
-
-server:
-    host:   localhost
-    port:   80
-
-current_language: pt_br
