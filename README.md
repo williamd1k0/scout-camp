@@ -1,5 +1,5 @@
 # Scout Camp
-
+[![Build Status](https://travis-ci.org/TheTimeTunnel/scout-camp.svg?branch=master)](https://travis-ci.org/TheTimeTunnel/scout-camp)
 ## Argumentos do terminal/prompt:
 
 | Arg - atalho | Arg - completo | Parâmetro | Descrição |
