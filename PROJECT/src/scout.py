@@ -20,10 +20,10 @@ class ScoutCamp(object):
     @classmethod
     def main(cls, conf_override=None, mode="default", project_name=None):
 
-        cls.progress(1)
+        cls.progress('init')
 
         # Checagem para obter as configurações
-        cls.progress(2)
+        cls.progress('config_c')
         if conf_override:
             cls.configs = Config(conf_override)
         else:
@@ -42,9 +42,10 @@ class ScoutCamp(object):
 
         else:
             # Compilar projeto
+            cls.progress('folder_c')
             cls.check_folders()
             cls.compile()
-            cls.progress()
+            cls.progress('comp_end')
 
         sys.exit(0)
 
@@ -66,8 +67,8 @@ class ScoutCamp(object):
 
     @classmethod
     def compile(cls):
-        cls.progress(3)
 
+        cls.progress('temp_c')
         try:
             # Templates base
             cls.main_template = Template(
@@ -81,7 +82,7 @@ class ScoutCamp(object):
             raw_input()
             sys.exit(1)
 
-        cls.progress(4)
+        cls.progress('local_c')
 
         try:
             # Strings para localização
@@ -114,6 +115,7 @@ class ScoutCamp(object):
         temp_terms = ['badges', 'scouts']
 
         for term in temp_terms:
+            cls.progress('comp_term', cls.configs.get_term(term))
             badges_list = DataList(
                 cls.configs.get_path_to(term),
                 cls.configs.get_list_to(term),
@@ -128,7 +130,7 @@ class ScoutCamp(object):
 
 ################################################################################
 
-        cls.progress(5)
+        cls.progress('comp_page')
         temp_maker = pystache.Renderer()
 
         template_dict = dict()
@@ -222,35 +224,20 @@ class ScoutCamp(object):
         return cls.__version__
 
 
-    @staticmethod
-    def progress(prog=None):
+    @classmethod
+    def progress(cls, prog=None, term=""):
         # TODO: Refazer o esquema do progress
-        messages = [
-            " Compilação finalizada!",
-            " Inicializando...",
-            " Checando configurações...",
-            " Checando templates...",
-            " Checando localização",
-            " Compilando páginas..."
-        ]
-        # if platform.system().lower() == "windows":
-        #     for i in range(len(messages)):
-        #         messages[i] = messages[i].decode("utf8")
-
-        if prog:
-            if prog == 1:
-                print(messages[prog])
-            if prog == 2:
-                print(messages[prog])
-            if prog == 3:
-                print(messages[prog])
-            if prog == 4:
-                print(messages[prog])
-            if prog == 5:
-                print(messages[prog])
-
-        else:
-            print(messages[0])
+        messages = {
+            'init': " Inicializando...",
+            'folder_c': " Checando pastas...",
+            'config_c': " Checando configurações...",
+            'temp_c': " Checando templates...",
+            'local_c': " Checando localização...",
+            'comp_term': " Compilando "+term+"...",
+            'comp_page': " Compilando páginas...",
+            'comp_end': " Compilação finalizada!"
+        }
+        print(messages[prog])
 
 
     @classmethod
