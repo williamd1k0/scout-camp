@@ -6,7 +6,6 @@ import platform
 import sys, os
 import yaml
 import pystache
-import json
 
 
 class ScoutCamp(object):
@@ -27,8 +26,6 @@ class ScoutCamp(object):
         cls.progress(2)
         if conf_override:
             cls.configs = Config(conf_override)
-        elif mode == "init":
-            cls.configs = Config(init=True)
         else:
             cls.configs = Config()
 
@@ -45,9 +42,9 @@ class ScoutCamp(object):
 
         else:
             # Compilar projeto
+            # TODO: folder check/init
             cls.compile()
             cls.progress()
-
 
         sys.exit(0)
 
@@ -97,40 +94,22 @@ class ScoutCamp(object):
 
 
 ################################################################################
-#   Leitura e escrita das medalhas
+        """Leitura e escrita das medalhas"""
 
         badges_list = DataList(
             cls.configs.get_path_to("badges"),
             cls.configs.get_list_to("badges"),
         )
 
-
         cls.badge_base = list()
 
         for i in badges_list.get_data_list():
-            cls.badge_base.append(DataBase(cls.configs.get_path_to("badges"),i))
+            cls.badge_base.append(DataBase(cls.configs.get_path_to("badges"), i))
 
 
-        json_badges = "{"
+        json_parser = JSON(cls.configs.get_path_to('index'))
+        json_parser.save_all(cls.badge_base, 'badges', cls.configs.get_path_to("scripts")[1::])
 
-        for i in cls.badge_base:
-            json_badges += '\n\t"'+i.get_id()+'":'
-            json_badges += json.dumps(i.get_attributes(),sort_keys=True,indent=8)
-            json_badges += ','
-
-        json_badges = json_badges[0:len(json_badges)-1]
-        json_badges += '\n}'
-        if cls.configs.facebook_mode():
-            pass
-        else:
-            json_output = open(
-                cls.configs.get_path_to("index")+
-                cls.configs.get_path_to("scripts")[1::]+
-                "badges.json","w")
-            json_output.write(json_badges)
-            json_output.close()
-
-#
 ################################################################################
 
         cls.progress(5)
@@ -206,7 +185,6 @@ class ScoutCamp(object):
         if path[-1] != "/":
             path += "/"
         os.chdir(path)
-        #cls.main()
 
 
     @classmethod
@@ -219,6 +197,7 @@ class ScoutCamp(object):
 
     @staticmethod
     def myth():
+        # ninguém está vendo isso
         print("\n -*- Penso, logo mito -*-")
 
 
@@ -226,8 +205,10 @@ class ScoutCamp(object):
     def get_version(cls):
         return cls.__version__
 
+
     @staticmethod
     def progress(prog=None):
+        # TODO: Refazer o esquema do progress
         messages = [
             " Compilação finalizada!",
             " Inicializando...",
@@ -255,9 +236,9 @@ class ScoutCamp(object):
         else:
             print(messages[0])
 
+
     @classmethod
     def init(cls, project_name):
-
         if not os.path.isdir(project_name):
             from zipfile import ZipFile
             with ZipFile(os.path.dirname(sys.argv[0])+'/base_project.zip', "r") as init_zip:
@@ -265,6 +246,7 @@ class ScoutCamp(object):
 
         else:
             print("The directory {} already exists!".format(project_name))
+
 
 
 if __name__ == '__main__':

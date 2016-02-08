@@ -38,36 +38,34 @@ class Config(object):
 
     __facebook_mode = False
 
-    def __init__(self, config="conf.yml", init=False):
+    def __init__(self, config="conf.yml"):
 
-        if not init:
+        try:
+            config_file = open(config, "r")
+        except IOError:
+            ConfigException("conf.yml for settings was not found")
+            raw_input()
+            sys.exit(1)
+        config_dict = yaml.load(config_file.read())
+        config_file.close()
 
-            try:
-                config_file = open(config, "r")
-            except IOError:
-                ConfigException("conf.yml for settings was not found")
-                raw_input()
-                sys.exit(1)
-            config_dict = yaml.load(config_file.read())
-            config_file.close()
-
-            # Altera os padrões de host e porta a partir do arquivo de configuração
-            if "server" in config_dict:
-                if "host" in config_dict["server"]:
-                    self.__server["host"] = config_dict["server"]["host"]
-                if "port" in config_dict["server"]:
-                    self.__server["port"] = config_dict["server"]["port"]
+        # Altera os padrões de host e porta a partir do arquivo de configuração
+        if "server" in config_dict:
+            if "host" in config_dict["server"]:
+                self.__server["host"] = config_dict["server"]["host"]
+            if "port" in config_dict["server"]:
+                self.__server["port"] = config_dict["server"]["port"]
 
 
-            if "camp" in config_dict:
-                if "name" in config_dict["camp"]:
-                    self.__camp["name"] = config_dict["camp"]["name"]
-                if "index" in config_dict["camp"]:
-                    self.__paths["index"] = config_dict["camp"]["index"]
+        if "camp" in config_dict:
+            if "name" in config_dict["camp"]:
+                self.__camp["name"] = config_dict["camp"]["name"]
+            if "index" in config_dict["camp"]:
+                self.__paths["index"] = config_dict["camp"]["index"]
 
 
-            if "current_language" in config_dict:
-                self.__current_language = config_dict["current_language"]
+        if "current_language" in config_dict:
+            self.__current_language = config_dict["current_language"]
 
 
     def __call__(self, cmd, args):

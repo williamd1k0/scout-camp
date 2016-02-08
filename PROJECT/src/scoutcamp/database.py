@@ -2,6 +2,7 @@
 
 import yaml
 import sys
+import json
 import sqlite3
 from exceptions import *
 
@@ -108,11 +109,50 @@ class DataBase(object):
         return self.__relations
 
 
-class Util(object):
 
-    @classmethod
-    def get_list(cls, path="", list_file=None):
-        pass
+
+class JSON(object):
+
+
+    __default_out = None
+    __default_ext = None
+    __default_indent = None
+
+
+    def __init__ (self, _default_out, _default_ext=".json", _default_indent=8):
+        self.__default_out = _default_out
+        self.__default_ext = _default_ext
+        self.__default_indent = _default_indent
+
+
+    def to_json(self, _dict):
+        return json.dumps(_dict, sort_keys=True, indent=self.__default_indent)
+
+
+    def parse_list(self, _list):
+        main_string = "{"
+        for i in _list:
+            main_string += '\n\t"'+i.get_id()+'":'
+            main_string += self.to_json(i.get_attributes())
+            main_string += ','
+
+        main_string = main_string[0:len(main_string)-1]
+        main_string += '\n}'
+        return main_string
+
+
+    def save(self, _json, _outfile, _alt_path=""):
+        json_output = open(
+            self.__default_out+
+            _alt_path+
+            _outfile+self.__default_ext,"w")
+        json_output.write(_json)
+        json_output.close()
+
+
+    def save_all(self, _list, _outfile, _alt_path=""):
+        self.save(self.parse_list(_list), _outfile, _alt_path)
+
 
 
 class SQLite(object):

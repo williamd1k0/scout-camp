@@ -39,18 +39,6 @@ class Template(object):
         self.__template_list = DataList(path, list_file)
         self.__templates = list()
 
-        # # Abre o arquivo da lista em YAML
-        # list_file = open(path+list_file,"r")
-        # # Passa o arquivo para uma dict
-        # template_list = yaml.load(list_file.read())
-        # list_file.close()
-        #
-        # # Tenta converter a dict para uma list
-        # self.__set_template_list(template_list)
-        # # Se falhar, lança uma exceção do template
-        # if type(self.__template_list) is not list:
-        #     raise TemplateException("Template list have any typo.")
-
         # Seta um novo path caso seja diferete do padrão
         if path != self.__path:
             self.__path = path
