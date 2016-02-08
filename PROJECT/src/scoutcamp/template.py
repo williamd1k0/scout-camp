@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
+from database import *
 from exceptions import *
 
 
@@ -35,20 +36,20 @@ class Template(object):
         """
 
         # Previne instanciamento duplicado
-        self.__template_list = list()
+        self.__template_list = DataList(path, list_file)
         self.__templates = list()
 
-        # Abre o arquivo da lista em YAML
-        list_file = open(path+list_file,"r")
-        # Passa o arquivo para uma dict
-        template_list = yaml.load(list_file.read())
-        list_file.close()
-
-        # Tenta converter a dict para uma list
-        self.__set_template_list(template_list)
-        # Se falhar, lança uma exceção do template
-        if type(self.__template_list) is not list:
-            raise TemplateException("Template list have any typo.")
+        # # Abre o arquivo da lista em YAML
+        # list_file = open(path+list_file,"r")
+        # # Passa o arquivo para uma dict
+        # template_list = yaml.load(list_file.read())
+        # list_file.close()
+        #
+        # # Tenta converter a dict para uma list
+        # self.__set_template_list(template_list)
+        # # Se falhar, lança uma exceção do template
+        # if type(self.__template_list) is not list:
+        #     raise TemplateException("Template list have any typo.")
 
         # Seta um novo path caso seja diferete do padrão
         if path != self.__path:
@@ -89,7 +90,7 @@ class Template(object):
             Retorno:
               - self.__template_list (lsit): lista de templates
         """
-        return self.__template_list
+        return self.__template_list.get_data_list()
 
 
     def __set_templates(self, path=None, extension=None):

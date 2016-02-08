@@ -6,6 +6,61 @@ import sqlite3
 from exceptions import *
 
 
+class DataList(object):
+
+
+    __data_list = None
+
+
+    def __init__(self, _path="", _list_file=""):
+
+        self.__data_list = list()
+
+        # Abre o arquivo da lista em YAML
+        list_file = open(_path+_list_file,"r")
+
+        # Passa o arquivo para uma dict
+        yml_list = yaml.load(list_file.read())
+        list_file.close()
+
+        # Tenta converter a dict para uma list
+        self.__set_data_list(yml_list)
+        # Se falhar, lança uma exceção do template
+        if type(self.__data_list) is not list:
+            raise DataBaseException("Erro ao ler a lista")
+
+
+    def __set_data_list(self, temp_dict={}):
+        """Método privado __set_data_list
+            - Percorre uma dict para forçar que seja usada somente a
+            - primeira posição e atribui o resultado ao atributo privado
+            - __template_list (list).
+            Argumentos:
+              - self (object): instância da própria classe
+              - temp_dict (dict): dict herdada do yaml (default=dict vazio)
+            Retorno:
+              - Sem retorno
+        """
+        temp_list = []
+        # Percorre a dict para atribuir a uma list
+        for i in temp_dict:
+            temp_list.append(temp_dict[i])
+        # Atribui à nova lista somente a primeira posição da list
+        self.__data_list = temp_list[0]
+
+
+    def get_data_list(self):
+        """Método público get_data_list
+            - Retorna a lista dos templates disponíveis.
+            Argumentos:
+              - self (object): instância da própria classe
+            Retorno:
+              - self.__data_list (list): lista de templates
+        """
+        return self.__data_list
+
+
+
 class DataBase(object):
 
 
@@ -36,7 +91,7 @@ class DataBase(object):
                     self.__relations[key] = scout_dict[key]
 
         else:
-            DataBaseException("O atributo id e obrigatorio e nao foi definido para o membro {}".format(scout))
+            DataBaseException("O atributo id e obrigatorio e nao foi definido para {}".format(scout))
             raw_input()
             sys.exit(1)
 

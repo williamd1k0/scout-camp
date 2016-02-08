@@ -64,6 +64,7 @@ class ScoutCamp(object):
             )
 
         except IOError:
+            raise
             TemplateException("list.yml for templates not found")
             raw_input()
             sys.exit(1)
@@ -95,19 +96,19 @@ class ScoutCamp(object):
             sys.exit(1)
 
 
-        cls.badges = Template(
+################################################################################
+#   Leitura e escrita das medalhas
+
+        badges_list = DataList(
             cls.configs.get_path_to("badges"),
             cls.configs.get_list_to("badges"),
-            ".yml"
         )
-
 
 
         cls.badge_base = list()
 
-        for i in cls.badges.get_template_list():
+        for i in badges_list.get_data_list():
             cls.badge_base.append(DataBase(cls.configs.get_path_to("badges"),i))
-
 
 
         json_badges = "{"
@@ -129,6 +130,8 @@ class ScoutCamp(object):
             json_output.write(json_badges)
             json_output.close()
 
+#
+################################################################################
 
         cls.progress(5)
         temp_maker = pystache.Renderer()
@@ -152,6 +155,10 @@ class ScoutCamp(object):
         js_output.close()
 
 
+
+    """ Método generate_sql
+    - Abandonado por enquanto
+    """
     @classmethod
     def generate_sql(cls):
 
