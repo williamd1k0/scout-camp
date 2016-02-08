@@ -18,11 +18,22 @@ class Config(object):
         "languages": "_lang",
         "index": "scout_board"
     }
+    __build_paths = {
+        "scripts": "js",
+        "data": "data",
+        "styles": "style"
+    }
     __lists = {
         "templates": "list.yml",
         "scouts": "list.yml",
         "table": "list.yml",
         "badges": "list.yml"
+    }
+    __terms = {
+        "scouts": "scouts",
+        "badges": "badges",
+        "tiers": "tiers",
+        "crests": "crests"
     }
     __server = {
         "host": "localhost",
@@ -83,11 +94,25 @@ class Config(object):
             return self.__paths[path]
 
 
+    def get_build_path_to(self, path):
+        if self.__build_paths[path][-1] != "/":
+            return self.__build_paths[path]+"/"
+        else:
+            return self.__build_paths[path]
+
+
+    def get_term(self, term):
+        return self.__terms[term]
+
+
     def get_list_to(self, conf):
         return self.__lists[conf]
 
     def get_paths(self):
         return self.__paths
+
+    def get_build_paths(self):
+        return self.__build_paths
 
     def get_lists(self):
         return self.__lists

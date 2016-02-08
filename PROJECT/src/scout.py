@@ -11,7 +11,7 @@ import pystache
 class ScoutCamp(object):
 
 
-    __version__ = "Scout Camp 0.4.0 by William Tumeo <tumeowilliam@gmail.com>"
+    __version__ = "Scout Camp 0.5.0 by William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
     main_language = dict()
@@ -42,11 +42,26 @@ class ScoutCamp(object):
 
         else:
             # Compilar projeto
-            # TODO: folder check/init
+            cls.check_folders()
             cls.compile()
             cls.progress()
 
         sys.exit(0)
+
+
+    @classmethod
+    def check_folders(cls):
+        base_paths = cls.configs.get_paths()
+        build_paths = cls.configs.get_build_paths()
+        build_main = base_paths['index']
+
+        for folder in base_paths:
+            if not os.path.isdir(base_paths[folder]):
+                os.mkdir(base_paths[folder])
+
+        for folder in build_paths:
+            if not os.path.isdir(build_main+'/'+build_paths[folder]):
+                os.mkdir(build_main+'/'+build_paths[folder])
 
 
     @classmethod
@@ -95,20 +110,21 @@ class ScoutCamp(object):
 
 ################################################################################
         """Leitura e escrita das medalhas"""
+        json_parser = JsonParser(cls.configs.get_path_to('index'))
+        temp_terms = ['badges', 'scouts']
 
-        badges_list = DataList(
-            cls.configs.get_path_to("badges"),
-            cls.configs.get_list_to("badges"),
-        )
+        for term in temp_terms:
+            badges_list = DataList(
+                cls.configs.get_path_to(term),
+                cls.configs.get_list_to(term),
+            )
 
-        cls.badge_base = list()
+            cls.badge_base = list()
 
-        for i in badges_list.get_data_list():
-            cls.badge_base.append(DataBase(cls.configs.get_path_to("badges"), i))
+            for i in badges_list.get_data_list():
+                cls.badge_base.append(DataBase(cls.configs.get_path_to(term), i))
 
-
-        json_parser = JSON(cls.configs.get_path_to('index'))
-        json_parser.save_all(cls.badge_base, 'badges', cls.configs.get_path_to("scripts")[1::])
+            json_parser.save_all(cls.badge_base, cls.configs.get_term(term), cls.configs.get_build_path_to("data"))
 
 ################################################################################
 

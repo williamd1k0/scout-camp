@@ -87,7 +87,6 @@ class DataBase(object):
             for key in scout_dict.keys():
                 if type(scout_dict[key]) is not list:
                     self.__attributes[key] = scout_dict[key]
-
                 else:
                     self.__relations[key] = scout_dict[key]
 
@@ -111,7 +110,7 @@ class DataBase(object):
 
 
 
-class JSON(object):
+class JsonParser(object):
 
 
     __default_out = None
@@ -133,7 +132,12 @@ class JSON(object):
         main_string = "{"
         for i in _list:
             main_string += '\n\t"'+i.get_id()+'":'
-            main_string += self.to_json(i.get_attributes())
+
+            main_dict = dict()
+            main_dict.update(i.get_attributes())
+            main_dict.update(i.get_relations())
+
+            main_string += self.to_json(main_dict)
             main_string += ','
 
         main_string = main_string[0:len(main_string)-1]
@@ -142,10 +146,9 @@ class JSON(object):
 
 
     def save(self, _json, _outfile, _alt_path=""):
-        json_output = open(
-            self.__default_out+
-            _alt_path+
-            _outfile+self.__default_ext,"w")
+        output = self.__default_out + _alt_path + _outfile+self.__default_ext
+
+        json_output = open(output, "w")
         json_output.write(_json)
         json_output.close()
 
