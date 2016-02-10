@@ -267,11 +267,11 @@ class ScoutCamp(object):
 
 if __name__ == '__main__':
 
-    if sys.stdin.isatty():
-        print("\n\n\t"+ScoutCamp.get_full_version())
-        print("\n\tExecute pelo prompt/terminal!")
-        raw_input()
-        sys.exit()
+    # if sys.stdin.isatty():
+    #     print("\n\n\t"+ScoutCamp.get_full_version())
+    #     print("\n\tExecute pelo prompt/terminal!")
+    #     raw_input()
+    #     sys.exit()
 
     import argparse
 
