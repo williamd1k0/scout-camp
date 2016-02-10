@@ -10,8 +10,9 @@ import pystache
 
 class ScoutCamp(object):
 
-
-    __version__ = "Scout Camp 0.5.0 by William Tumeo <tumeowilliam@gmail.com>"
+    __app__ = "ScoutCamp"
+    __version__ = "0.5.1"
+    __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
     main_language = dict()
@@ -223,10 +224,22 @@ class ScoutCamp(object):
     def get_version(cls):
         return cls.__version__
 
+    @classmethod
+    def get_app_name(cls):
+        return cls.__app__
+
+    @classmethod
+    def get_author(cls):
+        return cls.__author__
+
+
+    @classmethod
+    def get_full_version(cls):
+        return cls.__app__+" "+cls.__version__+" "+cls.__author__
+
 
     @classmethod
     def progress(cls, prog=None, term=""):
-        # TODO: Refazer o esquema do progress
         messages = {
             'init': " Inicializando...",
             'folder_c': " Checando pastas...",
@@ -253,6 +266,12 @@ class ScoutCamp(object):
 
 
 if __name__ == '__main__':
+
+    if sys.stdin.isatty():
+        print("\n\n\t"+ScoutCamp.get_full_version())
+        print("\n\tExecute pelo prompt/terminal!")
+        raw_input()
+        sys.exit()
 
     import argparse
 
@@ -298,7 +317,7 @@ if __name__ == '__main__':
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        print(ScoutCamp.get_version())
+        print(ScoutCamp.get_full_version())
 
     elif args.create:
         print(ScoutCamp.main(mode="init", project_name=args.create))
@@ -308,4 +327,5 @@ if __name__ == '__main__':
         raw_input()
 
     else:
+        print(ScoutCamp.get_full_version())
         parser.print_help()
