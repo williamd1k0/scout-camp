@@ -1,5 +1,9 @@
-nav_button:
+nav_buttons:
     badges: Medalhas
     scouts: Membros
     sort:   Ordenar
     select: Selecionar Membro
+
+links:
+    badges: medalhas
+    scouts: membros

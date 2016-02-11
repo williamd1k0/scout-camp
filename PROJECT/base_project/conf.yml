@@ -1,9 +1,19 @@
 camp:
-    name:   Scout Camp
+    name:   Novo Projeto
     index:  scout_board
 
 server:
     host:   localhost
     port:   80
 
+language_list: list.yml
 current_language: pt_br
+
+variables:
+    badges: badges
+    scouts: members
+    custom: vars
+
+custom_variables:
+    - lorem
+    - ipsum

@@ -2,12 +2,18 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Scout Camp</title>
+    <title>Novo Projeto</title>
 
     <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css">
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" charset="utf-8"></script>
+    <!-- temporary styles -->
+    <style media="screen">
+    .navbar-brand>img {
+        display: inline !important;
+    }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-default">
@@ -20,14 +26,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Scout Camp</a>
+                <a class="navbar-brand" href="/">
+                    <img src="/logo.png" alt="logo" />
+                    Novo Projeto
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Membros <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Medalhas</a></li>
+                    <li class="active"><a href="/#membros">Membros <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/#medalhas">Medalhas</a></li>
                     <li class="dropdown">
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -68,13 +77,8 @@
                         </a>
                         <ul class="dropdown-menu drop-overflow">
                             <!-- MythAPI - Use method GET | search -->
-                            <!-- {-{ #scouts }} -->
-                            <li><a href="/?scout=lorem">{-{ scout.lorem }}</a></li>
-                            <li><a href="/?scout=ipsum">{-{ scout.ipsum }}</a></li>
-                            <li><a href="/?scout=dolor">{-{ scout.dolor }}</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/?scout=sit">{-{ scout.sit }}</a></li>
-                            <!-- {-{ /scouts }} -->
+                                <li><a href="/?scout=williamd1k0">William Tuméo</a></li>
+                                <li><a href="/?scout=lucasflicky">Lucas Flicky</a></li>
                         </ul>
                     </li>
                 </ul>
