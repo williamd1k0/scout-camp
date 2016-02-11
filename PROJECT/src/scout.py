@@ -11,7 +11,7 @@ import pystache
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "0.5.1"
+    __version__ = "0.6.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -78,24 +78,25 @@ class ScoutCamp(object):
             )
 
         except IOError:
-            raise
             TemplateException("list.yml for templates not found")
             raw_input()
             sys.exit(1)
 
+
         cls.progress('local_c')
 
-        try:
-            # Strings para localização
-            cls.main_language = Lang(
-                cls.configs.get_path_to("languages"),
-                cls.configs.get_current_language()
-            )
+        if cls.configs.get_language_list() is not None:
+            languages = cls.configs.get_language_list().get_data_list()
+        else:
+            languages = [cls.configs.get_current_language()]
 
-        except IOError:
-            TemplateException("list.yml for locale not found")
-            raw_input()
-            sys.exit(1)
+        cls.languages = dict()
+
+        for lang in languages:
+            cls.languages.update({lang: Lang(cls.configs.get_path_to("languages"), lang)})
+
+        # Strings para localização
+        cls.main_language = cls.languages[cls.configs.get_current_language()]
 
         try:
             # Template para a tabela de cada integrante
@@ -111,33 +112,47 @@ class ScoutCamp(object):
 
 
 ################################################################################
-        """Leitura e escrita das medalhas"""
+        """ Leitura e escrita dos membros e medalhas """
         json_parser = JsonParser(cls.configs.get_path_to('index'))
         temp_terms = ['badges', 'scouts']
 
+        cls.data_base = dict()
+
         for term in temp_terms:
-            cls.progress('comp_term', cls.configs.get_term(term))
+            cls.progress('comp_term', cls.configs.get_variable(term))
+
             badges_list = DataList(
                 cls.configs.get_path_to(term),
                 cls.configs.get_list_to(term),
             )
 
-            cls.badge_base = list()
-
+            badge_base = list()
             for i in badges_list.get_data_list():
-                cls.badge_base.append(DataBase(cls.configs.get_path_to(term), i))
+                badge_base.append(DataBase(cls.configs.get_path_to(term), i))
 
-            json_parser.save_all(cls.badge_base, cls.configs.get_term(term), cls.configs.get_build_path_to("data"))
+            cls.data_base[cls.configs.get_variable(term)] = list()
+            for row in badge_base:
+                temp_data = dict()
+                temp_data.update(row.get_attributes())
+                temp_data.update(row.get_relations())
+                cls.data_base[cls.configs.get_variable(term)].append(temp_data)
+
+            json_parser.save_all(badge_base, cls.configs.get_variable(term), cls.configs.get_build_path_to("data"))
+
+        cls.data_base[cls.configs.get_variable("custom")] = cls.configs.get_custom_variables()
+        json_parser.save(json_parser.to_json(cls.configs.get_custom_variables(), 4), cls.configs.get_variable("custom"), cls.configs.get_build_path_to("data"))
 
 ################################################################################
-
+        """ Template maker """
+        # TODO: Arrumar essa bagunça hard-codada
         cls.progress('comp_page')
         temp_maker = pystache.Renderer()
 
         template_dict = dict()
 
         template_dict.update({"camp":cls.configs.get_camp()})
-        template_dict.update(cls.main_language.get_lang())
+        template_dict.update(cls.main_language.get_terms())
+        template_dict.update(cls.data_base)
 
         rendered_html = temp_maker.render(
             cls.main_template("string").decode('utf8'),
@@ -167,6 +182,7 @@ class ScoutCamp(object):
 
         table = SQLite(data_base_file)
 
+        ## NOTE: hard-coded
         datas = ['flicky','william']
         teste_scout = []
 
@@ -182,8 +198,6 @@ class ScoutCamp(object):
                 table.new_table(teste_scout[0].get_relations().keys(), "scouts", relation)
             table.crate_tables()
             for i in range(len(datas)):
-                #teste_scout = DataBase(cls.configs.get_path_to("scouts"), i)
-                #print scout.get_attributes()
                 table.new_insert(new_table, teste_scout[i].get_attributes())
 
                 for rel in teste_scout[i].get_relations().keys():

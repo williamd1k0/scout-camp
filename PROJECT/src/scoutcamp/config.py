@@ -2,6 +2,7 @@
 
 import yaml
 import sys
+from database import *
 from exceptions import *
 
 
@@ -42,11 +43,17 @@ class Config(object):
     __camp = {
         "name": "Scout Camp"
     }
+    __variables = {
+        "badges": "badges",
+        "scouts": "scouts",
+        "custom": "custom"
+    }
+
+    __custom_variables = None
 
     __database = "scout"
-
+    __language_list = None
     __current_language = "pt_br"
-
     __facebook_mode = False
 
     def __init__(self, config="conf.yml"):
@@ -74,9 +81,22 @@ class Config(object):
             if "index" in config_dict["camp"]:
                 self.__paths["index"] = config_dict["camp"]["index"]
 
+        if "language_list" in config_dict:
+            self.__language_list = DataList(self.get_path_to("languages"), config_dict["language_list"])
 
         if "current_language" in config_dict:
             self.__current_language = config_dict["current_language"]
+
+        if "variables" in config_dict:
+            if "scouts" in config_dict["variables"]:
+                self.__variables["scouts"] = config_dict["variables"]["scouts"]
+            if "badges" in config_dict["variables"]:
+                self.__variables["badges"] = config_dict["variables"]["badges"]
+            if "custom" in config_dict["variables"]:
+                self.__variables["custom"] = config_dict["variables"]["custom"]
+
+        if "custom_variables" in config_dict:
+            self.__custom_variables = config_dict["custom_variables"]
 
 
     def __call__(self, cmd, args):
@@ -108,17 +128,22 @@ class Config(object):
     def get_list_to(self, conf):
         return self.__lists[conf]
 
+
     def get_paths(self):
         return self.__paths
+
 
     def get_build_paths(self):
         return self.__build_paths
 
+
     def get_lists(self):
         return self.__lists
 
+
     def get_server(self):
         return self.__server
+
 
     def list_paths(self):
         paths = ""
@@ -126,26 +151,50 @@ class Config(object):
             paths += self.__paths[i]+"\n"
         return paths
 
+
     def get_server_host(self):
         return self.__server["host"]
+
 
     def get_server_port(self):
         return self.__server["port"]
 
+
     def get_server_index(self):
         return self.__server["index"]
+
 
     def get_camp_name(self):
         return self.__camp["name"]
 
+
     def get_camp(self):
         return self.__camp
+
+
+    def get_variable(self, var):
+        return self.__variables[var]
+
+
+    def get_all_variables(self):
+        return self.__variables
+
+
+    def get_custom_variables(self):
+        return self.__custom_variables
+
+
+    def get_language_list(self):
+        return self.__language_list
+
 
     def get_current_language(self):
         return self.__current_language
 
+
     def facebook_mode(self):
         return self.__facebook_mode
+
 
 
 if __name__ == '__main__':

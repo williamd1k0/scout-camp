@@ -2,21 +2,21 @@
 
 import yaml
 import sys
-from exceptions import *
+from exceptions import LanguageException
 
 
 class Lang(object):
 
 
-    __lang_dict = None
+    __lang_dict = None # Lang::dict
+
 
     def __init__(self, path="", lang=None, ext=".yml"):
 
         try:
             lang_file = open(path+lang+ext, "r")
         except IOError:
-            LanguageException("{0}{1} for template localization was not found".format(lang,ext))
-            raw_input()
+            LanguageException("O arquivo de localização \"{0}{1}\" não foi encontrado!".format(lang,ext))
             sys.exit(1)
 
         lang_dict = yaml.load(lang_file.read())
@@ -25,11 +25,9 @@ class Lang(object):
         self.__lang_dict = lang_dict
 
 
-    def get_lang(self):
+    def get_terms(self):
         return self.__lang_dict
 
-    def __dict__(self):
-        return self.get_lang()
 
 
 if __name__ == '__main__':

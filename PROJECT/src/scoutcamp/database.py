@@ -18,7 +18,11 @@ class DataList(object):
         self.__data_list = list()
 
         # Abre o arquivo da lista em YAML
-        list_file = open(_path+_list_file,"r")
+        try:
+            list_file = open(_path+_list_file,"r")
+        except IOError:
+            DataBaseException("Não foi possível encontrar a lista \""+_path+_list_file+"\"!")
+            sys.exit(1)
 
         # Passa o arquivo para uma dict
         yml_list = yaml.load(list_file.read())
@@ -124,8 +128,10 @@ class JsonParser(object):
         self.__default_indent = _default_indent
 
 
-    def to_json(self, _dict):
-        return json.dumps(_dict, sort_keys=True, indent=self.__default_indent)
+    def to_json(self, _dict, _indent=None):
+        if _indent is None:
+            _indent = self.__default_indent
+        return json.dumps(_dict, sort_keys=True, indent=_indent)
 
 
     def parse_list(self, _list):
