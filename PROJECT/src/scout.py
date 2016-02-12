@@ -145,17 +145,35 @@ class ScoutCamp(object):
         """ Template maker """
 
         cls.progress('comp_page')
-        temp_maker = pystache.Renderer()
+        temp_maker = pystache.Renderer(string_encoding='utf8')
 
         template_dict = dict()
         template_dict.update({"camp":cls.configs.get_camp()})
         template_dict.update(cls.main_language.get_terms())
         template_dict.update(cls.data_base)
 
+        rendered_board = temp_maker.render(
+            cls.main_scoutboard("string").decode('utf8'),
+            template_dict
+        )
+
+        temp_output = open("table.tmp","w")
+        temp_output.write(rendered_board.encode('utf8'))
+        temp_output.close()
+
+        temp_output = open("table.tmp","r")
+
+        rendered_board = temp_output.read()
+        print rendered_board
+
+        template_dict.update({"table":rendered_board})
+
         rendered_html = temp_maker.render(
             cls.main_template("string").decode('utf8'),
             template_dict
         )
+
+        print rendered_html.encode('utf8')
 
         html_output = open(cls.configs.get_path_to("index") + "index.html","w")
         html_output.write(rendered_html.encode('utf8'))
