@@ -4,3 +4,14 @@ scoutboard.innerHTML = `
     {{ nome }}
 {{ /members }}
 `;
+
+var dump = [
+    {{ #members }}
+        {
+            "nome":"{{nome}}",
+            "id":"{{id}}",
+            "faceid":"{{faceId}}",
+            "badges": {{ badges }}
+        },
+    {{ /members }}
+];

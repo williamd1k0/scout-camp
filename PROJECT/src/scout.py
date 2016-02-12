@@ -11,7 +11,7 @@ import pystache
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "0.6.0"
+    __version__ = "0.7.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
