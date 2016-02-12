@@ -68,23 +68,33 @@ class ScoutCamp(object):
 
     @classmethod
     def compile(cls):
+################################################################################
+        """ Leitura dos templates """
 
         cls.progress('temp_c')
-        try:
-            # Templates base
-            cls.main_template = Template(
-                cls.configs.get_path_to("templates"),
-                cls.configs.get_list_to("templates")
-            )
 
-        except IOError:
-            TemplateException("list.yml for templates not found")
-            raw_input()
-            sys.exit(1)
+        # Templates base
+        cls.main_template = Template(
+            cls.configs.get_path_to("templates"),
+            cls.configs.get_list_to("templates")
+        )
 
+        # Template para a tabela de cada integrante
+        cls.main_scoutboard = Template(
+            cls.configs.get_path_to("table"),
+            cls.configs.get_list_to("table")
+        )
+
+        # Template de scripts
+        cls.script_template = Template(
+            cls.configs.get_path_to("scripts"),
+            cls.configs.get_list_to("scripts"),
+            ".js"
+        )
 
         cls.progress('local_c')
 
+        # Leitura das linguagens
         if cls.configs.get_language_list() is not None:
             languages = cls.configs.get_language_list().get_data_list()
         else:
@@ -98,21 +108,10 @@ class ScoutCamp(object):
         # Strings para localização
         cls.main_language = cls.languages[cls.configs.get_current_language()]
 
-        try:
-            # Template para a tabela de cada integrante
-            cls.main_scoutboard = Template(
-                cls.configs.get_path_to("table"),
-                cls.configs.get_list_to("table")
-            )
-
-        except IOError:
-            TemplateException("list.yml for scoutboard not found")
-            raw_input()
-            sys.exit(1)
-
 
 ################################################################################
         """ Leitura e escrita dos membros e medalhas """
+
         json_parser = JsonParser(cls.configs.get_path_to('index'))
         temp_terms = ['badges', 'scouts']
 
@@ -144,12 +143,11 @@ class ScoutCamp(object):
 
 ################################################################################
         """ Template maker """
-        # TODO: Arrumar essa bagunça hard-codada
+
         cls.progress('comp_page')
         temp_maker = pystache.Renderer()
 
         template_dict = dict()
-
         template_dict.update({"camp":cls.configs.get_camp()})
         template_dict.update(cls.main_language.get_terms())
         template_dict.update(cls.data_base)
@@ -163,9 +161,14 @@ class ScoutCamp(object):
         html_output.write(rendered_html.encode('utf8'))
         html_output.close()
 
-        js_output = open(cls.configs.get_path_to("index")+"/js/"+"scoutboard.js","w")
-        js_output.write("var scoutboard = document.querySelector('#scout-board');\nscoutboard.innerHTML = "+cls.main_scoutboard("string").encode('utf8')+";")
-        js_output.close()
+        for i in range(len(cls.script_template.get_templates())):
+            rendered_script = temp_maker.render(
+                cls.script_template.get_templates()[i].decode('utf8'),
+                template_dict
+            )
+            js_output = open(cls.configs.get_path_to("index")+cls.configs.get_build_path_to("scripts")+cls.script_template.get_template_list()[i]+".js","w")
+            js_output.write(rendered_script.encode('utf8'))
+            js_output.close()
 
 
 

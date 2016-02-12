@@ -108,7 +108,7 @@ class Template(object):
                 template.close()
 
             except IOError:
-                TemplateException("File "+i+extension+" was not found")
+                TemplateException("O arquivo "+i+extension+" não foi encontrado!")
                 raw_input()
                 exit(1)
 

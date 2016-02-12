@@ -28,7 +28,8 @@ class Config(object):
         "templates": "list.yml",
         "scouts": "list.yml",
         "table": "list.yml",
-        "badges": "list.yml"
+        "badges": "list.yml",
+        "scripts": "list.yml"
     }
     __terms = {
         "scouts": "scouts",
