@@ -4,7 +4,7 @@
 }
   body{
       background-color: #113;
-  /*background-image: url(http://desktop.freewallpaper4.me/view/original/7212/marvel-vs-dc.jpg);*/  
+  /*background-image: url(http://desktop.freewallpaper4.me/view/original/7212/marvel-vs-dc.jpg);*/
   /*	background: -webkit-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); /* For Safari 5.1 to 6.0 */
   /*  background: -o-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); /* For Opera 11.1 to 12.0 */
     /*background: -moz-linear-gradient(left, red, orange, yellow, green, blue, indigo, violet); /* For Fx 3.6 to 15 */
@@ -13,7 +13,7 @@
   }
 
   table {
-    
+
     background: #262b56; /*rgba(38, 43, 86, 0.68); */
     -moz-border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -172,7 +172,7 @@ img.badgeicon{
     height:24px;
     background:#FFF;
     border-radius:105px;
-     
+
   }
   img.tier {
    border-style:solid;
@@ -181,7 +181,7 @@ img.badgeicon{
       align-content: center;
     background:#FFF;
     border-radius:105px;
-     
+
   }
   img.subtier {
     border-style:hidden;
@@ -329,6 +329,10 @@ background-color: #00F;
 }
 .tierlevel{
   color: rgba(0,0,0,0);
+}
+
+.navbar-brand>img {
+    display: inline !important;
 }
 
 #gayframe{

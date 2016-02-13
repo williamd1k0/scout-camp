@@ -63,3 +63,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# ScoutCamp build folder
+PROJECT/base_project/scout_board/

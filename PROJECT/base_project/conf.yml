@@ -5,6 +5,29 @@ camp:
 server:
     host: localhost
     port: 80
+    open_browser: false
+
+paths:
+    templates: _view
+    table: _table
+    scouts: _scouts
+    badges: _badges
+    assets: _assets
+    scripts: _js
+    languages: _lang
+    index: scout_board
+
+build_paths:
+    scripts: scripts
+    data: dump
+    assets: assets
+
+lists:
+    templates: list.yml
+    scouts: list.yml
+    table: list.yml
+    badges: list.yml
+    scripts: list.yml
 
 language_list: list.yml
 current_language: pt_br
@@ -16,6 +39,9 @@ variables:
 
 custom_variables:
     assets:
-        badges: /assets/badges/
-        tiers: /assets/tiers/
-        crests: /assets/crests/
+        badges: /assets/images/badges/
+        tiers: /assets/images/tiers/
+        crests: /assets/images/crests/
+        styles: /assets/styles/
+        bootstrap: /assets/bootstrap/
+    scripts: /scripts/
