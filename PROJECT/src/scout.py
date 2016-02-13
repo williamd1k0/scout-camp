@@ -11,7 +11,7 @@ import pystache
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "0.7.0"
+    __version__ = "0.8.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -145,7 +145,7 @@ class ScoutCamp(object):
         """ Template maker """
 
         cls.progress('comp_page')
-        temp_maker = pystache.Renderer(string_encoding='utf8')
+        temp_maker = pystache.Renderer(string_encoding='utf8', escape=lambda a:a)
 
         template_dict = dict()
         template_dict.update({"camp":cls.configs.get_camp()})
@@ -164,7 +164,6 @@ class ScoutCamp(object):
         temp_output = open("table.tmp","r")
 
         rendered_board = temp_output.read()
-        print rendered_board
 
         template_dict.update({"table":rendered_board})
 
@@ -172,8 +171,6 @@ class ScoutCamp(object):
             cls.main_template("string").decode('utf8'),
             template_dict
         )
-
-        print rendered_html.encode('utf8')
 
         html_output = open(cls.configs.get_path_to("index") + "index.html","w")
         html_output.write(rendered_html.encode('utf8'))
