@@ -14,7 +14,7 @@ class Config(object):
         "table": "_table",
         "scouts": "_scouts",
         "badges": "_badges",
-        "styles": "_styles",
+        "assets": "_assets",
         "scripts": "_js",
         "languages": "_lang",
         "index": "scout_board"
@@ -22,7 +22,7 @@ class Config(object):
     __build_paths = {
         "scripts": "js",
         "data": "data",
-        "styles": "style"
+        "assets": "assets"
     }
     __lists = {
         "templates": "list.yml",
@@ -31,15 +31,10 @@ class Config(object):
         "badges": "list.yml",
         "scripts": "list.yml"
     }
-    __terms = {
-        "scouts": "scouts",
-        "badges": "badges",
-        "tiers": "tiers",
-        "crests": "crests"
-    }
     __server = {
         "host": "localhost",
-        "port": 80
+        "port": 80,
+        "open_browser": True
     }
     __camp = {
         "name": "Scout Camp"
@@ -55,7 +50,6 @@ class Config(object):
     __database = "scout"
     __language_list = None
     __current_language = "pt_br"
-    __open_browser = True
 
 
     def __init__(self, config="conf.yml"):
@@ -68,43 +62,49 @@ class Config(object):
         config_dict = yaml.load(config_file.read())
         config_file.close()
 
-        # Altera os padrões de host e porta a partir do arquivo de configuração
-        if "server" in config_dict:
-            if "host" in config_dict["server"]:
-                self.__server["host"] = config_dict["server"]["host"]
-            if "port" in config_dict["server"]:
-                self.__server["port"] = config_dict["server"]["port"]
-
-
         if "camp" in config_dict:
             if "name" in config_dict["camp"]:
                 self.__camp["name"] = config_dict["camp"]["name"]
-            if "index" in config_dict["camp"]:
-                self.__paths["index"] = config_dict["camp"]["index"]
+                if "index" in config_dict["camp"]:
+                    self.__paths["index"] = config_dict["camp"]["index"]
+
+
+        config_defaults = [
+            ["server", ["host", "port", "open_browser"]],
+            ["paths", ["templates", "scouts", "badges", "assets", "scripts", "languages"]],
+            ["build_paths", ["scripts", "data", "assets"]],
+            ["variables", ["scouts", "badges", "custom"]]
+        ]
+
+        # Setando todas as configurações que possuem o mesmo padrão
+        for conf in config_defaults:
+            if conf[0] in config_dict:
+                for sett in conf[1]:
+                    if sett in config_dict[conf[0]]:
+                        if conf[0] == 'server':
+                            self.__server[sett] = config_dict[conf[0]][sett]
+                        elif conf[0] == 'paths':
+                            self.__paths[sett] = config_dict[conf[0]][sett]
+                        elif conf[0] == 'build_paths':
+                            self.__build_paths[sett] = config_dict[conf[0]][sett]
+                        elif conf[0] == 'variables':
+                            self.__variables[sett] = config_dict[conf[0]][sett]
+
 
         if "language_list" in config_dict:
             self.__language_list = DataList(self.get_path_to("languages"), config_dict["language_list"])
 
+
         if "current_language" in config_dict:
             self.__current_language = config_dict["current_language"]
 
-        if "variables" in config_dict:
-            if "scouts" in config_dict["variables"]:
-                self.__variables["scouts"] = config_dict["variables"]["scouts"]
-            if "badges" in config_dict["variables"]:
-                self.__variables["badges"] = config_dict["variables"]["badges"]
-            if "custom" in config_dict["variables"]:
-                self.__variables["custom"] = config_dict["variables"]["custom"]
 
         if "custom_variables" in config_dict:
             self.__custom_variables = config_dict["custom_variables"]
 
-        if "open_browser" in config_dict:
-            self.__open_browser = config_dict["open_browser"]
+        if "database" in config_dict:
+            self.__database = config_dict["database"]
 
-
-    def __call__(self, cmd, args):
-        pass
 
 
     def get_database(self):
@@ -123,10 +123,6 @@ class Config(object):
             return self.__build_paths[path]+"/"
         else:
             return self.__build_paths[path]
-
-
-    def get_term(self, term):
-        return self.__terms[term]
 
 
     def get_list_to(self, conf):
@@ -164,10 +160,6 @@ class Config(object):
         return self.__server["port"]
 
 
-    def get_server_index(self):
-        return self.__server["index"]
-
-
     def get_camp_name(self):
         return self.__camp["name"]
 
@@ -197,7 +189,7 @@ class Config(object):
 
 
     def get_open_browser(self):
-        return self.__open_browser
+        return self.__server["open_browser"]
 
 
 

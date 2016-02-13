@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-from scoutcamp import *
-import platform
-import sys, os
 import yaml
 import pystache
+import shutil, sys, os
+from scoutcamp import *
+from distutils.dir_util import copy_tree
 
 prints = Utils.prints
+printc = Utils.printc
+paint = Utils.paint
 
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "0.9.0"
+    __version__ = "1.0.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -67,13 +69,28 @@ class ScoutCamp(object):
                 os.mkdir(build_main+'/'+build_paths[folder])
 
 
+
     @classmethod
     def compile(cls):
-################################################################################
-        """ Leitura dos templates """
 
         cls.progress('temp_c')
+        cls.instance_templates()
 
+        cls.progress('local_c')
+        cls.instance_localization()
+
+        cls.progress('assets_c')
+        cls.copy_assets()
+
+        cls.dump_variables()
+
+        cls.progress('comp_page')
+        cls.render_templates()
+
+
+
+    @classmethod
+    def instance_templates(cls):
         # Templates base
         cls.main_template = Template(
             cls.configs.get_path_to("templates"),
@@ -93,8 +110,10 @@ class ScoutCamp(object):
             ".js"
         )
 
-        cls.progress('local_c')
 
+
+    @classmethod
+    def instance_localization(cls):
         # Leitura das linguagens
         if cls.configs.get_language_list() is not None:
             languages = cls.configs.get_language_list().get_data_list()
@@ -110,8 +129,24 @@ class ScoutCamp(object):
         cls.main_language = cls.languages[cls.configs.get_current_language()]
 
 
-################################################################################
-        """ Leitura e escrita dos membros e medalhas """
+
+    @classmethod
+    def copy_assets(cls):
+
+        try:
+            shutil.copy('favicon.ico', cls.configs.get_path_to('index')+"favicon.ico")
+        except IOError:
+            printc(" > Favicon não encontrado <", 'yellow')
+
+        copy_tree(
+            cls.configs.get_path_to('assets'),
+            cls.configs.get_path_to('index')+cls.configs.get_build_path_to('assets')
+        )
+
+
+
+    @classmethod
+    def dump_variables(cls):
 
         json_parser = JsonParser(cls.configs.get_path_to('index'))
         temp_terms = ['badges', 'scouts']
@@ -137,16 +172,21 @@ class ScoutCamp(object):
                 temp_data.update(row.get_relations())
                 cls.data_base[cls.configs.get_variable(term)].append(temp_data)
 
+            # check if dump json
             json_parser.save_all(badge_base, cls.configs.get_variable(term), cls.configs.get_build_path_to("data"))
 
         cls.data_base[cls.configs.get_variable("custom")] = cls.configs.get_custom_variables()
+        # check if dump json
         json_parser.save(json_parser.to_json(cls.configs.get_custom_variables(), 4), cls.configs.get_variable("custom"), cls.configs.get_build_path_to("data"))
 
-################################################################################
-        """ Template maker """
 
-        cls.progress('comp_page')
-        temp_maker = pystache.Renderer(string_encoding='utf8', escape=lambda a:a)
+
+    @classmethod
+    def render_templates(cls):
+
+        ignore_escape = lambda do_nothing: do_nothing
+
+        temp_maker = pystache.Renderer(string_encoding='utf8', escape=ignore_escape)
 
         template_dict = dict()
         template_dict.update({"camp":cls.configs.get_camp()})
@@ -274,14 +314,13 @@ class ScoutCamp(object):
             'config_c': " Checando configurações...",
             'temp_c': " Checando templates...",
             'local_c': " Checando localização...",
+            'assets_c': " Copiando assets...",
             'comp_term': " Compilando "+term+"...",
             'comp_page': " Compilando páginas...",
-            'comp_end': " Compilação finalizada!"
+            'comp_end': paint(" Compilação finalizada!", 'green')
         }
-        try:
-            prints(unicode(messages_unicode[prog], 'utf8'))
-        except:
-            prints(messages_unicode[prog])
+        prints(messages_unicode[prog])
+
 
     @classmethod
     def init(cls, project_name):
@@ -291,17 +330,11 @@ class ScoutCamp(object):
                 init_zip.extractall(project_name)
 
         else:
-            prints("A pasta {} já existe!".format(project_name))
+            printc("A pasta {} já existe!".format(project_name), 'yellow')
 
 
 
 if __name__ == '__main__':
-
-    # if sys.stdin.isatty():
-    #     print("\n\n\t"+ScoutCamp.get_full_version())
-    #     print("\n\tExecute pelo prompt/terminal!")
-    #     raw_input()
-    #     sys.exit()
 
     import argparse
 
@@ -334,19 +367,21 @@ if __name__ == '__main__':
         elif args.server:
             ScoutCamp.main(mode="server")
         else:
-            prints("Use o comando path com render ou server!")
+            printc(" Use o comando --path com --render ou --server!", 'yellow')
 
-    elif args.test and not args.server:
-        ScoutCamp.main(conf_override=args.test)
+    elif args.test:
+        if args.server:
+            ScoutCamp.main(conf_override=args.test, mode="server")
+        elif args.render:
+            ScoutCamp.main(conf_override=args.test)
+        else:
+            printc(" Use o comando --test com --render ou --server!", 'yellow')
 
-    elif args.test and args.server:
-        ScoutCamp.main(conf_override=args.test, mode="server")
-
-    elif args.server and not args.test:
+    elif args.server:
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        prints(ScoutCamp.get_full_version())
+        printc(ScoutCamp.get_full_version(), 'blue')
 
     elif args.create:
         prints(ScoutCamp.main(mode="init", project_name=args.create))
@@ -355,5 +390,5 @@ if __name__ == '__main__':
         ScoutCamp.main()
 
     else:
-        prints(ScoutCamp.get_full_version())
+        printc(ScoutCamp.get_full_version(), 'blue')
         parser.print_help()
