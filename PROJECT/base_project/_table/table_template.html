@@ -1,6 +1,6 @@
 
 {{ #members }}
-<table class="tg table table-striped table-bordered" style="margin-bottom: 10px; fixed; width: 100%">
+<table class="tg" style="margin-bottom: 10px; fixed; width: 100%">
     <colgroup>
         <col style="width: 50px">
         <col style="width: 150px">
@@ -9,19 +9,17 @@
         <tr>
             <!-- CREST ICON -->
             <th class="crest">
-                <img alt="crest" class="crestpic" title="!{crest[0]}" src="{PATH + crest[1]}.png">
+                <img alt="crest" class="crestpic" title="" src="{{ vars.assets.crests }}{{ crest }}.png">
             </th>
             <!-- NAME -->
             <th align="left" class="name" colspan="3"> {{ nome }} </th>
             <!-- Espacinho -->
             <!-- TIER -->
             <th align="left" class="tiername">
-                <span class="tierlevel"> !{mito.tier[2]} </span>{{! table.tier }}:
-                <strong> !{mito.tier[0]}</strong>
+                <b>{{ terms.tier }}</b>: {{ tier }}
             </th>
             <th align="right" class="tiericon">
-                <div>
-                    <img alt="tier" class="tier" title="!{mito.tier[1][0]}" src="!{PATH + mito.tier[1][1]}.png">
+                    <img alt="tier" class="tier" title="{{ tier }}" src="{{ vars.assets.tiers }}{{ tier }}.png">
             </th>
         </tr>
         <tr>
@@ -35,22 +33,23 @@
                 <td HEIGHT="1px" colspan="2"></td>
             </tr>
             <td class="tg-e3zv">
-                {{ nav_buttons.badges }}
+                <b>{{ nav_buttons.badges }}</b>
             </td>
             <td class="tg-031e"></td>
-            <td class="since" align="right" colspan="3"> {{ joindate }}
+            <td class="since" align="right" colspan="3"> {{ terms.joindate }}:
                 <strong class="mythano"> {{ joindate }} </strong>
             </td>
         </tr>
         <tr>
             <!-- BADGES -->
-            <td class="badges" id="!{mito.tagId}" colspan="4">
-                {{ badges }}
+            <td class="badges" id="b-{{ id }}" colspan="4">
+                {{ #badges }}
+                <img class="badgeicon" src="{{ vars.assets.badges }}{{ . }}.png" alt="{{ . }}" />
+                {{ /badges }}
             </td>
         </tr>
         <tr>
-
-                    <td colspan="4" align="right" class="badges2"> <i>{{! table.collection }}</i> <b id="!{mito.tagId1}"></b> </td>
+            <td colspan="4" align="right" class="badges2"> <i>{{ terms.collection }}</i> <b id="t-{{ id }}"></b> </td>
         </tr>
     </tbody>
 </table>

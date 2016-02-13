@@ -1,10 +1,11 @@
 # Lucas Flicky
 id: lucasflicky
-faceId: 100001156867316
+faceId: 1489576273
 nome: Lucas Flicky
 joindate: 2014/11/15
 tier: Minister
+crest: hood
 badges:
     - mythMinister
-    - chefao
+    - desenheiro
     - programeiro

@@ -1,5 +1,5 @@
 camp:
-    name:   Novo Projeto
+    name:   Projeto Teste
     index:  scout_board
 
 server:
@@ -15,5 +15,7 @@ variables:
     custom: vars
 
 custom_variables:
-    - lorem
-    - ipsum
+    assets:
+        badges: /assets/badges/
+        tiers: /assets/tiers/
+        crests: /assets/crests/

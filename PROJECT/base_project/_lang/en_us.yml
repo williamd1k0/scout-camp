@@ -4,6 +4,12 @@ nav_buttons:
     sort:   Sort
     select: Select Member
 
+terms:
+    joindate: Since
+    tier: Tier
+    crest: Crest
+    collection: Total
+
 links:
     badges: badges
     scouts: scouts

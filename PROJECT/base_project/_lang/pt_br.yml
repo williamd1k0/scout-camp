@@ -4,6 +4,12 @@ nav_buttons:
     sort:   Ordenar
     select: Selecionar Membro
 
+terms:
+    joindate: Desde
+    tier: Nível
+    crest: Insígnia
+    collection: Total
+
 links:
     badges: medalhas
     scouts: membros
