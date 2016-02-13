@@ -8,7 +8,7 @@ from exceptions import LanguageException
 class Lang(object):
 
 
-    __lang_dict = None # Lang::dict
+    __lang_dict = None
 
 
     def __init__(self, path="", lang=None, ext=".yml"):

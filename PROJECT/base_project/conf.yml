@@ -1,10 +1,10 @@
 camp:
-    name:   Projeto Teste
-    index:  scout_board
+    name: Projeto Teste
+    index: scout_board
 
 server:
-    host:   localhost
-    port:   80
+    host: localhost
+    port: 80
 
 language_list: list.yml
 current_language: pt_br

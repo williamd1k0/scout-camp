@@ -55,15 +55,15 @@ class Config(object):
     __database = "scout"
     __language_list = None
     __current_language = "pt_br"
-    __facebook_mode = False
+    __open_browser = True
+
 
     def __init__(self, config="conf.yml"):
 
         try:
             config_file = open(config, "r")
         except IOError:
-            ConfigException("conf.yml for settings was not found")
-            raw_input()
+            ConfigException("O arquivo \""+config+"\" para as configurações não foi encontrado!")
             sys.exit(1)
         config_dict = yaml.load(config_file.read())
         config_file.close()
@@ -98,6 +98,9 @@ class Config(object):
 
         if "custom_variables" in config_dict:
             self.__custom_variables = config_dict["custom_variables"]
+
+        if "open_browser" in config_dict:
+            self.__open_browser = config_dict["open_browser"]
 
 
     def __call__(self, cmd, args):
@@ -193,15 +196,10 @@ class Config(object):
         return self.__current_language
 
 
-    def facebook_mode(self):
-        return self.__facebook_mode
+    def get_open_browser(self):
+        return self.__open_browser
 
 
 
 if __name__ == '__main__':
-
-    teste = Config()
-    print(teste.get_path_to("template"))
-    print(teste.get_paths())
-    print(teste.list_paths())
-    raw_input()
+    pass

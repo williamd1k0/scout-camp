@@ -1,24 +1,26 @@
 # -*- encoding: utf-8 -*-
-
+from utils import Utils
+prints = Utils.prints
 
 class ConfigException(Exception):
 
     def __init__(self, message="Configuration error"):
-        print("\n ConfigException: "+message)
+        prints("\n ConfigException: "+message)
 
 
 class TemplateException(Exception):
 
     def __init__(self, message="Template error"):
-        print("\n TemplateException: "+message)
+        prints("\n TemplateException: "+message)
 
 
 class LanguageException(Exception):
 
     def __init__(self, message="Language error"):
-        print("\n LanguageException: "+message)
+        prints("\n LanguageException: "+message)
+
 
 class DataBaseException(Exception):
 
     def __init__(self, message="DataBase error"):
-        print("\n DataBaseException: "+message)
+        prints("\n DataBaseException: "+message)

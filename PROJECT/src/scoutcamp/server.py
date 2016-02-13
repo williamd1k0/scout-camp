@@ -2,50 +2,65 @@ import SimpleHTTPServer
 import SocketServer
 import webbrowser
 
-class Server:
+class Server(object):
 
-    __port = 80
-    __host = "localhost"
+    __port = None
+    __host = None
+    __open_browser = None
+    __httpd = None
 
-    def __init__(self, host=None, port=None):
+    def __init__(self, _host=None, _port=None, _open_browser=None):
 
-        if port:
-            self.__port = port
-        if host:
-            self.__host = host
+        if _host is not None:
+            self.__host = _host
+        else:
+            self.__host = "localhost"
+
+        if _port is not None:
+            self.__port = _port
+        else:
+            self.__port = 80
+
+        if _open_browser is not None:
+            self.__open_browser = _open_browser
+        else:
+            self.__open_browser = True
 
         Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-        self.httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
+        self.__httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
 
 
-    def start_server(self, auto_exec=True):
+    def start_server(self, _auto_exec=None):
 
-        if auto_exec:
-            self.open_chrome()
+        if _auto_exec is None:
+            _auto_exec = self.__open_browser
 
-        self.server_message()
+        if _auto_exec:
+            self.open_browser()
+
+        self.server_message('on')
         try:
-            self.httpd.serve_forever()
+            self.__httpd.serve_forever()
         except:
             pass
 
-        self.httpd.server_close()
-        print(" Server switched off, press Enter to exit")
-        raw_input()
-
-    def server_message(self):
-
-        print("\n> Scout Camp serving at port {}".format(self.__port))
-        print("> Open your browser and go to http://{}/".format(self.__host))
-        print("\n> Press Ctrl+C or close window to shut down the server\n")
+        self.__httpd.server_close()
+        self.server_message('off')
 
 
-    def open_chrome(self):
+    def server_message(self, _mode):
+        if _mode == "on":
+            print("\n> ScoutCamp serving at port {}".format(self.__port))
+            print("> Open your browser and go to http://{}/".format(self.__host))
+            print("\n> Press Ctrl+C or close window to shut down the server\n")
+        elif _mode == 'off':
+            print(" Servidor desativado")
 
+
+    def open_browser(self):
         webbrowser.open("http://{}:{}".format(self.__host, self.__port))
 
 
 if __name__ == '__main__':
-
     camp = Server()
     camp.start_server()

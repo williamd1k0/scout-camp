@@ -32,7 +32,7 @@ class DataList(object):
         self.__set_data_list(yml_list)
         # Se falhar, lança uma exceção do template
         if type(self.__data_list) is not list:
-            raise DataBaseException("Erro ao ler a lista")
+            DataBaseException("Erro ao ler a lista \""+_path+_list_file+"\"!")
 
 
     def __set_data_list(self, temp_dict={}):
@@ -95,8 +95,7 @@ class DataBase(object):
                     self.__relations[key] = scout_dict[key]
 
         else:
-            DataBaseException("O atributo id e obrigatorio e nao foi definido para {}".format(scout))
-            raw_input()
+            DataBaseException("O atributo id é obrigatório e não foi definido para {}".format(scout))
             sys.exit(1)
 
 
@@ -164,7 +163,7 @@ class JsonParser(object):
 
 
 
-class SQLite(object):
+class SQLiteExport(object):
 
     connection = None
     __tables = []

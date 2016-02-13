@@ -109,7 +109,6 @@ class Template(object):
 
             except IOError:
                 TemplateException("O arquivo "+i+extension+" não foi encontrado!")
-                raw_input()
                 exit(1)
 
         # Seta o resultado no atriburo templates
@@ -144,6 +143,4 @@ class Template(object):
 
 
 if __name__ == '__main__':
-    """ Bloco main para testes """
-    print(dir(Template))
-    raw_input()
+    pass

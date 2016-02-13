@@ -7,15 +7,18 @@ import sys, os
 import yaml
 import pystache
 
+prints = Utils.prints
 
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "0.8.0"
+    __version__ = "0.9.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
-    main_language = dict()
+    main_language = None
+    data_base = None
+    languages = None
 
 
     @classmethod
@@ -47,8 +50,6 @@ class ScoutCamp(object):
             cls.check_folders()
             cls.compile()
             cls.progress('comp_end')
-
-        sys.exit(0)
 
 
     @classmethod
@@ -157,14 +158,6 @@ class ScoutCamp(object):
             template_dict
         )
 
-        temp_output = open("table.tmp","w")
-        temp_output.write(rendered_board.encode('utf8'))
-        temp_output.close()
-
-        temp_output = open("table.tmp","r")
-
-        rendered_board = temp_output.read()
-
         template_dict.update({"table":rendered_board})
 
         rendered_html = temp_maker.render(
@@ -198,7 +191,7 @@ class ScoutCamp(object):
         if os.path.exists(data_base_file):
             os.remove(data_base_file)
 
-        table = SQLite(data_base_file)
+        table = SQLiteExport(data_base_file)
 
         ## NOTE: hard-coded
         datas = ['flicky','william']
@@ -240,8 +233,11 @@ class ScoutCamp(object):
 
     @classmethod
     def server(cls):
-        camp = Server(cls.configs.get_server_host(),
-                      cls.configs.get_server_port())
+        camp = Server(
+            cls.configs.get_server_host(),
+            cls.configs.get_server_port(),
+            cls.configs.get_open_browser()
+        )
         os.chdir(cls.configs.get_path_to("index"))
         camp.start_server()
 
@@ -249,7 +245,7 @@ class ScoutCamp(object):
     @staticmethod
     def myth():
         # ninguém está vendo isso
-        print("\n -*- Penso, logo mito -*-")
+        prints("\n -*- Penso, logo mito -*-")
 
 
     @classmethod
@@ -272,7 +268,7 @@ class ScoutCamp(object):
 
     @classmethod
     def progress(cls, prog=None, term=""):
-        messages = {
+        messages_unicode = {
             'init': " Inicializando...",
             'folder_c': " Checando pastas...",
             'config_c': " Checando configurações...",
@@ -282,8 +278,10 @@ class ScoutCamp(object):
             'comp_page': " Compilando páginas...",
             'comp_end': " Compilação finalizada!"
         }
-        print(messages[prog])
-
+        try:
+            prints(unicode(messages_unicode[prog], 'utf8'))
+        except:
+            prints(messages_unicode[prog])
 
     @classmethod
     def init(cls, project_name):
@@ -293,7 +291,7 @@ class ScoutCamp(object):
                 init_zip.extractall(project_name)
 
         else:
-            print("The directory {} already exists!".format(project_name))
+            prints("A pasta {} já existe!".format(project_name))
 
 
 
@@ -332,12 +330,11 @@ if __name__ == '__main__':
 
         elif args.render and not args.server:
             ScoutCamp.main()
-            raw_input()
+
         elif args.server:
             ScoutCamp.main(mode="server")
         else:
-            print("Use o comando path com render ou server!")
-            raw_input()
+            prints("Use o comando path com render ou server!")
 
     elif args.test and not args.server:
         ScoutCamp.main(conf_override=args.test)
@@ -349,15 +346,14 @@ if __name__ == '__main__':
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        print(ScoutCamp.get_full_version())
+        prints(ScoutCamp.get_full_version())
 
     elif args.create:
-        print(ScoutCamp.main(mode="init", project_name=args.create))
+        prints(ScoutCamp.main(mode="init", project_name=args.create))
 
     elif args.render:
         ScoutCamp.main()
-        raw_input()
 
     else:
-        print(ScoutCamp.get_full_version())
+        prints(ScoutCamp.get_full_version())
         parser.print_help()
