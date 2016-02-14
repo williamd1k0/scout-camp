@@ -11,8 +11,8 @@ echo  Building ScoutCamp...
 echo.
 python scout.py -v
 echo.
-echo  Packed version...
-pyinstaller -F -i py.ico scout.py
+echo  Unpacked version...
+pyinstaller -i py.ico scout.py
 echo. >> build-log.txt
 echo  -- Build done -- >> build-log.txt
 echo  %date% >> build-log.txt
