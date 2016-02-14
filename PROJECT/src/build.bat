@@ -1,6 +1,5 @@
 @echo off
 title  Scout Camp Builder
-color e1
 echo.
 echo  Checking Python
 python --version

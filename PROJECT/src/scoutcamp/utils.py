@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import platform
+
 
 class Utils(object):
 
@@ -30,4 +32,16 @@ class Utils(object):
 
     @classmethod
     def paint(cls, _string, _color):
-        return cls.__COLORS[_color] + _string + cls.__COLORS["default"]
+        if cls.colors_enabled():
+            return cls.__COLORS[_color] + _string + cls.__COLORS["default"]
+        else:
+            return _string
+
+
+    @staticmethod
+    def colors_enabled():
+        return int(platform.win32_ver()[0]) > 7
+
+
+if __name__ == '__main__':
+    pass
