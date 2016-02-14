@@ -1,6 +1,16 @@
-import SimpleHTTPServer
-import SocketServer
+# -*- encoding: utf-8 -*-
+
+import sys
+import errno
 import webbrowser
+import SocketServer
+import SimpleHTTPServer
+from utils import Utils
+from socket import error as socket_error
+
+printc = Utils.printc
+prints = Utils.prints
+
 
 class Server(object):
 
@@ -27,7 +37,15 @@ class Server(object):
             self.__open_browser = True
 
         Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-        self.__httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
+        try:
+            self.__httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
+        except socket_error as serr:
+            if serr.errno == errno.WSAEACCES:
+                printc(" Não foi possível criar o servidor, a porta {} pode estar sendo usada!".format(self.__port),'red')
+            else:
+                raise serr
+            exit(1)
+
 
 
     def start_server(self, _auto_exec=None):
@@ -50,11 +68,11 @@ class Server(object):
 
     def server_message(self, _mode):
         if _mode == "on":
-            print("\n> ScoutCamp serving at port {}".format(self.__port))
-            print("> Open your browser and go to http://{}/".format(self.__host))
-            print("\n> Press Ctrl+C or close window to shut down the server\n")
+            prints("\n> ScoutCamp serving at port {}".format(self.__port))
+            prints("> Open your browser and go to http://{}/".format(self.__host))
+            prints("\n> Press Ctrl+C or close window to shut down the server\n")
         elif _mode == 'off':
-            print(" Servidor desativado")
+            prints(" Servidor desativado")
 
 
     def open_browser(self):

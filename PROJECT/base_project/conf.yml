@@ -5,7 +5,7 @@ camp:
 server:
     host: localhost
     port: 80
-    open_browser: false
+    open_browser: true
 
 paths:
     templates: _view

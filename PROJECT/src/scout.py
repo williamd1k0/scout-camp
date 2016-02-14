@@ -14,7 +14,7 @@ paint = Utils.paint
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "1.0.0"
+    __version__ = "1.0.1"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -27,6 +27,10 @@ class ScoutCamp(object):
     def main(cls, conf_override=None, mode="default", project_name=None):
 
         cls.progress('init')
+        # Criar novo projeto
+        if mode == "init":
+            cls.progress('unzip')
+            cls.init(project_name)
 
         # Checagem para obter as configurações
         cls.progress('config_c')
@@ -39,9 +43,6 @@ class ScoutCamp(object):
         if mode == "server":
             cls.server()
 
-        # Criar novo projeto
-        elif mode == "init":
-            cls.init(project_name)
 
         elif mode == "database":
             cls.generate_sql()
@@ -317,6 +318,8 @@ class ScoutCamp(object):
             'assets_c': " Copiando assets...",
             'comp_term': " Compilando "+term+"...",
             'comp_page': " Compilando páginas...",
+            'unzip': " Extraindo templates...",
+            'unziped': paint(" Projeto criado!", 'green'),
             'comp_end': paint(" Compilação finalizada!", 'green')
         }
         prints(messages_unicode[prog])
@@ -326,11 +329,21 @@ class ScoutCamp(object):
     def init(cls, project_name):
         if not os.path.isdir(project_name):
             from zipfile import ZipFile
-            with ZipFile(os.path.dirname(sys.argv[0])+'/base_project.zip', "r") as init_zip:
+
+            template_file = os.path.dirname(sys.argv[0])
+            if len(template_file) > 0:
+                template_file += '/'
+            template_file += 'base_project.zip'
+
+            with ZipFile(template_file, "r") as init_zip:
                 init_zip.extractall(project_name)
 
         else:
-            printc("A pasta {} já existe!".format(project_name), 'yellow')
+            printc(" A pasta {} já existe!".format(project_name), 'yellow')
+            sys.exit(1)
+
+        cls.progress("unziped")
+        sys.exit(0)
 
 
 
