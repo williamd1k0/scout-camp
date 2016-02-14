@@ -40,7 +40,12 @@ class Utils(object):
 
     @staticmethod
     def colors_enabled():
-        return int(platform.win32_ver()[0]) > 7
+        win_version = platform.win32_ver()[0]
+        if len(win_version) > 0:
+            return int(win_version) > 7
+        else:
+            return False
+
 
 
 if __name__ == '__main__':
