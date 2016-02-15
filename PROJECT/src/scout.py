@@ -3,6 +3,7 @@
 
 import yaml
 import pystache
+import colorama
 import shutil, sys, os
 from scoutcamp import *
 from distutils.dir_util import copy_tree
@@ -14,7 +15,7 @@ paint = Utils.paint
 class ScoutCamp(object):
 
     __app__ = "ScoutCamp"
-    __version__ = "1.0.3"
+    __version__ = "1.0.4"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -351,6 +352,8 @@ if __name__ == '__main__':
 
     import argparse
 
+    colorama.init()
+
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-r","--render", help="compile project using default config file", action="store_true")
     parser.add_argument("-p","--path", help="compile using alternative path")
@@ -394,7 +397,7 @@ if __name__ == '__main__':
         ScoutCamp.main(mode="server")
 
     elif args.version:
-        printc(ScoutCamp.get_full_version(), 'blue')
+        printc(ScoutCamp.get_full_version(), 'cyan')
 
     elif args.create:
         prints(ScoutCamp.main(mode="init", project_name=args.create))
@@ -403,5 +406,5 @@ if __name__ == '__main__':
         ScoutCamp.main()
 
     else:
-        printc(ScoutCamp.get_full_version(), 'blue')
+        printc(ScoutCamp.get_full_version(), 'cyan')
         parser.print_help()
