@@ -1,42 +1,48 @@
+# Geral
 camp:
-    name: Projeto Teste
-    index: scout_board
+    name: Projeto Teste # nome do projeto
+    index: board_result # pasta do resultado do render
 
+# Servidor
 server:
-    host: localhost
-    port: 80
-    open_browser: true
+    host: localhost     # IP para o host local (ou simplesmemte 'localhost')
+    port: 80            # Porta do host local (usar porta maior que 1024 para Linux sem SU)
+    open_browser: true  # Abrir ou não o navegador automaticamente
 
+# Pastas do projeto
 paths:
-    templates: _view
-    table: _table
-    scouts: _scouts
-    badges: _badges
-    assets: _assets
-    scripts: _js
-    languages: _lang
-    index: scout_board
+    templates: _view    # Pasta para os templates do index.html
+    table: _table       # Pasta para os templates da tabela do membro
+    scouts: _scouts     # Pasta para os dados dos membros
+    badges: _badges     # Pasta para os dados das medalhas
+    assets: _assets     # Pasta para os recursos gerais (css, imagens etc)
+    scripts: _js        # Pasta para os scripts
+    languages: _lang    # Pasta para os arquivos de linguagem
 
+# Pastas da renderização do projeto
 build_paths:
-    scripts: scripts
-    data: dump
-    assets: assets
+    scripts: scripts    # Pasta dos scritps
+    data: dump          # Pasta dos arquivos json exportados
+    assets: assets      # Pasta dos recursos gerais
 
+# Lista dos dados em geral
 lists:
-    templates: list.yml
-    scouts: list.yml
-    table: list.yml
-    badges: list.yml
-    scripts: list.yml
+    templates: list.yml # Lista dos templates
+    scouts: list.yml    # Lista dos membros
+    table: list.yml     # Lista dos templates de tabela
+    badges: list.yml    # Lista das medalhas
+    scripts: list.yml   # Lista dos scripts
 
-language_list: list.yml
-current_language: pt_br
+language_list: list.yml # Lista dos arquivos de lingaugem (opcional)
+current_language: pt_br # Linguagem padrão
 
+# Nome usado para as variáveis no template e export json
 variables:
-    badges: badges
-    scouts: members
-    custom: vars
+    badges: badges      # Nome da variável das medalhas
+    scouts: members     # Nome da variável dos membros
+    custom: vars        # Nome da variável das variáveis customizadas
 
+# Variáveis customizadas (definidas pelo usuário)
 custom_variables:
     assets:
         badges: /assets/images/badges/
