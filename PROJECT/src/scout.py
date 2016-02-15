@@ -14,8 +14,9 @@ paint = Utils.paint
 
 class ScoutCamp(object):
 
+
     __app__ = "ScoutCamp"
-    __version__ = "1.0.4"
+    __version__ = "1.0.5"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     configs = None
     main_template = None
@@ -287,7 +288,8 @@ class ScoutCamp(object):
     @staticmethod
     def myth():
         # ninguém está vendo isso
-        prints("\n -*- Penso, logo mito -*-")
+        printc("\n -*- Penso, logo mito -*-", "magenta")
+        sys.exit()
 
 
     @classmethod
@@ -351,8 +353,6 @@ class ScoutCamp(object):
 if __name__ == '__main__':
 
     import argparse
-
-    colorama.init()
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-r","--render", help="compile project using default config file", action="store_true")

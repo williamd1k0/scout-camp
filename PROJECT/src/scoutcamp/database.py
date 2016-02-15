@@ -76,9 +76,13 @@ class DataBase(object):
 
     def __init__(self, path="", scout="", ext=".yml"):
 
-        scout_file = open(path+scout+ext,'r')
-        scout_dict = yaml.load(scout_file.read())
-        scout_file.close()
+        try:
+            scout_file = open(path+scout+ext,'r')
+            scout_dict = yaml.load(scout_file.read())
+            scout_file.close()
+        except IOError:
+            DataBaseException("Não foi possível encontrar o arquivo \""+path+scout+ext+"\"!")
+            sys.exit(1)
 
 
         if "id" in scout_dict:
