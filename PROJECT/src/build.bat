@@ -12,7 +12,7 @@ echo.
 python scout.py -v
 echo.
 echo  Packed version...
-pyinstaller -F -i py.ico scout.py
+pyinstaller -F -i scicon.ico scout.py
 echo. >> build-log.txt
 echo  -- Build done -- >> build-log.txt
 echo  %date% >> build-log.txt
