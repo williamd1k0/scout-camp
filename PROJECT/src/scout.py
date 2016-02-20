@@ -333,6 +333,8 @@ class ScoutCamp(object):
         if not os.path.isdir(project_name):
             from zipfile import ZipFile
 
+            template_file = Download.get_template()
+
             template_file = os.path.dirname(sys.argv[0])
             if len(template_file) > 0:
                 template_file += '/'
