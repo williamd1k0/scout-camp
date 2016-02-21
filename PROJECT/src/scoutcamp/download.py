@@ -103,7 +103,8 @@ class TemplateUpdate(object):
                     status += chr(13)
                     if progress:
                         print(status, end="")
-                print()
+                if progress:
+                    print()
 
         except Exception as e:
             raise

@@ -351,7 +351,9 @@ class ScoutCamp(object):
             template_file = TemplateUpdate.get_main_path()+'base_project.zip'
 
             with ZipFile(template_file, "r") as init_zip:
-                init_zip.extractall(project_name)
+                init_zip.extractall("")
+
+            os.rename('scout-camp-template-master', project_name)
 
         else:
             printc(" A pasta {} já existe!".format(project_name), 'yellow')
