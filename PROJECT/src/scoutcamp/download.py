@@ -4,7 +4,7 @@ import sys, os, tempfile, logging
 import urllib2
 import urlparse
 
-class Download(object):
+class TemplateUpdate(object):
 
     __template_source = "https://github.com/TheTimeTunnel/scout-camp-template/archive/master.zip"
     __template_file = "base_project.zip"
@@ -12,31 +12,61 @@ class Download(object):
     __version_file = "temp_version.sc"
 
 
+    @staticmethod
+    def get_main_path():
+        path = os.path.dirname(sys.argv[0])
+        if len(path) > 0:
+            path += '/'
+        return path
+
+
     @classmethod
-    def get_template(cls):
-        template_file = os.path.dirname(sys.argv[0])
-        if len(template_file) > 0:
-            template_file += '/'
-
-        if os.path.isfile(template_file+cls.__template_file):
+    def has_update(cls):
+        versions = cls.get_template_versions()
+        return versions[0] < versions[1]
 
 
     @classmethod
-    def get_template_version(cls):
-        pass
+    def get_template_versions(cls):
+        version_file = cls.get_main_path()+cls.__version_file
+
+        if not os.path.isfile(version_file):
+            cls.download_version()
+
+        open_version = open(version_file, 'r')
+        version = int(open_version.read())
+        open_version.close()
+
+        cls.download_version()
+        open_version = open(version_file, 'r')
+        version_origin = int(open_version.read())
+        open_version.close()
+
+        open_version = open(version_file, 'w')
+        open_version.write(str(version))
+        open_version.close()
+
+        cls.local_version = version
+        cls.origin_version = version_origin
+
+        return [version, version_origin]
+
+
 
     @classmethod
     def download_version(cls):
-        return cls.download_file(cls.__version_source, cls.__version_file)
+        return cls.download_file(cls.__version_source, cls.__version_file, False)
 
 
     @classmethod
     def download_template(cls):
-        return cls.download_file(cls.__template_source, cls.__template_file)
+        template = cls.download_file(cls.__template_source, cls.__template_file)
+        cls.download_version()
+        return template
 
 
-    @staticmethod
-    def download_file(url, desc=None):
+    @classmethod
+    def download_file(cls, url, desc=None, progress=True):
         try:
             u = urllib2.urlopen(url)
 
@@ -45,7 +75,7 @@ class Download(object):
             if not filename:
                 filename = 'downloaded.file'
             if desc:
-                filename = os.path.join(desc, filename)
+                filename = cls.get_main_path()+desc
 
             with open(filename, 'wb') as f:
                 meta = u.info()
@@ -54,7 +84,8 @@ class Download(object):
                 file_size = None
                 if meta_length:
                     file_size = int(meta_length[0])
-                print("Downloading: {0} Bytes: {1}".format(url, file_size))
+                if progress:
+                    print(" Downloading: {0} Bytes: {1}".format(desc, file_size))
 
                 file_size_dl = 0
                 block_sz = 8192
@@ -70,10 +101,16 @@ class Download(object):
                     if file_size:
                         status += "   [{0:6.2f}%]".format(file_size_dl * 100 / file_size)
                     status += chr(13)
-                    print(status, end="")
+                    if progress:
+                        print(status, end="")
                 print()
 
         except Exception as e:
             raise
 
         return filename
+
+
+
+if __name__ == '__main__':
+    pass

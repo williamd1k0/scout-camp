@@ -65,4 +65,6 @@ docs/_build/
 target/
 
 # ScoutCamp build folder
-PROJECT/base_project/board_result/
+PROJECT/base_project/
+PROJECT/src/base_project.zip
+PROJECT/src/temp_version.sc

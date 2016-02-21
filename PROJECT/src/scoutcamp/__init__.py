@@ -34,4 +34,5 @@ from server import Server
 from lang import Lang
 from template import Template
 from utils import Utils
+from download import TemplateUpdate
 from exceptions import *

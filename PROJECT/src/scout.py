@@ -31,7 +31,6 @@ class ScoutCamp(object):
         cls.progress('init')
         # Criar novo projeto
         if mode == "init":
-            cls.progress('unzip')
             cls.init(project_name)
 
         # Checagem para obter as configurações
@@ -321,6 +320,7 @@ class ScoutCamp(object):
             'assets_c': " Copiando assets...",
             'comp_term': " Compilando "+term+"...",
             'comp_page': " Compilando páginas...",
+            'download_temp': " Baixando templates...",
             'unzip': " Extraindo templates...",
             'unziped': paint(" Projeto criado!", 'green'),
             'comp_end': paint(" Compilação finalizada!", 'green')
@@ -333,12 +333,22 @@ class ScoutCamp(object):
         if not os.path.isdir(project_name):
             from zipfile import ZipFile
 
-            template_file = Download.get_template()
+            if not os.path.isfile(TemplateUpdate.get_main_path()+'base_project.zip'):
+                cls.progress('download_temp')
+                TemplateUpdate.download_template()
 
-            template_file = os.path.dirname(sys.argv[0])
-            if len(template_file) > 0:
-                template_file += '/'
-            template_file += 'base_project.zip'
+            if TemplateUpdate.has_update():
+                printc("Há uma nova versão do template disponível!", 'yellow')
+                prints("Deseja baixar? (Y/N)")
+
+                update = None
+                while update != "Y" and update != "N":
+                    update = raw_input('> ').upper()
+                    if update == "Y":
+                        TemplateUpdate.download_template()
+
+            cls.progress('unzip')
+            template_file = TemplateUpdate.get_main_path()+'base_project.zip'
 
             with ZipFile(template_file, "r") as init_zip:
                 init_zip.extractall(project_name)
