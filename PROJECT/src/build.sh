@@ -1,5 +1,6 @@
 #!/bin/bash
 path_src='PROJECT/src'
+echo "pip install -r '$path_src/requirements.txt'"
 pip install -r "$path_src/requirements.txt"
 echo 'ScoutCamp Linux Build (w/ render)'
 echo '$ scout --version'

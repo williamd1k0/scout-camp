@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
 import yaml
@@ -16,8 +16,9 @@ class ScoutCamp(object):
 
 
     __app__ = "ScoutCamp"
-    __version__ = "1.1.0"
+    __version__ = "1.1.2"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
+    program_path = None
     configs = None
     main_template = None
     main_language = None
@@ -29,6 +30,9 @@ class ScoutCamp(object):
     def main(cls, conf_override=None, mode="default", project_name=None):
 
         cls.progress('init')
+        cls.program_path = cls.get_main_path()
+        ScoutCampException.set_error_log(ErrorLog(cls.program_path, 'camp'))
+
         # Criar novo projeto
         if mode == "init":
             cls.init(project_name)
@@ -291,6 +295,14 @@ class ScoutCamp(object):
         sys.exit()
 
 
+    @staticmethod
+    def get_main_path():
+        path = os.path.dirname(sys.argv[0])
+        if len(path) > 0:
+            path += '/'
+        return path
+
+
     @classmethod
     def get_version(cls):
         return cls.__version__
@@ -333,22 +345,30 @@ class ScoutCamp(object):
         if not os.path.isdir(project_name):
             from zipfile import ZipFile
 
-            if not os.path.isfile(TemplateUpdate.get_main_path()+'base_project.zip'):
-                cls.progress('download_temp')
-                TemplateUpdate.download_template()
+            if not os.path.isfile(cls.program_path+'base_project.zip'):
+                try:
+                    cls.progress('download_temp')
+                    TemplateUpdate.download_template()
+                except Exception as e:
+                    ServerException(" Não foi possível baixar o template, verifique sua conexão e tente novamente!", e)
+                    sys.exit(1)
 
-            if TemplateUpdate.has_update():
-                printc("Há uma nova versão do template disponível!", 'yellow')
-                prints("Deseja baixar? (Y/N)")
+            try:
+                if TemplateUpdate.has_update():
+                    printc("Há uma nova versão do template disponível!", 'yellow')
+                    prints("Deseja baixar? (Y/N)")
 
-                update = None
-                while update != "Y" and update != "N":
-                    update = raw_input('> ').upper()
-                    if update == "Y":
-                        TemplateUpdate.download_template()
+                    update = None
+                    while update != "Y" and update != "N":
+                        update = raw_input('> ').upper()
+                        if update == "Y":
+                            TemplateUpdate.download_template()
+            except Exception as e:
+                printc(" Não foi possível checar a versão do template, usando o template atual...", 'yellow')
+
 
             cls.progress('unzip')
-            template_file = TemplateUpdate.get_main_path()+'base_project.zip'
+            template_file = cls.program_path+'base_project.zip'
 
             with ZipFile(template_file, "r") as init_zip:
                 init_zip.extractall("")

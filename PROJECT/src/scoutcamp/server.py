@@ -6,6 +6,7 @@ import webbrowser
 import SocketServer
 import SimpleHTTPServer
 from utils import Utils
+from exceptions import ServerException
 from socket import error as socket_error
 
 printc = Utils.printc
@@ -41,10 +42,10 @@ class Server(object):
             self.__httpd = SocketServer.TCPServer((self.__host, self.__port), Handler)
         except socket_error as serr:
             if serr.errno == errno.WSAEACCES:
-                printc(" Não foi possível criar o servidor, a porta {} pode estar sendo usada!".format(self.__port),'red')
+                ServerException(" Não foi possível criar o servidor, a porta {} pode estar sendo usada!".format(self.__port), serr)
+                sys.exit(serr.errno)
             else:
                 raise serr
-            exit(1)
 
 
 

@@ -1,6 +1,21 @@
 # -*- encoding: utf-8 -*-
-from utils import Utils
+from utils import *
+
 printc = Utils.printc
+
+
+class ScoutCampException(Exception):
+
+    __error_log = ErrorLog()
+
+    @classmethod
+    def set_error_log(cls, _errlg):
+        cls.__error_log = _errlg
+
+    @classmethod
+    def log(cls, info):
+        cls.__error_log.log(info)
+
 
 class ConfigException(Exception):
 
@@ -24,3 +39,15 @@ class DataBaseException(Exception):
 
     def __init__(self, message="DataBase error"):
         printc("\n DataBaseException: "+message, 'red')
+
+
+class ServerException(ScoutCampException):
+
+    def __init__(self, message="Server error", err=''):
+        ScoutCampException.log(err)
+        printc("\n ServerException: "+message, 'red')
+
+
+
+if __name__ == '__main__':
+    pass
