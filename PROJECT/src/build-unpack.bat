@@ -9,10 +9,10 @@ pyinstaller -v
 echo.
 echo  Building ScoutCamp...
 echo.
-python scout.py -v
+python main.py -v
 echo.
 echo  Unpacked version...
-pyinstaller -i scicon.ico scout.py
+pyinstaller -i scicon.ico -n camp main.py
 echo. >> build-log.txt
 echo  -- Build done -- >> build-log.txt
 echo  %date% >> build-log.txt

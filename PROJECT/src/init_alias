@@ -1,0 +1,6 @@
+#!/bin/bash
+
+main_path='/path/to/src'
+
+echo '' >> ~/.bash_aliases && source ~/.bash_aliases
+echo "alias camp='python $main_path/main.py'" >> ~/.bash_aliases && source ~/.bash_aliases

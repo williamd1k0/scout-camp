@@ -1,5 +1,5 @@
 @echo off
-title  Scout Camp Builder
+title  ScoutCamp Builder
 echo.
 echo  Checking Python
 python --version
@@ -9,10 +9,10 @@ pyinstaller -v
 echo.
 echo  Building ScoutCamp...
 echo.
-python scout.py -v
+python main.py -v
 echo.
 echo  Packed version...
-pyinstaller -F -i scicon.ico scout.py
+pyinstaller -F -i scicon.ico -n camp main.py
 echo. >> build-log.txt
 echo  -- Build done -- >> build-log.txt
 echo  %date% >> build-log.txt
