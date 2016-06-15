@@ -226,7 +226,7 @@ class SQLiteExport(object):
 
             insert_header = insert_header[0:len(insert_header)-1]+")\n VALUES ("
             for val in attributes.values():
-                val = u"%s" % val
+                val = "%s" % val
                 insert_header += "'%s'," % val
 
         insert_header = insert_header[0:len(insert_header)-1]+")"
