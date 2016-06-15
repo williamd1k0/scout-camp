@@ -14,7 +14,7 @@ class Lang(object):
     def __init__(self, path="", lang=None, ext=".yml"):
 
         try:
-            lang_file = open(path+lang+ext, "r")
+            lang_file = open(path+lang+ext, "r", encoding='utf-8')
         except IOError:
             LanguageException("O arquivo de localização \"{0}{1}\" não foi encontrado!".format(lang,ext))
             sys.exit(1)

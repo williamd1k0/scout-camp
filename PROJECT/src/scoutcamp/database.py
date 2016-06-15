@@ -19,7 +19,7 @@ class DataList(object):
 
         # Abre o arquivo da lista em YAML
         try:
-            list_file = open(_path+_list_file,"r")
+            list_file = open(_path+_list_file,"r", encoding='utf-8')
         except IOError:
             DataBaseException("Não foi possível encontrar a lista \""+_path+_list_file+"\"!")
             sys.exit(1)
@@ -77,7 +77,7 @@ class DataBase(object):
     def __init__(self, path="", scout="", ext=".yml"):
 
         try:
-            scout_file = open(path+scout+ext,'r')
+            scout_file = open(path+scout+ext,'r', encoding='utf-8')
             scout_dict = yaml.load(scout_file.read())
             scout_file.close()
         except IOError:
@@ -157,7 +157,7 @@ class JsonParser(object):
     def save(self, _json, _outfile, _alt_path=""):
         output = self.__default_out + _alt_path + _outfile+self.__default_ext
 
-        json_output = open(output, "w")
+        json_output = open(output, "w", encoding='utf-8')
         json_output.write(_json)
         json_output.close()
 

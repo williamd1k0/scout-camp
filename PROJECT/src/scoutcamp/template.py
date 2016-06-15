@@ -103,7 +103,7 @@ class Template(object):
         # Faz um loop pela lista de templates para obtê-los
         for i in self.get_template_list():
             try:
-                template = open(path+i+extension,"r")
+                template = open(path+i+extension,"r", encoding='utf-8')
                 temps.append(template.read())
                 template.close()
 

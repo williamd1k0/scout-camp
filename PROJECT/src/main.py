@@ -200,28 +200,31 @@ class ScoutCamp(object):
         template_dict.update(cls.data_base)
 
         rendered_board = temp_maker.render(
-            cls.main_scoutboard("string").decode('utf8'),
+            cls.main_scoutboard("string"),
             template_dict
         )
 
         template_dict.update({"table":rendered_board})
 
         rendered_html = temp_maker.render(
-            cls.main_template("string").decode('utf8'),
+            cls.main_template("string"),
             template_dict
         )
 
-        html_output = open(cls.configs.get_path_to("index") + "index.html","w")
-        html_output.write(rendered_html.encode('utf8'))
+        html_output = open(cls.configs.get_path_to("index") + "index.html","w", encoding='utf-8')
+        html_output.write(rendered_html)
         html_output.close()
 
         for i in range(len(cls.script_template.get_templates())):
             rendered_script = temp_maker.render(
-                cls.script_template.get_templates()[i].decode('utf8'),
+                cls.script_template.get_templates()[i],
                 template_dict
             )
-            js_output = open(cls.configs.get_path_to("index")+cls.configs.get_build_path_to("scripts")+cls.script_template.get_template_list()[i]+".js","w")
-            js_output.write(rendered_script.encode('utf8'))
+            js_output = open(
+                cls.configs.get_path_to("index")+cls.configs.get_build_path_to("scripts")+cls.script_template.get_template_list()[i]+".js",
+                "w", encoding='utf-8'
+            )
+            js_output.write(rendered_script)
             js_output.close()
 
 
