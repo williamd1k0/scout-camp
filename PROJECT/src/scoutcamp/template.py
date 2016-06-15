@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
-from database import *
-from exceptions import *
+from .database import *
+from .exceptions import *
 
 
 class Template(object):

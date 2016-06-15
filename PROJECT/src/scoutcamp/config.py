@@ -2,8 +2,8 @@
 
 import yaml
 import sys
-from database import *
-from exceptions import *
+from .database import *
+from .exceptions import *
 
 
 class Config(object):

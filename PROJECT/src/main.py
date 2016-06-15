@@ -351,6 +351,7 @@ class ScoutCamp(object):
                     TemplateUpdate.download_template()
                 except Exception as e:
                     ServerException(" Não foi possível baixar o template, verifique sua conexão e tente novamente!", e)
+                    raise
                     sys.exit(1)
 
             try:

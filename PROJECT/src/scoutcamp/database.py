@@ -4,7 +4,7 @@ import yaml
 import sys
 import json
 import sqlite3
-from exceptions import *
+from .exceptions import *
 
 
 class DataList(object):

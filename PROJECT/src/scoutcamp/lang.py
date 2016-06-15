@@ -2,7 +2,7 @@
 
 import yaml
 import sys
-from exceptions import LanguageException
+from .exceptions import LanguageException
 
 
 class Lang(object):

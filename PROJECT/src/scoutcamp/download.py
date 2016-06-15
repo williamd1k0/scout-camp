@@ -1,8 +1,7 @@
-from __future__ import ( division, absolute_import, print_function, unicode_literals )
 
 import sys, os, tempfile, logging
-import urllib2
-import urlparse
+from urllib import request, parse
+
 
 class TemplateUpdate(object):
 
@@ -68,9 +67,9 @@ class TemplateUpdate(object):
     @classmethod
     def download_file(cls, url, desc=None, progress=True):
         try:
-            u = urllib2.urlopen(url)
+            u = request.urlopen(url)
 
-            scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
+            scheme, netloc, path, query, fragment = parse.urlsplit(url)
             filename = os.path.basename(path)
             if not filename:
                 filename = 'downloaded.file'

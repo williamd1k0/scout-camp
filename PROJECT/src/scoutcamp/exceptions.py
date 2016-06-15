@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from utils import *
+from .utils import *
 
 printc = Utils.printc
 
