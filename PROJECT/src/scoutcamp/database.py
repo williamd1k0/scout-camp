@@ -2,6 +2,7 @@
 
 import yaml
 import sys
+import os
 import json
 import sqlite3
 from .exceptions import *
@@ -16,6 +17,9 @@ class DataList(object):
     def __init__(self, _path="", _list_file=""):
 
         self.__data_list = list()
+        self.path = _path
+        self.listfile = _list_file
+        self.extension = _list_file.split('.')[-1]
 
         # Abre o arquivo da lista em YAML
         try:
@@ -50,8 +54,17 @@ class DataList(object):
         # Percorre a dict para atribuir a uma list
         for i in temp_dict:
             temp_list.append(temp_dict[i])
+        
+        list_ = temp_list[0]
+        if list_[0] == '*':
+            temp_list = os.listdir(self.path)
+            list_ = list()
+            for item in temp_list:
+                if item == self.listfile: continue
+                list_.append(item.replace('.'+self.extension, ''))
+
         # Atribui à nova lista somente a primeira posição da list
-        self.__data_list = temp_list[0]
+        self.__data_list = list_
 
 
     def get_data_list(self):
