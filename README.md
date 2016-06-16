@@ -1,7 +1,7 @@
 # ScoutCamp
-[![Build Status](https://travis-ci.org/TheTimeTunnel/scout-camp.svg?branch=master)](https://travis-ci.org/TheTimeTunnel/scout-camp)
+[![Build Status](https://travis-ci.org/williamd1k0/scout-camp.svg?branch=master)](https://travis-ci.org/TheTimeTunnel/scout-camp)
 
-![ScoutCamp](https://raw.githubusercontent.com/TheTimeTunnel/scout-camp/master/scout-camp.png)
+![ScoutCamp](https://raw.githubusercontent.com/williamd1k0/scout-camp/master/scout-camp.png)
 
 ## Argumentos do terminal/prompt:
 
