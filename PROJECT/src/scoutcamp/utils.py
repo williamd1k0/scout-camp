@@ -19,21 +19,21 @@ class Utils(object):
 
 
     @staticmethod
-    def prints(_string):
+    def prints(string_):
         try:
-            print(unicode(_string, 'utf8'))
+            print(unicode(string_, 'utf8'))
         except:
-            print(_string)
+            print(string_)
 
 
     @classmethod
-    def printc(cls, _string, _color):
-        cls.prints(cls.paint(_string, _color))
+    def printc(cls, string_, color_):
+        cls.prints(cls.paint(string_, color_))
 
 
     @classmethod
-    def paint(cls, _string, _color):
-        return cls.__COLORS[_color] + _string + cls.__COLORS["default"]
+    def paint(cls, string_, color_):
+        return cls.__COLORS[color_] + string_ + cls.__COLORS["default"]
 
 
 class ErrorLog(object):

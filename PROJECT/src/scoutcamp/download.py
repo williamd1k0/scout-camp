@@ -5,10 +5,10 @@ from urllib import request, parse
 
 class TemplateUpdate(object):
 
-    __template_source = "https://github.com/TheTimeTunnel/scout-camp-template/archive/master.zip"
+    __template_source = "https://github.com/williamd1k0/scout-camp-template/archive/master.zip"
     __template_file = "base_project.zip"
-    __version_source = "https://github.com/TheTimeTunnel/scout-camp-template/raw/version/VERSION"
-    __version_file = "temp_version.sc"
+    __version_source = "https://github.com/williamd1k0/scout-camp-template/raw/version/VERSION"
+    __version_file = ".template_version"
 
 
     @staticmethod

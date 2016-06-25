@@ -12,11 +12,12 @@ prints = Utils.prints
 printc = Utils.printc
 paint = Utils.paint
 
+
 class ScoutCamp(object):
 
 
     __app__ = "ScoutCamp"
-    __version__ = "1.1.2"
+    __version__ = "1.2.0"
     __author__ = "William Tumeo <tumeowilliam@gmail.com>"
     program_path = None
     configs = None
@@ -394,11 +395,11 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(prog="ScoutCamp", description="Scout Camp - Static HTML Group Manager")
     parser.add_argument("-r","--render", help="compile project using default config file", action="store_true")
-    parser.add_argument("-p","--path", help="compile using alternative path")
-    parser.add_argument("-c","--create", help="create new ScoutCamp project")
-    parser.add_argument("-t","--test", help="compile using another config file")
+    parser.add_argument("-p","--path", metavar="alternative-path", help="compile using alternative path")
+    parser.add_argument("-c","--create", metavar="project-name", help="create new ScoutCamp project")
+    parser.add_argument("-t","--test", metavar="config-file", help="compile using another config file")
     parser.add_argument("-s","--server", help="start the Scout Camp server", action="store_true")
-    parser.add_argument("-d","--data", help="generate SQLite database", action="store_true")
+    parser.add_argument("-d","--data", help="generate SQLite database [experimental]", action="store_true")
     parser.add_argument("-m","--myth", help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-v","--version", help="show version", action="store_true")
     args = parser.parse_args()
