@@ -3,6 +3,7 @@
 
 import yaml
 import pystache
+import jinja2 as jinjo
 import colorama
 import shutil, sys, os
 from scoutcamp import *
@@ -200,15 +201,15 @@ class ScoutCamp(object):
         template_dict.update(cls.main_language.get_terms())
         template_dict.update(cls.data_base)
 
-        rendered_board = temp_maker.render(
-            cls.main_scoutboard("string"),
+        rendered_board = jinjo.Template(
+            cls.main_scoutboard("string")).render(
             template_dict
         )
 
         template_dict.update({"table":rendered_board})
 
-        rendered_html = temp_maker.render(
-            cls.main_template("string"),
+        rendered_html = jinjo.Template(
+            cls.main_template("string")).render(
             template_dict
         )
 
@@ -217,8 +218,8 @@ class ScoutCamp(object):
         html_output.close()
 
         for i in range(len(cls.script_template.get_templates())):
-            rendered_script = temp_maker.render(
-                cls.script_template.get_templates()[i],
+            rendered_script = jinjo.Template(
+                cls.script_template.get_templates()[i]).render(
                 template_dict
             )
             js_output = open(

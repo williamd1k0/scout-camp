@@ -1,0 +1,3 @@
+[submodule "PROJECT/template"]
+	path = PROJECT/template
+	url = https://github.com/williamd1k0/scout-camp-template.git
