@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from colorama import Fore, init
+import os.path
 
 
 class Utils(object):
@@ -34,6 +35,20 @@ class Utils(object):
     @classmethod
     def paint(cls, string_, color_):
         return cls.__COLORS[color_] + string_ + cls.__COLORS["default"]
+    
+    
+    @classmethod
+    def recursive_mkdir(cls, path, start=''):
+        if os.path.isdir(os.path.join(start, path)): return False
+        import re as regxp
+        paths = regxp.sub('[\\\/]+', r'\\', path).split('\\')
+        paths_i = [start]
+        for folder in paths:
+            paths_i.append(folder)
+            absolute = '\\'.join(paths_i)
+            if not os.path.isdir(absolute):
+                os.mkdir(absolute)
+        del regxp
 
 
 class ErrorLog(object):

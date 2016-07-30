@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
+import os.path
 from .database import *
 from .exceptions import *
 
@@ -140,6 +141,33 @@ class Template(object):
     def __call__(self, term):
         if term == "string":
             return str(self)
+
+class Header(object):
+
+    def __init__(self, dict_):
+        self.__dict__ = dict_
+
+
+
+class StaticTemplate(object):
+
+    def __init__(self, file_=None, path_='_static'):
+        
+        template_f = open(os.path.join(path_, file_), 'r', encoding='utf-8')
+        static_temp = template_f.read()
+        template_f.close()
+        del template_f
+
+        import re
+        re_reader = re.search(r'^(---)([\n\S\s])+\n(---)', static_temp)
+        if re_reader is not None:
+            header = yaml.load(re_reader.group(0).replace('---',''))
+            static_temp = re.sub(r'^(---)([\n\S\s])+\n(---)', '', static_temp)
+        else:
+            header = {'layout':None, 'route':None, 'title':None}
+        
+        self.base = static_temp
+        self.data = Header(header)
 
 
 if __name__ == '__main__':

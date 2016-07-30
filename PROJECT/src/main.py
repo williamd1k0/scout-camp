@@ -2,7 +2,6 @@
 # -*- encoding: utf-8 -*-
 
 import yaml
-import pystache
 import jinja2 as jinjo
 import colorama
 import shutil, sys, os
@@ -118,6 +117,10 @@ class ScoutCamp(object):
             ".js"
         )
 
+        # Templates base
+        cls.static_templates = list()
+        cls.static_templates.append(StaticTemplate('about.html'))
+
 
 
     @classmethod
@@ -216,6 +219,20 @@ class ScoutCamp(object):
         html_output = open(cls.configs.get_path_to("index") + "index.html","w", encoding='utf-8')
         html_output.write(rendered_html)
         html_output.close()
+
+        
+        for static in cls.static_templates:
+            static_html = jinjo.Template(
+                static.base).render(
+                template_dict
+            )
+            path = static.data.route
+            print(cls.configs.get_path_to("index"))
+            Utils.recursive_mkdir(path, cls.configs.get_path_to("index"))
+            html_output = open(cls.configs.get_path_to("index")+'/'+ path + "/index.html", "w", encoding='utf-8')
+            html_output.write(static_html)
+            html_output.close()
+
 
         for i in range(len(cls.script_template.get_templates())):
             rendered_script = jinjo.Template(
