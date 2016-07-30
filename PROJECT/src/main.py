@@ -197,8 +197,6 @@ class ScoutCamp(object):
 
         ignore_escape = lambda do_nothing: do_nothing
 
-        temp_maker = pystache.Renderer(string_encoding='utf8', escape=ignore_escape)
-
         template_dict = dict()
         template_dict.update({"camp":cls.configs.get_camp()})
         template_dict.update(cls.main_language.get_terms())
